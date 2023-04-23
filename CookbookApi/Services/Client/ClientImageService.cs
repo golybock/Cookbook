@@ -1,0 +1,75 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cookbook.Database.Repositories.Client;
+using Cookbook.Database.Services.Interfaces.ClientInterfaces;
+using CookbookApi.Models.Database;
+using CookbookApi.Models.Database.Client;
+
+namespace Cookbook.Database.Services.Client;
+
+public class ClientImageService : IClientImageService
+{
+    private readonly ClientImageRepository _clientImageRepository;
+
+    public ClientImageService()
+    {
+        _clientImageRepository = new ClientImageRepository();
+    }
+
+    public async Task<ClientImage> GetClientImageAsync(int id)
+    {
+        if (id <= 0)
+            return new ClientImage();
+
+        return await _clientImageRepository.GetClientImageAsync(id);
+    }
+
+    public async Task<ClientImage> GetClientImageByClientIdAsync(int clientId)
+    {
+        if (clientId <= 0)
+            return new ClientImage();
+
+        return await _clientImageRepository.GetClientImageByClientIdAsync(clientId);
+    }
+
+    public async Task<List<ClientImage>> GetClientImagesAsync(int clientId)
+    {
+        if (clientId <= 0)
+            return new List<ClientImage>();
+
+        return await _clientImageRepository.GetClientImagesAsync(clientId);
+    }
+
+    public async Task<CommandResult> AddClientImageAsync(ClientImage clientImage)
+    {
+        if (clientImage.ClientId == 0)
+            return CommandResults.BadRequest;
+
+        if (string.IsNullOrEmpty(clientImage.ImagePath))
+            return CommandResults.BadRequest;
+
+        return await _clientImageRepository.AddClientImageAsync(clientImage);
+    }
+
+    public async Task<CommandResult> UpdateClientImageAsync(ClientImage clientImage)
+    {
+        if (clientImage.Id <= 0)
+            return CommandResults.BadRequest;
+
+        if (clientImage.ClientId <= 0)
+            return CommandResults.BadRequest;
+
+        if (string.IsNullOrEmpty(clientImage.ImagePath))
+            return CommandResults.BadRequest;
+
+        return await _clientImageRepository.UpdateClientImageAsync(clientImage);
+    }
+
+    public async Task<CommandResult> DeleteClientImageAsync(int id)
+    {
+        if (id <= 0)
+            return CommandResults.BadRequest;
+
+        return await _clientImageRepository.DeleteClientImageAsync(id);
+    }
+}

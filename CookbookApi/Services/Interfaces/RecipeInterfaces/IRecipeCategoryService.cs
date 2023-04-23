@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CookbookApi.Models.Database;
+using CookbookApi.Models.Database.Recipe;
+
+namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
+
+public interface IRecipeCategoryService
+{
+    public Task<RecipeCategory?> GetRecipeCategoryAsync(int id);
+    public Task<RecipeCategory?>? GetRecipeMainCategoryAsync(int recipeId);
+    public Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId);
+    public Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory);
+    public Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory);
+    public Task<CommandResult> DeleteRecipeCategoryAsync(int id);
+    public Task<CommandResult> DeleteRecipeCategoriesAsync(int recipeId);
+}
