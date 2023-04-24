@@ -10,5 +10,4 @@ public class RecipeImage
     public int RecipeId { get; set; }
     
     public string Path { get; set; } = string.Empty;
-
 }

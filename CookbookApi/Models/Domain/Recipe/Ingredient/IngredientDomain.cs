@@ -7,4 +7,20 @@ public class IngredientDomain
     public int MeasureId { get; set; }
 
     public string Name { get; set; } = string.Empty;
+
+    public IngredientDomain() { }
+
+    public IngredientDomain(Database.Recipe.Ingredient.Ingredient ingredient)
+    {
+        Id = ingredient.Id;
+        Name = ingredient.Name;
+        MeasureId = ingredient.MeasureId;
+    }
+    
+    public IngredientDomain(IngredientDomain ingredient)
+    {
+        Id = ingredient.Id;
+        Name = ingredient.Name;
+        MeasureId = ingredient.MeasureId;
+    }
 }

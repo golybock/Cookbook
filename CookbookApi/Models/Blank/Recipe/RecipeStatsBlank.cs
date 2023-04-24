@@ -1,4 +1,7 @@
-﻿namespace CookbookApi.Models.Blank.Recipe;
+﻿using CookbookApi.Models.Database.Recipe;
+using CookbookApi.Models.Domain.Recipe;
+
+namespace CookbookApi.Models.Blank.Recipe;
 
 public class RecipeStatsBlank
 {
@@ -13,4 +16,26 @@ public class RecipeStatsBlank
     public int Portions { get; set; }
     
     public DateTime CookingTime { get; set; }
+
+    public RecipeStatsBlank() { }
+
+    public RecipeStatsBlank(RecipeStats recipeStats)
+    {
+        Fats = recipeStats.Fats;
+        Squirrels = recipeStats.Squirrels;
+        Carbohydrates = recipeStats.Carbohydrates;
+        Kilocalories = recipeStats.Kilocalories;
+        Portions = recipeStats.Portions;
+        CookingTime = recipeStats.CookingTime;
+    }
+    
+    public RecipeStatsBlank(RecipeStatsDomain recipeStats)
+    {
+        Fats = recipeStats.Fats;
+        Squirrels = recipeStats.Squirrels;
+        Carbohydrates = recipeStats.Carbohydrates;
+        Kilocalories = recipeStats.Kilocalories;
+        Portions = recipeStats.Portions;
+        CookingTime = recipeStats.CookingTime;
+    }
 }

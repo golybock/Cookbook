@@ -1,4 +1,7 @@
-﻿namespace CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Blank.Client;
+using CookbookApi.Models.Domain.Client;
+
+namespace CookbookApi.Models.Database.Client;
 
 public partial class Client
 {
@@ -13,4 +16,21 @@ public partial class Client
     public string? Name { get; set; }
 
     public string? Description { get; set; }
+
+    public Client()  { }
+
+    public Client(ClientDomain client)
+    {
+        Login = client.Login;
+        Name = client.Name;
+        Description = client.Description;
+    }
+    
+    public Client(ClientBlank client)
+    {
+        Login = client.Login;
+        Name = client.Name;
+        Description = client.Description;
+    }
+    
 }

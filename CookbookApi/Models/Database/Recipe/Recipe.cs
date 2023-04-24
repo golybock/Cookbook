@@ -1,4 +1,6 @@
-﻿namespace CookbookApi.Models.Database.Recipe;
+﻿using CookbookApi.Models.Domain.Recipe;
+
+namespace CookbookApi.Models.Database.Recipe;
 
 public partial class Recipe
 {
@@ -15,4 +17,16 @@ public partial class Recipe
     public string? PathToText { get; set; }
     
     public string? Code { get; set; }
+
+    public Recipe() { }
+
+    public Recipe(RecipeDomain recipe)
+    {
+        ClientId = recipe.ClientId;
+        TypeId = recipe.TypeId;
+        Header = recipe.Header;
+        Description = recipe.Description;
+        Code = recipe.Code;
+        
+    }
 }

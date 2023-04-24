@@ -1,4 +1,7 @@
-﻿namespace CookbookApi.Models.Domain.Recipe;
+﻿using CookbookApi.Models.Blank.Recipe;
+using CookbookApi.Models.Domain.Recipe.Category;
+
+namespace CookbookApi.Models.Domain.Recipe;
 
 public class RecipeDomain
 {
@@ -14,9 +17,29 @@ public class RecipeDomain
 
     public RecipeTypeDomain RecipeType { get; set; } = new RecipeTypeDomain();
     
-    public RecipeStatsDomain RecipeStats { get; set; } = new RecipeStatsDomain();
+    public RecipeStatsDomain Stats { get; set; } = new RecipeStatsDomain();
 
-    public List<RecipeIngredientDomain> RecipeIngredients { get; set; } = new List<RecipeIngredientDomain>();
+    public List<RecipeIngredientDomain> Ingredients { get; set; } = new List<RecipeIngredientDomain>();
+
+    public List<CategoryDomain> Categories { get; set; } = new List<CategoryDomain>();
 
     public List<string> Images { get; set; } = new List<string>();
+
+    public RecipeDomain() { }
+
+    public RecipeDomain(Database.Recipe.Recipe recipe)
+    {
+        ClientId = recipe.ClientId;
+        TypeId = recipe.TypeId;
+        Header = recipe.Header;
+        Description = recipe.Description;
+        Code = recipe.Code;
+    }
+    
+    public RecipeDomain(RecipeBlank recipe)
+    {
+        TypeId = recipe.TypeId;
+        Header = recipe.Header;
+        Description = recipe.Description;
+    }
 }

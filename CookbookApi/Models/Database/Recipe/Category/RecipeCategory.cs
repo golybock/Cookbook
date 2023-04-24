@@ -1,4 +1,6 @@
-﻿namespace CookbookApi.Models.Database.Recipe.Category;
+﻿using CookbookApi.Models.Blank.Recipe.Category;
+
+namespace CookbookApi.Models.Database.Recipe.Category;
 
 public class RecipeCategory
 {
@@ -7,4 +9,12 @@ public class RecipeCategory
     public int RecipeId { get; set; }
 
     public int CategoryId { get; set; }
+
+    public RecipeCategory() { }
+
+    public RecipeCategory(RecipeCategoryBlank recipeCategory)
+    {
+        CategoryId = recipeCategory.CategoryId;
+        RecipeId = recipeCategory.RecipeId;
+    }
 }
