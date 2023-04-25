@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Cookbook.Database.Services.Client;
-using Cookbook.Database.Services.Interfaces;
-using Cookbook.Database.Services.Recipe;
-using Cookbook.Database.Services.Recipe.Ingredients;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Database.Client;
 using CookbookApi.Models.Database.Recipe;
 using CookbookApi.Models.Database.Recipe.Category;
-using CookbookApi.Models.Database.Recipe.Ingredients;
+using CookbookApi.Services.Client;
+using CookbookApi.Services.Interfaces;
+using CookbookApi.Services.Recipe;
+using CookbookApi.Services.Recipe.Ingredients;
 using RecipeModel = CookbookApi.Models.Database.Recipe.Recipe;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services;
+namespace CookbookApi.Services;
 
 public class RecipeService : IRecipeService
 {

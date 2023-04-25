@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cookbook.Database.Repositories.Client;
-using Cookbook.Database.Services.Interfaces.ClientInterfaces;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Database.Client;
+using CookbookApi.Repositories.Client;
+using CookbookApi.Services.Interfaces.ClientInterfaces;
 
-namespace Cookbook.Database.Services.Client;
+namespace CookbookApi.Services.Client;
 
 public class ClientFavService : IClientFavService
 {
@@ -37,7 +34,7 @@ public class ClientFavService : IClientFavService
         if (recipeId <= 0 || clientId <= 0)
             return false;
 
-        return await _clientFavRepository.GetRecipeIsLiked(recipeId, clientId);
+        return await _clientFavRepository.GET(recipeId, clientId);
     }
 
     public async Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)

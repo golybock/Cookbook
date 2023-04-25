@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using CookbookApi.Models.Register;
-using CookbookApi.Models.Register.Password;
-using ClientModel = CookbookApi.Models.Database.Client.Client;
+﻿using ClientModel = CookbookApi.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services.Interfaces;
+namespace CookbookApi.Services.Interfaces;
 
 public interface IRegisterService
 {

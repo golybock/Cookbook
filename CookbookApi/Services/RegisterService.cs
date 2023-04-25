@@ -1,15 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Cookbook.Database.Services.Client;
-using Cookbook.Database.Services.Interfaces;
-using CookbookApi.Models.Database.Client;
-using CookbookApi.Models.Register;
-using CookbookApi.Models.Register.Password;
+﻿using CookbookApi.Models.Database.Client;
+using CookbookApi.Services.Client;
+using CookbookApi.Services.Interfaces;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services;
+namespace CookbookApi.Services;
 
 public class RegisterService : IRegisterService
 {

@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Recipe.Ingredients;
+﻿using CookbookApi.Models.Blank.Recipe.Ingredient;
+using CookbookApi.Models.Domain.Recipe.Ingredient;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+namespace CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 
 public interface IMeasureService
 {
-    public Task<Measure?> GetMeasureAsync(int id);
-    public Task<List<Measure>> GetMeasuresAsync();
-    public Task<CommandResult> AddMeasureAsync(Measure measure);
-    public Task<CommandResult> UpdateMeasureAsync(Measure measure);
-    public Task<CommandResult> DeleteMeasureAsync(int id);
+    public Task<MeasureDomain?> GetMeasureAsync(int id);
+    
+    public Task<List<MeasureDomain>> GetMeasuresAsync();
+    
+    public Task<IActionResult> CreateMeasureAsync(MeasureBlank measure);
+    
+    public Task<IActionResult> UpdateMeasureAsync(int id, MeasureBlank measure);
+    
+    public Task<IActionResult> DeleteMeasureAsync(int id);
 }

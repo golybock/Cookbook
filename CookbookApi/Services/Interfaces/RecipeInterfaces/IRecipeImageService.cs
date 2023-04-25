@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Recipe;
+﻿using CookbookApi.Models.Database.Recipe;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
+namespace CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 public interface IRecipeImageService
 {
-    public Task<RecipeImage> GetRecipeImageAsync(int id);
-    public Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId);
+    public Task<IActionResult> GetRecipeImageAsync(int id);
+    
     public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId);
-    public Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage);
-    public Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage);
-    public Task<CommandResult> DeleteRecipeImagesByRecipeAsync(int id);
-    public Task<CommandResult> DeleteRecipeImageAsync(int id);
+    
+    public Task<IActionResult> AddRecipeImageAsync();
+    
+    public Task<IActionResult> UpdateRecipeImageAsync(int id, IFormFile file);
+    
+    public Task<IActionResult> DeleteRecipeImagesAsync(int recipeId);
+    
+    public Task<IActionResult> DeleteRecipeImageAsync(int id);
 }

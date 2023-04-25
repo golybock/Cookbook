@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Recipe.Ingredients;
+﻿using CookbookApi.Models.Blank.Recipe.Ingredient;
+using CookbookApi.Models.Database.Recipe.Ingredient;
+using CookbookApi.Models.Domain.Recipe.Ingredient;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+namespace CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 
 public interface IIngredientService
 {
-    public Task<Ingredient> GetIngredientAsync(int id);
-    public Task<List<Ingredient>> GetIngredientsAsync();
-    public Task<CommandResult> AddIngredientAsync(Ingredient ingredient);
-    public Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient);
-    public Task<CommandResult> DeleteIngredientAsync(int id);
+    public Task<IActionResult> GetIngredientAsync(int id);
+    
+    public Task<List<IngredientDomain>> GetIngredientsAsync();
+    
+    public Task<IActionResult> CreateIngredientAsync(IngredientBlank ingredient);
+    
+    public Task<IActionResult> UpdateIngredientAsync(int id, IngredientBlank ingredient);
+    
+    public Task<IActionResult> DeleteIngredientAsync(int id);
 }

@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cookbook.Database.Repositories.Recipe;
-using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Cookbook.Database.Services.Recipe.Ingredients;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Recipe;
+﻿using CookbookApi.Models.Database.Recipe;
+using CookbookApi.Services.Interfaces.RecipeInterfaces;
+using CookbookApi.Services.Recipe.Ingredients;
 
-namespace Cookbook.Database.Services.Recipe;
+namespace CookbookApi.Services.Recipe;
 
 public class RecipeIngredientService : IRecipeIngredientService
 {

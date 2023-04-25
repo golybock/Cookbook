@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using Cookbook.Database.Services.Client;
-using Cookbook.Database.Services.Interfaces;
-using CookbookApi.Models.Login;
+﻿using CookbookApi.Services.Client;
+using CookbookApi.Services.Interfaces;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services;
+namespace CookbookApi.Services;
 
 public class LoginService : ILoginService
 {

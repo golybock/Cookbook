@@ -1,15 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
-using Cookbook.FIleGenerating;
-using Cookbook.Pages.Recipe;
-using CookbookApi.Models.Database.Client;
-using ModernWpf.Controls;
+﻿using CookbookApi.Models.Database.Client;
 using RecipeModel = CookbookApi.Models.Database.Recipe.Recipe;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services;
+namespace CookbookApi.Services;
 
 public class RecipesViewService
 {

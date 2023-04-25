@@ -1,6 +1,4 @@
-﻿using ClientModel = CookbookApi.Models.Database.Client.Client;
-
-namespace Cookbook.Database.Services.Interfaces;
+﻿namespace CookbookApi.Services.Interfaces;
 
 public interface IClientService
 {

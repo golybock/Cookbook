@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CookbookApi.Models.Database;
-using RecipeModel = CookbookApi.Models.Database.Recipe.Recipe;
+﻿using RecipeModel = CookbookApi.Models.Database.Recipe.Recipe;
 
-namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
+namespace CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 public interface IRecipeService
 {

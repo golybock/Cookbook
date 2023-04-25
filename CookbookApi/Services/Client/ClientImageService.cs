@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cookbook.Database.Repositories.Client;
-using Cookbook.Database.Services.Interfaces.ClientInterfaces;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Database.Client;
+using CookbookApi.Services.Interfaces.ClientInterfaces;
 
-namespace Cookbook.Database.Services.Client;
+namespace CookbookApi.Services.Client;
 
 public class ClientImageService : IClientImageService
 {

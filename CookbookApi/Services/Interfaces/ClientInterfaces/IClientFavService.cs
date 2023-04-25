@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CookbookApi.Models.Database;
-using CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Database.Client;
+using CookbookApi.Models.Domain.Recipe;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
+namespace CookbookApi.Services.Interfaces.ClientInterfaces;
 
 public interface IClientFavService
 {
-    public Task<FavoriteRecipe?> GetFavoriteRecipeAsync(int id);
-    public Task<List<FavoriteRecipe>> GetFavoriteRecipesAsync(int clientId);
-    public Task<bool> GetRecipeIsLiked(int recipeId, int clientId);
-    public Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
-
-    public Task<CommandResult> UpdateFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
-    public Task<CommandResult> DeleteFavoriteRecipeAsync(int id);
-    public Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId);
-    public Task<CommandResult> DeleteFavoriteRecipeByRecipe(int recipeId);
-    public Task<CommandResult> DeleteFavoriteRecipeByClient(int clientId);
+    public Task<List<RecipeDomain>> GetFavoriteRecipesAsync(string token);
+    
+    public Task<IActionResult> AddFavoriteRecipeAsync(string token, int recipeId);
+    
+    public Task<IActionResult> DeleteFavoriteRecipeAsync(string token, int recipeId);
+    
+    // public Task<int> DeleteClientFavoriteRecipes(string token);
 }
