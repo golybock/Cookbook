@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Database.Recipe;
+using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe;
@@ -44,7 +45,7 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
         }
     }
 
-    public async Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
+    public async Task<List<RecipeIngredient>> GetRecipeIngredientsAsync(int recipeId)
     {
         var con = GetConnection();
         con.Open();
@@ -84,50 +85,8 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
         }
     }
 
-    public async Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()
+    public async Task<int> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        var recipeIngredients = new List<RecipeIngredient>();
-
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "select * from recipe_ingredients";
-
-            await using var cmd = new NpgsqlCommand(query, con);
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
-            {
-                var recipeIngredient = new RecipeIngredient();
-
-                recipeIngredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                recipeIngredient.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                recipeIngredient.IngredientId = reader.GetInt32(reader.GetOrdinal("ingredient_id"));
-                recipeIngredient.Count = reader.GetInt32(reader.GetOrdinal("count"));
-
-                recipeIngredients.Add(recipeIngredient);
-            }
-
-            return recipeIngredients;
-        }
-        catch
-        {
-            return new List<RecipeIngredient>();
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
-    {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -146,20 +105,15 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
                     new NpgsqlParameter {Value = recipeIngredient.Count}
                 }
             };
-            result = CommandResults.Successfully;
-
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync()) recipeIngredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
 
-            return result;
+            return recipeIngredient.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -167,10 +121,8 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
         }
     }
 
-    public async Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public async Task<int> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -188,17 +140,11 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
                 }
             };
 
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -206,44 +152,14 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeIngredientAsync(int id)
+    public async Task<int> DeleteRecipeIngredientAsync(int id)
     {
-        return await DeleteAsync("recipe_ingredients", id);
+        return await DeleteAsync("recipe_ingredients", "id", id.ToString());
     }
 
-    public async Task<CommandResult> DeleteRecipeIngredientByRecipeAsync(int recipeId)
+    public async Task<int> DeleteRecipeIngredientsAsync(int recipeId)
     {
-        CommandResult result;
-
-        var connection = GetConnection();
-
-        try
-        {
-            connection.Open();
-
-            var query = "delete from recipe_ingredients where recipe_id = $1";
-            await using var cmd = new NpgsqlCommand(query, connection)
-            {
-                Parameters =
-                {
-                    new NpgsqlParameter {Value = recipeId}
-                }
-            };
-
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
-        }
-        catch (Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
+        return await DeleteAsync("recipe_ingredients", "recipe_id", recipeId.ToString());
     }
+
 }

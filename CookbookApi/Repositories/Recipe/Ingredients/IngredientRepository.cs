@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+﻿using CookbookApi.Models.Database.Recipe.Ingredient;
+using CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe.Ingredients;
@@ -81,10 +82,8 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
         }
     }
 
-    public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
+    public async Task<int> AddIngredientAsync(Ingredient ingredient)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -98,25 +97,21 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
             {
                 Parameters =
                 {
-                    new NpgsqlParameter {Value = ingredient.Measure.Id},
+                    new NpgsqlParameter {Value = ingredient.MeasureId},
                     new NpgsqlParameter {Value = ingredient.Name}
                 }
             };
 
-            result = CommandResults.Successfully;
-
             await using var reader = await cmd.ExecuteReaderAsync();
 
-            while (await reader.ReadAsync()) ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
+            while (await reader.ReadAsync())
+                ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
 
-            return result;
+            return ingredient.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -124,10 +119,8 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
         }
     }
 
-    public async Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
+    public async Task<int> UpdateIngredientAsync(Ingredient ingredient)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -146,17 +139,11 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
                 }
             };
 
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -164,8 +151,8 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
         }
     }
 
-    public async Task<CommandResult> DeleteIngredientAsync(int id)
+    public async Task<int> DeleteIngredientAsync(int id)
     {
-        return await DeleteAsync("ingredient", id);
+        return await DeleteAsync("ingredient", "id", id.ToString());
     }
 }

@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Database.Recipe.Category;
+using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe;
@@ -80,10 +81,8 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
         }
     }
 
-    public async Task<CommandResult> AddCategoryAsync(Category category)
+    public async Task<int> AddCategoryAsync(Category category)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -99,21 +98,16 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
                     new NpgsqlParameter {Value = category.Name}
                 }
             };
-
-            result = CommandResults.Successfully;
-
+            
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync()) category.Id = reader.GetInt32(reader.GetOrdinal("id"));
 
-            return result;
+            return category.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -121,10 +115,8 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
         }
     }
 
-    public async Task<CommandResult> UpdateCategoryAsync(Category category)
+    public async Task<int> UpdateCategoryAsync(Category category)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -141,18 +133,12 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
                     new NpgsqlParameter {Value = category.Name}
                 }
             };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -160,8 +146,8 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
         }
     }
 
-    public async Task<CommandResult> DeleteCategoryAsync(int id)
+    public async Task<int> DeleteCategoryAsync(int id)
     {
-        return await DeleteAsync("category", id);
+        return await DeleteAsync("category", "id", id.ToString());
     }
 }

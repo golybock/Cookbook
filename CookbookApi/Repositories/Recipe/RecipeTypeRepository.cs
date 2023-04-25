@@ -70,38 +70,4 @@ public class RecipeTypeRepository : RepositoryBase, IRecipeTypeRepository
             await con.CloseAsync();
         }
     }
-
-    public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
-    {
-        var commandResult = CommandResults.Successfully;
-
-        var con = GetConnection();
-
-        try
-        {
-            await con.OpenAsync();
-            var query = "insert into recipe_type(name) values($1) returning id";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters = {new NpgsqlParameter {Value = recipeType.Name}}
-            };
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync()) recipeType.Id = reader.GetInt32(reader.GetOrdinal("id"));
-
-            return commandResult;
-        }
-        catch (Exception e)
-        {
-            commandResult = CommandResults.BadRequest;
-            commandResult.Description = e.ToString();
-            return commandResult;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
 }

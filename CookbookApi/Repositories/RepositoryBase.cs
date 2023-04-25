@@ -13,7 +13,7 @@ public class RepositoryBase
 
     private string GetConnectionString() => _connectionString;
 
-    protected async Task<int> DeleteAsync(string table, string where, string value)
+    public async Task<int> DeleteAsync(string table, string where, string value)
     {
         var connection = GetConnection();
 

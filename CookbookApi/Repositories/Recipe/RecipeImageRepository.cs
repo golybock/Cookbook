@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Database.Recipe;
+using CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe;
@@ -28,7 +29,7 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
             {
                 recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
+                recipeImage.Path = reader.GetString(reader.GetOrdinal("image_path"));
             }
 
             return recipeImage;
@@ -42,45 +43,6 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
             await con.CloseAsync();
         }
     }
-
-    public async Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId)
-    {
-        var recipeImage = new RecipeImage();
-
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "select * from recipe_images where recipe_id = $1 limit 1";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters = {new NpgsqlParameter {Value = recipeId}}
-            };
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
-            {
-                recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-            }
-
-            return recipeImage;
-        }
-        catch
-        {
-            return new RecipeImage();
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
     public async Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId)
     {
         var recipeImages = new List<RecipeImage>();
@@ -106,7 +68,7 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
 
                 recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
+                recipeImage.Path = reader.GetString(reader.GetOrdinal("image_path"));
 
                 recipeImages.Add(recipeImage);
             }
@@ -123,17 +85,15 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
         }
     }
 
-    public async Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage)
+    public async Task<int> AddRecipeImageAsync(RecipeImage recipeImage)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
         {
             con.Open();
 
-            var query = "insert into recipe_images(recipe_id, image_path)" +
+            var query = "insert into recipe_images(recipe_id, path)" +
                         " values ($1, $2) returning id";
 
             await using var cmd = new NpgsqlCommand(query, con)
@@ -141,24 +101,19 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
                 Parameters =
                 {
                     new NpgsqlParameter {Value = recipeImage.RecipeId},
-                    new NpgsqlParameter {Value = recipeImage.GetImagePath()}
+                    new NpgsqlParameter {Value = recipeImage.Path}
                 }
             };
-
-            result = CommandResults.Successfully;
-
+            
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync()) recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
 
-            return result;
+            return recipeImage.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -166,38 +121,30 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
         }
     }
 
-    public async Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage)
+    public async Task<int> UpdateRecipeImageAsync(RecipeImage recipeImage)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
         {
             con.Open();
 
-            var query = "update recipe_images set image_path = $2 where id = $1";
+            var query = "update recipe_images set path = $2 where id = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new NpgsqlParameter {Value = recipeImage.Id},
-                    new NpgsqlParameter {Value = recipeImage.GetImagePath()}
+                    new NpgsqlParameter {Value = recipeImage.Path}
                 }
             };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -205,10 +152,8 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeImagesByRecipeAsync(int id)
+    public async Task<int> DeleteRecipeImagesAsync(int recipeId)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -221,20 +166,15 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
             {
                 Parameters =
                 {
-                    new NpgsqlParameter {Value = id}
+                    new NpgsqlParameter {Value = recipeId}
                 }
             };
-
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -242,8 +182,8 @@ public class RecipeImageRepository : RepositoryBase, IRecipeImageRepository
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeImageAsync(int id)
+    public async Task<int> DeleteRecipeImageAsync(int id)
     {
-        return await DeleteAsync("recipe_images", id);
+        return await DeleteAsync("recipe_images", "id", id.ToString());
     }
 }

@@ -47,6 +47,82 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
+    public async Task<int> AddClient(ClientModel client)
+    {
+        int result;
+
+        var con = GetConnection();
+
+        try
+        {
+            con.Open();
+
+            var query = "insert into client(login, password, name)" +
+                        " values ($1, $2, $3) returning id";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new NpgsqlParameter {Value = client.Login},
+                    new NpgsqlParameter {Value = client.Password},
+                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name}
+                }
+            };
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+            
+            while (await reader.ReadAsync())
+            {
+                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
+            return client.Id;
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
+    public async Task<int> UpdateClientAsync(int id, ClientModel client)
+    {
+        int result;
+
+        var con = GetConnection();
+
+        try
+        {
+            con.Open();
+
+            var query = "update client set name = $2, description = $3 where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new NpgsqlParameter {Value = client.Id},
+                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
+                    new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description}
+                }
+            };
+            
+            return await cmd.ExecuteNonQueryAsync();
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
     public async Task<ClientModel> GetClientAsync(string login)
     {
         var client = new ClientModel();
@@ -131,98 +207,10 @@ public class ClientRepository : RepositoryBase, IClientRepository
             await con.CloseAsync();
         }
     }
-
-    public async Task<CommandResult> AddClientAsync(ClientModel client)
+    
+    public async Task<int> DeleteClientAsync(int id)
     {
-        CommandResult result;
-
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "insert into client(login, password, name)" +
-                        " values ($1, $2, $3) returning id";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters =
-                {
-                    new NpgsqlParameter {Value = client.Login},
-                    new NpgsqlParameter {Value = client.Password},
-                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name}
-                }
-            };
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            result = CommandResults.Successfully;
-
-            while (await reader.ReadAsync())
-            {
-                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                result.Value = client;
-            }
-
-            return result;
-        }
-        catch (Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<CommandResult> UpdateClientAsync(ClientModel client)
-    {
-        CommandResult result;
-
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "update client set name = $2, description = $3 where id = $1";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters =
-                {
-                    new NpgsqlParameter {Value = client.Id},
-                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
-                    new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description}
-                }
-            };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
-        }
-        catch (Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<CommandResult> DeleteClientAsync(int id)
-    {
-        CommandResult result;
+        int result;
 
         var con = GetConnection();
 
@@ -239,18 +227,12 @@ public class ClientRepository : RepositoryBase, IClientRepository
                     new NpgsqlParameter {Value = id}
                 }
             };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {

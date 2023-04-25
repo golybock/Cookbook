@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.ClientInterfaces;
+﻿using CookbookApi.Models.Database.Client;
+using CookbookApi.Repositories.Interfaces.ClientInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Client;
@@ -21,51 +22,13 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
             {
                 Parameters = {new NpgsqlParameter {Value = id}}
             };
-
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-            }
-
-            return clientImage;
-        }
-        catch
-        {
-            return new ClientImage();
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<ClientImage> GetClientImageByClientIdAsync(int clientId)
-    {
-        var clientImage = new ClientImage();
-
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "select * from client_images where client_id = $1 order by id desc limit 1 ";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters = {new NpgsqlParameter {Value = clientId}}
-            };
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
-            {
-                clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
+                clientImage.Path = reader.GetString(reader.GetOrdinal("path"));
             }
 
             return clientImage;
@@ -103,7 +66,7 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
                 var clientImage = new ClientImage();
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
+                clientImage.Path = reader.GetString(reader.GetOrdinal("path"));
                 clientImages.Add(clientImage);
             }
 
@@ -119,17 +82,20 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
         }
     }
 
-    public async Task<CommandResult> AddClientImageAsync(ClientImage clientImage)
+    public async Task<List<ClientImage>> GetClientImagesAsync(int clientId, int limit)
     {
-        CommandResult result;
+        throw new NotImplementedException();
+    }
 
+    public async Task<int> AddClientImageAsync(ClientImage clientImage)
+    {
         var con = GetConnection();
 
         try
         {
             con.Open();
 
-            var query = "insert into client_images(client_id, image_path)" +
+            var query = "insert into client_images(client_id, path)" +
                         " values ($1, $2) returning id";
 
             await using var cmd = new NpgsqlCommand(query, con)
@@ -137,28 +103,22 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
                 Parameters =
                 {
                     new NpgsqlParameter {Value = clientImage.ClientId},
-                    new NpgsqlParameter {Value = clientImage.GetImagePath()}
+                    new NpgsqlParameter {Value = clientImage.Path}
                 }
             };
-
-            result = CommandResults.Successfully;
 
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                result.Value = clientImage;
             }
 
-            return result;
+            return clientImage.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -166,38 +126,30 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
         }
     }
 
-    public async Task<CommandResult> UpdateClientImageAsync(ClientImage clientImage)
+    public async Task<int> UpdateClientImageAsync(ClientImage clientImage)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
         {
             con.Open();
 
-            var query = "update client_images set image_path = $2 where id = $1";
+            var query = "update client_images set path = $2 where id = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new NpgsqlParameter {Value = clientImage.Id},
-                    new NpgsqlParameter {Value = clientImage.GetImagePath()}
+                    new NpgsqlParameter {Value = clientImage.Path}
                 }
             };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -205,8 +157,9 @@ public class ClientImageRepository : RepositoryBase, IClientImageRepository
         }
     }
 
-    public Task<CommandResult> DeleteClientImageAsync(int id)
+    public async Task<int> DeleteClientImageAsync(int id)
     {
-        return DeleteAsync("client_images", id);
+        return await DeleteAsync("client_images", "id", id.ToString());
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+﻿using CookbookApi.Models.Database.Recipe.Ingredient;
+using CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe.Ingredients;
@@ -78,9 +79,9 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
         }
     }
 
-    public async Task<CommandResult> AddMeasureAsync(Measure measure)
+    public async Task<int> AddMeasureAsync(Measure measure)
     {
-        CommandResult result;
+        int result;
 
         var con = GetConnection();
 
@@ -98,21 +99,16 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
                     new NpgsqlParameter {Value = measure.Name}
                 }
             };
-
-            result = CommandResults.Successfully;
-
+            
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync()) measure.Id = reader.GetInt32(reader.GetOrdinal("id"));
 
-            return result;
+            return measure.Id;
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -120,10 +116,8 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
         }
     }
 
-    public async Task<CommandResult> UpdateMeasureAsync(Measure measure)
+    public async Task<int> UpdateMeasureAsync(Measure measure)
     {
-        CommandResult result;
-
         var con = GetConnection();
 
         try
@@ -140,18 +134,12 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
                     new NpgsqlParameter {Value = measure.Name}
                 }
             };
-
-            result =
-                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
-
-            return result;
+            
+            return await cmd.ExecuteNonQueryAsync();
         }
         catch (Exception e)
         {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-
-            return result;
+            return -1;
         }
         finally
         {
@@ -159,8 +147,8 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
         }
     }
 
-    public async Task<CommandResult> DeleteMeasureAsync(int id)
+    public async Task<int> DeleteMeasureAsync(int id)
     {
-        return await DeleteAsync("measure", id);
+        return await DeleteAsync("measure", "id", id.ToString());
     }
 }

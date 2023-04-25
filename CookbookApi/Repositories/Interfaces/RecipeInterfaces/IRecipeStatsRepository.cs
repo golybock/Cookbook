@@ -1,9 +1,11 @@
-﻿namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Database.Recipe;
+
+namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 
 public interface IRecipeStatsRepository
 {
     public Task<RecipeStats> GetRecipeStatsAsync(int id);
-    public Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats);
-    public Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats);
-    public Task<CommandResult> DeleteRecipeStatsAsync(int id);
+    public Task<int> AddRecipeStatsAsync(RecipeStats recipeStats);
+    public Task<int> UpdateRecipeStatsAsync(RecipeStats recipeStats);
+    public Task<int> DeleteRecipeStatsAsync(int id);
 }
