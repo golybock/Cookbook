@@ -1,68 +1,38 @@
-﻿using CookbookApi.Services.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Blank.Recipe.Category;
+using CookbookApi.Models.Database.Recipe.Category;
+using CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 namespace CookbookApi.Services.Recipe;
 
 public class RecipeCategoryService : IRecipeCategoryService
 {
-    private readonly RecipeCategoryRepository _recipeCategoryRepository;
-
-    public RecipeCategoryService()
-    {
-        _recipeCategoryRepository = new RecipeCategoryRepository();
-    }
-
     public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
     {
-        if (id <= 0)
-            return new RecipeCategory();
-
-        return await _recipeCategoryRepository.GetRecipeCategoryAsync(id);
-    }
-
-    public async Task<RecipeCategory?> GetRecipeMainCategoryAsync(int recipeId)
-    {
-        if (recipeId <= 0)
-            return null;
-
-        return await _recipeCategoryRepository.GetRecipeMainCategoryAsync(recipeId);
+        throw new NotImplementedException();
     }
 
     public async Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId)
     {
-        if (recipeId <= 0)
-            return new List<RecipeCategory>();
-
-        return await _recipeCategoryRepository.GetRecipeCategoriesAsync(recipeId);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory)
+    public async Task<int> CreateRecipeCategoryAsync(RecipeCategoryBlank recipeCategory)
     {
-        if (recipeCategory.CategoryId <= 0 ||
-            recipeCategory.RecipeId <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeCategoryRepository.AddRecipeCategoryAsync(recipeCategory);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory)
+    public async Task<int> UpdateRecipeCategoryAsync(int id, RecipeCategoryBlank recipeCategory)
     {
-        if (recipeCategory.Id <= 0)
-            return CommandResults.BadRequest;
-
-        if (recipeCategory.CategoryId <= 0 ||
-            recipeCategory.RecipeId <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeCategoryRepository.UpdateRecipeCategoryAsync(recipeCategory);
+        throw new NotImplementedException();
     }
 
-    public Task<CommandResult> DeleteRecipeCategoryAsync(int id)
+    public async Task<int> DeleteRecipeCategoryAsync(int id)
     {
-        return _recipeCategoryRepository.DeleteRecipeCategoryAsync(id);
+        throw new NotImplementedException();
     }
 
-    public Task<CommandResult> DeleteRecipeCategoriesAsync(int id)
+    public async Task<int> DeleteRecipeCategoriesAsync(int recipeId)
     {
-        return _recipeCategoryRepository.DeleteRecipeCategoriesAsync(id);
+        throw new NotImplementedException();
     }
 }

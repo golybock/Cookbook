@@ -1,39 +1,30 @@
-﻿using CookbookApi.Models.Database.Recipe.Category;
+﻿using CookbookApi.Models.Blank.Recipe.Category;
+using CookbookApi.Models.Database.Recipe.Category;
+using CookbookApi.Models.Domain.Recipe.Category;
 using CookbookApi.Services.Interfaces.RecipeInterfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookbookApi.Services.Recipe;
 
 public class CategoryService : ICategoryService
 {
-    private readonly CategoryRepository _categoryRepository;
-
-    public CategoryService()
+    public async Task<IActionResult> GetCategoryAsync(int id)
     {
-        _categoryRepository = new CategoryRepository();
+        throw new NotImplementedException();
     }
 
-    public Task<Category> GetCategoryAsync(int id)
+    public async Task<List<CategoryDomain>> GetCategories()
     {
-        return _categoryRepository.GetCategoryAsync(id);
+        throw new NotImplementedException();
     }
 
-    public Task<List<Category>> GetCategories()
+    public async Task<IActionResult> CreateCategoryAsync(CategoryBlank category)
     {
-        return _categoryRepository.GetCategoriesAsync();
+        throw new NotImplementedException();
     }
 
-    public Task<CommandResult> AddCategoryAsync(Category category)
+    public async Task<IActionResult> DeleteCategoryAsync(int id)
     {
-        return _categoryRepository.AddCategoryAsync(category);
-    }
-
-    public Task<CommandResult> UpdateCategoryAsync(Category category)
-    {
-        return _categoryRepository.UpdateCategoryAsync(category);
-    }
-
-    public Task<CommandResult> DeleteCategoryAsync(int id)
-    {
-        return _categoryRepository.DeleteCategoryAsync(id);
+        throw new NotImplementedException();
     }
 }

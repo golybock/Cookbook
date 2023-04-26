@@ -1,105 +1,71 @@
-﻿using CookbookApi.Models.Database.Client;
+﻿using CookbookApi.Models.Blank.Client;
+using CookbookApi.Models.Database.Client;
+using CookbookApi.Models.Domain.Client;
 using CookbookApi.Services.Interfaces.ClientInterfaces;
+using Microsoft.AspNetCore.Mvc;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 
 namespace CookbookApi.Services.Client;
 
 public class ClientService : IClientService
 {
-    private readonly ClientImageService _clientImageService;
-    private readonly ClientRepository _clientRepository;
-
-    public ClientService()
-    {
-        _clientRepository = new ClientRepository();
-        _clientImageService = new ClientImageService();
-    }
-
-    public async Task<ClientModel> GetClientAsync(int id)
-    {
-        if (id <= 0)
-            return new ClientModel();
-
-        return await _clientRepository.GetClientAsync(id);
-    }
-
-    public async Task<ClientModel> GetClientAsync(string login)
-    {
-        if (string.IsNullOrEmpty(login))
-            return new ClientModel();
-
-        return await _clientRepository.GetClientAsync(login);
-    }
-
-    public async Task<List<ClientModel>> GetClientsAsync()
-    {
-        return await _clientRepository.GetClientsAsync();
-    }
-
-    public async Task<CommandResult> AddClientAsync(ClientModel client)
-    {
-        if (string.IsNullOrWhiteSpace(client.Login))
-            return CommandResults.BadRequest;
-
-        if (string.IsNullOrWhiteSpace(client.Password))
-            return CommandResults.BadRequest;
-
-        return await _clientRepository.AddClientAsync(client);
-    }
-
-    public async Task<CommandResult> UpdateClientAsync(ClientModel client)
-    {
-        if (client.Id <= 0)
-            return CommandResults.BadRequest;
-
-        var commandResult =
-            await _clientRepository.UpdateClientAsync(client);
-
-        if (commandResult.Result)
-            if (client.NewImagePath != null)
-            {
-                // save image to docs
-                var newClientImage =
-                    new ClientImage
-                    {
-                        ClientId = client.Id,
-                        ImagePath = client.NewImagePath
-                    };
-
-                client.ClientImage.ClientId = client.Id;
-                client.ClientImage.ImagePath = CopyImageToDocuments(newClientImage);
-
-                var cmdResult =
-                    await _clientImageService.AddClientImageAsync(client.ClientImage);
-
-                if (cmdResult.Result)
-                    client.ClientImage = (cmdResult.Value as ClientImage)!;
-
-                return CommandResults.Successfully;
-            }
-
-        return CommandResults.BadRequest;
-    }
-
-    public Task<CommandResult> DeleteClientAsync(int id)
+    public async Task<ClientDomain> GetClientInfoAsync(string token)
     {
         throw new NotImplementedException();
     }
 
-    private string? CopyImageToDocuments(ClientImage clientImage)
+    public async Task<IActionResult> CreateClient(ClientBlank client)
     {
-        var documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
+        throw new NotImplementedException();
+    }
 
-        var filePath = $"client_{clientImage.ClientId}_{App.GetTimeStamp()}.png";
+    public async Task<IActionResult> UpdateClientAsync(string token, ClientBlank client)
+    {
+        throw new NotImplementedException();
+    }
 
-        var writePath = documentsPath + filePath;
+    public async Task<IActionResult> DeleteClientAsync(string token)
+    {
+        throw new NotImplementedException();
+    }
 
-        if (File.Exists(clientImage.GetImagePath()))
-        {
-            File.Copy(clientImage.GetImagePath(), writePath);
-            return filePath;
-        }
+    public async Task<IActionResult> GetClientImageAsync(string token)
+    {
+        throw new NotImplementedException();
+    }
 
-        return null;
+    public async Task<IActionResult> GetClientImagesAsync(string token)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> GetClientImagesAsync(string token, int limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> UploadClientImageAsync(string token, IFormFile file)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> DeleteClientImageAsync(string token, int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> GetLikedRecipesAsync(string token)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> LikeRecipeAsync(string token, int recipeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IActionResult> UnLikeRecipeAsync(string token, int recipeId)
+    {
+        throw new NotImplementedException();
     }
 }

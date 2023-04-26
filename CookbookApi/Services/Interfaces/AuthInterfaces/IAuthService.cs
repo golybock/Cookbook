@@ -9,5 +9,7 @@ public interface IAuthService
     
     public Task<IActionResult> Registration(ClientBlank client);
 
+    public Task<IActionResult> UpdatePassword(string token, string password, string newPassword);
+
     public Task<IActionResult> Guest();
 }

@@ -1,68 +1,45 @@
-﻿using CookbookApi.Services.Interfaces.RecipeInterfaces;
+﻿using CookbookApi.Models.Blank.Recipe;
+using CookbookApi.Models.Domain.Recipe;
+using CookbookApi.Services.Interfaces.RecipeInterfaces;
+using Microsoft.AspNetCore.Mvc;
 using RecipeModel = CookbookApi.Models.Database.Recipe.Recipe;
 
 namespace CookbookApi.Services.Recipe;
 
 public class RecipeService : IRecipeService
 {
-    private readonly RecipeRepository _recipeRepository;
-
-    public RecipeService()
+    public async Task<IActionResult> GetRecipeAsync(string recipeCode)
     {
-        _recipeRepository = new RecipeRepository();
+        throw new NotImplementedException();
     }
 
-    public async Task<RecipeModel> GetRecipeAsync(int id)
+    public async Task<List<RecipeDomain>> GetRecipesAsync()
     {
-        if (id <= 0)
-            return new RecipeModel();
-
-        return await _recipeRepository.GetRecipeAsync(id);
+        throw new NotImplementedException();
     }
 
-    public Task<List<RecipeModel>> GetRecipesAsync()
+    public async Task<IActionResult> GetClientLikedRecipesAsync(string token)
     {
-        return _recipeRepository.GetRecipesAsync();
+        throw new NotImplementedException();
     }
 
-    public async Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
+    public async Task<IActionResult> GetClientRecipesAsync(string token)
     {
-        if (clientId <= 0)
-            return new List<RecipeModel>();
-
-        return await _recipeRepository.GetClientRecipesAsync(clientId);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
+    public async Task<IActionResult> CreateRecipeAsync(string token, RecipeBlank recipe)
     {
-        if (string.IsNullOrWhiteSpace(recipe.Name))
-            return CommandResults.BadRequest;
-
-        if (recipe.ClientId <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeRepository.AddRecipeAsync(recipe);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> UpdateRecipeAsync(RecipeModel? recipe)
+    public async Task<IActionResult> UpdateRecipeAsync(string token, string recipeCode, RecipeBlank recipe)
     {
-        if (recipe == null)
-            return CommandResults.BadRequest;
-
-        if (string.IsNullOrWhiteSpace(recipe.Name))
-            return CommandResults.BadRequest;
-
-        if (recipe.ClientId <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeRepository.UpdateRecipeAsync(recipe);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> DeleteRecipeAsync(int id)
+    public async Task<IActionResult> DeleteRecipeAsync(string token, string recipeCode)
     {
-        if (id <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeRepository.DeleteRecipeAsync(id);
+        throw new NotImplementedException();
     }
 }

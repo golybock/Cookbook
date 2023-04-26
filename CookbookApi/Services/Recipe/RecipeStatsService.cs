@@ -5,42 +5,23 @@ namespace CookbookApi.Services.Recipe;
 
 public class RecipeStatsService : IRecipeStatsService
 {
-    private readonly RecipeStatsRepository _recipeStatsRepository;
-
-    public RecipeStatsService()
+    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
     {
-        _recipeStatsRepository = new RecipeStatsRepository();
+        throw new NotImplementedException();
     }
 
-    public async Task<RecipeStats> GetRecipeStatsAsync(int id)
+    public async Task<int> AddRecipeStatsAsync(RecipeStats recipeStats)
     {
-        if (id < 0)
-            return new RecipeStats();
-
-        return await _recipeStatsRepository.GetRecipeStatsAsync(id);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
+    public async Task<int> UpdateRecipeStatsAsync(RecipeStats recipeStats)
     {
-        if (recipeStats.RecipeId == 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats? recipeStats)
+    public async Task<int> DeleteRecipeStatsAsync(int id)
     {
-        if (recipeStats == null)
-            return CommandResults.BadRequest;
-
-        return await _recipeStatsRepository.UpdateRecipeStatsAsync(recipeStats);
-    }
-
-    public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
-    {
-        if (id < 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeStatsRepository.DeleteRecipeStatsAsync(id);
+        throw new NotImplementedException();
     }
 }

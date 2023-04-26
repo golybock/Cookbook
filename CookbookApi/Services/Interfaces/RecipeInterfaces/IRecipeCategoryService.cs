@@ -6,15 +6,16 @@ namespace CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 public interface IRecipeCategoryService
 {
-    public Task<IActionResult> GetRecipeCategoryAsync(int id);
+    // приватный service для использования внутри других service-ов
+    public Task<RecipeCategory> GetRecipeCategoryAsync(int id);
 
     public Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId);
     
-    public Task<IActionResult> CreateRecipeCategoryAsync(RecipeCategoryBlank recipeCategory);
+    public Task<int> CreateRecipeCategoryAsync(RecipeCategoryBlank recipeCategory);
     
-    public Task<IActionResult> UpdateRecipeCategoryAsync(int id, RecipeCategoryBlank recipeCategory);
+    public Task<int> UpdateRecipeCategoryAsync(int id, RecipeCategoryBlank recipeCategory);
     
-    public Task<IActionResult> DeleteRecipeCategoryAsync(int id);
+    public Task<int> DeleteRecipeCategoryAsync(int id);
     
-    public Task<IActionResult> DeleteRecipeCategoriesAsync(int recipeId);
+    public Task<int> DeleteRecipeCategoriesAsync(int recipeId);
 }

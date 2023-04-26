@@ -6,83 +6,33 @@ namespace CookbookApi.Services.Recipe;
 
 public class RecipeIngredientService : IRecipeIngredientService
 {
-    private readonly IngredientService _ingredientService;
-    private readonly RecipeIngredientRepository _recipeIngredientRepository;
-
-    public RecipeIngredientService()
+    public async Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
     {
-        _ingredientService = new IngredientService();
-        _recipeIngredientRepository = new RecipeIngredientRepository();
+        throw new NotImplementedException();
     }
 
-    public async Task<RecipeIngredient?> GetRecipeIngredientAsync(int id)
+    public async Task<List<RecipeIngredient>> GetRecipeIngredientsAsync(int recipeId)
     {
-        if (id <= 0)
-            return null;
-
-        return await _recipeIngredientRepository.GetRecipeIngredientAsync(id);
+        throw new NotImplementedException();
     }
 
-    public async Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
+    public async Task<int> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        if (recipeId <= 0)
-            return new List<RecipeIngredient>();
-
-        var recipeIngredients =
-            await _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
-
-        foreach (var recipeIngredient in recipeIngredients)
-            recipeIngredient.Ingredient =
-                (await _ingredientService.GetIngredientAsync(recipeIngredient.IngredientId))!;
-
-        return recipeIngredients;
+        throw new NotImplementedException();
     }
 
-    public Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()
+    public async Task<int> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        return _recipeIngredientRepository.GetRecipeIngredientsAsync();
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public async Task<int> DeleteRecipeIngredientAsync(int id)
     {
-        if (recipeIngredient.IngredientId <= 0 ||
-            recipeIngredient.RecipeId <= 0)
-            return CommandResults.BadRequest;
-
-        if (recipeIngredient.Count < 1)
-            return CommandResults.BadRequest;
-
-        return await _recipeIngredientRepository.AddRecipeIngredientAsync(recipeIngredient);
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public async Task<int> DeleteRecipeIngredientsAsync(int recipeId)
     {
-        if (recipeIngredient.Id <= 0)
-            return CommandResults.BadRequest;
-
-        if (recipeIngredient.IngredientId <= 0 ||
-            recipeIngredient.RecipeId <= 0)
-            return CommandResults.BadRequest;
-
-        if (recipeIngredient.Count < 1)
-            return CommandResults.BadRequest;
-
-        return await _recipeIngredientRepository.UpdateRecipeIngredientAsync(recipeIngredient);
-    }
-
-    public async Task<CommandResult> DeleteRecipeIngredientAsync(int id)
-    {
-        if (id <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeIngredientRepository.DeleteRecipeIngredientAsync(id);
-    }
-
-    public async Task<CommandResult> DeleteRecipeIngredientByRecipeAsync(int recipeId)
-    {
-        if (recipeId <= 0)
-            return CommandResults.BadRequest;
-
-        return await _recipeIngredientRepository.DeleteRecipeIngredientByRecipeAsync(recipeId);
+        throw new NotImplementedException();
     }
 }

@@ -13,7 +13,7 @@ public interface IIngredientService
     
     public Task<IActionResult> CreateIngredientAsync(IngredientBlank ingredient);
     
-    public Task<IActionResult> UpdateIngredientAsync(int id, IngredientBlank ingredient);
+    // public Task<IActionResult> UpdateIngredientAsync(int id, IngredientBlank ingredient);
     
     public Task<IActionResult> DeleteIngredientAsync(int id);
 }

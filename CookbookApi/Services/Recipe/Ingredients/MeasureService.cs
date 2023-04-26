@@ -1,53 +1,29 @@
-﻿using CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+﻿using CookbookApi.Models.Blank.Recipe.Ingredient;
+using CookbookApi.Models.Domain.Recipe.Ingredient;
+using CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookbookApi.Services.Recipe.Ingredients;
 
 public class MeasureService : IMeasureService
 {
-    private readonly MeasureRepository _measureRepository;
-
-    public MeasureService()
+    public async Task<IActionResult> GetMeasureAsync(int id)
     {
-        _measureRepository = new MeasureRepository();
+        throw new NotImplementedException();
     }
 
-    public async Task<Measure?> GetMeasureAsync(int id)
+    public async Task<List<MeasureDomain>> GetMeasuresAsync()
     {
-        if (id <= 0)
-            return null;
-
-        return await _measureRepository.GetMeasureAsync(id);
+        throw new NotImplementedException();
     }
 
-    public Task<List<Measure>> GetMeasuresAsync()
+    public async Task<IActionResult> CreateMeasureAsync(MeasureBlank measure)
     {
-        return _measureRepository.GetMeasuresAsync();
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddMeasureAsync(Measure measure)
+    public async Task<IActionResult> DeleteMeasureAsync(int id)
     {
-        if (string.IsNullOrWhiteSpace(measure.Name))
-            return CommandResults.BadRequest;
-
-        return await _measureRepository.AddMeasureAsync(measure);
-    }
-
-    public async Task<CommandResult> UpdateMeasureAsync(Measure measure)
-    {
-        if (measure.Id <= 0)
-            return CommandResults.BadRequest;
-
-        if (string.IsNullOrWhiteSpace(measure.Name))
-            return CommandResults.BadRequest;
-
-        return await _measureRepository.UpdateMeasureAsync(measure);
-    }
-
-    public async Task<CommandResult> DeleteMeasureAsync(int id)
-    {
-        if (id <= 0)
-            return CommandResults.BadRequest;
-
-        return await _measureRepository.DeleteMeasureAsync(id);
+        throw new NotImplementedException();
     }
 }

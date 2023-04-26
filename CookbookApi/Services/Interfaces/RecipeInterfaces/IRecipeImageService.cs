@@ -5,6 +5,7 @@ namespace CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 public interface IRecipeImageService
 {
+    // приватный service для использования внутри других service-ов
     public Task<IActionResult> GetRecipeImageAsync(int id);
     
     public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId);

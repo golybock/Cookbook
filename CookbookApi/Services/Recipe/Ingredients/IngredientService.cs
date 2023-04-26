@@ -1,73 +1,30 @@
-﻿using CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+﻿using CookbookApi.Models.Blank.Recipe.Ingredient;
+using CookbookApi.Models.Domain.Recipe.Ingredient;
+using CookbookApi.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookbookApi.Services.Recipe.Ingredients;
 
 public class IngredientService : IIngredientService
 {
-    private readonly IngredientRepository _ingredientRepository;
-    private readonly MeasureService _measureService;
-
-    public IngredientService()
+    async Task<List<IngredientDomain>> IIngredientService.GetIngredientsAsync()
     {
-        _measureService = new MeasureService();
-        _ingredientRepository = new IngredientRepository();
+        throw new NotImplementedException();
     }
 
-    public async Task<Ingredient> GetIngredientAsync(int id)
+    public async Task<IActionResult> CreateIngredientAsync(IngredientBlank ingredient)
     {
-        if (id <= 0)
-            return new Ingredient();
-
-        var ingredient = await _ingredientRepository.GetIngredientAsync(id);
-
-        ingredient!.Measure =
-            await _measureService.GetMeasureAsync(ingredient.MeasureId);
-
-        return ingredient;
+        throw new NotImplementedException();
     }
 
-    public async Task<List<Ingredient>> GetIngredientsAsync()
+    async Task<IActionResult> IIngredientService.DeleteIngredientAsync(int id)
     {
-        var ingredients =
-            await _ingredientRepository.GetIngredientsAsync();
-
-        foreach (var ingredient in ingredients)
-            ingredient!.Measure =
-                await _measureService.GetMeasureAsync(ingredient.MeasureId);
-
-        return ingredients;
+        throw new NotImplementedException();
     }
 
-    public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
+    async Task<IActionResult> IIngredientService.GetIngredientAsync(int id)
     {
-        if (ingredient.Measure!.Id <= 0)
-            return CommandResults.BadRequest;
-
-        if (string.IsNullOrWhiteSpace(ingredient.Name))
-            return CommandResults.BadRequest;
-
-        return await _ingredientRepository.AddIngredientAsync(ingredient);
+        throw new NotImplementedException();
     }
-
-    public async Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
-    {
-        if (ingredient.Id <= 0)
-            return CommandResults.BadRequest;
-
-        if (ingredient.MeasureId <= 0)
-            return CommandResults.BadRequest;
-
-        if (string.IsNullOrWhiteSpace(ingredient.Name))
-            return CommandResults.BadRequest;
-
-        return await _ingredientRepository.UpdateIngredientAsync(ingredient);
-    }
-
-    public async Task<CommandResult> DeleteIngredientAsync(int id)
-    {
-        if (id <= 0)
-            return CommandResults.BadRequest;
-
-        return await _ingredientRepository.DeleteIngredientAsync(id);
-    }
+    
 }
