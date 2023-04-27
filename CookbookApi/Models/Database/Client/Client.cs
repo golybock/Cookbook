@@ -7,9 +7,9 @@ public partial class Client
 {
     public int Id { get; set; }
 
-    public string Login { get; set; } = null!;
+    public string? Login { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string? Password { get; set; } = null!;
 
     public string Token { get; set; } = string.Empty;
 
@@ -29,6 +29,7 @@ public partial class Client
     public Client(ClientBlank client)
     {
         Login = client.Login;
+        Password = client.Password;
         Name = client.Name;
         Description = client.Description;
     }

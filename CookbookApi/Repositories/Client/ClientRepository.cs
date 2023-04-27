@@ -6,26 +6,26 @@ namespace CookbookApi.Repositories.Client;
 
 public class ClientRepository : RepositoryBase, IClientRepository
 {
-    public async Task<ClientModel> GetClientAsync(int id)
+    public async Task<ClientModel?> GetClientAsync(string token)
     {
-        var client = new ClientModel();
-
         var con = GetConnection();
+        
         try
         {
             con.Open();
 
-            var query = "select * from client where id = $1";
+            var query = "select * from client where token = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = {new NpgsqlParameter {Value = id}}
+                Parameters = {new NpgsqlParameter {Value = token}}
             };
 
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
+                var client = new ClientModel();
                 client.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 client.Login = reader.GetString(reader.GetOrdinal("login"));
                 client.Password = reader.GetString(reader.GetOrdinal("password"));
@@ -33,13 +33,14 @@ public class ClientRepository : RepositoryBase, IClientRepository
                 client.Name = name == DBNull.Value ? null : name.ToString();
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
+                return client;
             }
 
-            return client;
+            return null;
         }
         catch
         {
-            return new ClientModel();
+            return null;
         }
         finally
         {
@@ -49,24 +50,23 @@ public class ClientRepository : RepositoryBase, IClientRepository
 
     public async Task<int> AddClient(ClientModel client)
     {
-        int result;
-
         var con = GetConnection();
 
         try
         {
             con.Open();
 
-            var query = "insert into client(login, password, name)" +
-                        " values ($1, $2, $3) returning id";
+            var query = "insert into client(login, password, name, token)" +
+                        " values ($1, $2, $3, $4) returning id";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
-                    new NpgsqlParameter {Value = client.Login},
-                    new NpgsqlParameter {Value = client.Password},
-                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name}
+                    new NpgsqlParameter {Value = client.Login == null ? DBNull.Value : client.Login},
+                    new NpgsqlParameter {Value = client.Password == null ? DBNull.Value : client.Password},
+                    new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
+                    new NpgsqlParameter { Value = client.Token}
                 }
             };
 
@@ -91,8 +91,6 @@ public class ClientRepository : RepositoryBase, IClientRepository
 
     public async Task<int> UpdateClientAsync(int id, ClientModel client)
     {
-        int result;
-
         var con = GetConnection();
 
         try
@@ -123,10 +121,70 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<ClientModel> GetClientAsync(string login)
+    public async Task<int> UpdateToken(int id, string token)
     {
-        var client = new ClientModel();
+        var con = GetConnection();
 
+        try
+        {
+            con.Open();
+
+            var query = "update client set token = $2 where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new NpgsqlParameter {Value = id},
+                    new NpgsqlParameter {Value = token},
+                }
+            };
+            
+            return await cmd.ExecuteNonQueryAsync();
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
+    public async Task<int> UpdatePassword(int id, string password)
+    {
+        var con = GetConnection();
+
+        try
+        {
+            con.Open();
+
+            var query = "update client set password = $2 where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new NpgsqlParameter {Value = id},
+                    new NpgsqlParameter {Value = password},
+                }
+            };
+            
+            return await cmd.ExecuteNonQueryAsync();
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
+    public async Task<ClientModel?> GetClientByLoginAsync(string login)
+    {
         var con = GetConnection();
 
         try
@@ -144,6 +202,8 @@ public class ClientRepository : RepositoryBase, IClientRepository
 
             while (await reader.ReadAsync())
             {
+                var client = new ClientModel();
+                
                 client.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 client.Login = reader.GetString(reader.GetOrdinal("login"));
                 client.Password = reader.GetString(reader.GetOrdinal("password"));
@@ -151,13 +211,15 @@ public class ClientRepository : RepositoryBase, IClientRepository
                 client.Name = name == DBNull.Value ? null : name.ToString();
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
+                
+                return client;
             }
 
-            return client;
+            return null;
         }
         catch (Exception e)
         {
-            return new ClientModel();
+            return null;
         }
         finally
         {
