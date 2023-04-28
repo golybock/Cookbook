@@ -16,6 +16,8 @@ public partial class Client
     public string? Name { get; set; }
 
     public string? Description { get; set; }
+    
+    public string? Email { get; set; }
 
     public Client()  { }
 
@@ -23,6 +25,7 @@ public partial class Client
     {
         Login = client.Login;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
     
@@ -31,6 +34,7 @@ public partial class Client
         Login = client.Login;
         Password = client.Password;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
     

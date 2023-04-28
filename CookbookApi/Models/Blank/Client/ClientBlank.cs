@@ -11,6 +11,8 @@ public class ClientBlank
     public string? Name { get; set; }
 
     public string? Description { get; set; }
+    
+    public string? Email { get; set; }
 
     public ClientBlank() { }
 
@@ -18,6 +20,7 @@ public class ClientBlank
     {
         Login = client.Login;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
 
@@ -25,6 +28,7 @@ public class ClientBlank
     {
         Login = client.Login;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
 }

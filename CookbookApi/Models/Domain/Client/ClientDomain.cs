@@ -14,6 +14,8 @@ public class ClientDomain
     public List<ClientImageDomain> Images { get; set; } = new List<ClientImageDomain>();
 
     public List<RecipeDomain> Recipes { get; set; } = new List<RecipeDomain>();
+    
+    public string? Email { get; set; }
 
     public ClientDomain() { }
 
@@ -21,6 +23,7 @@ public class ClientDomain
     {
         Login = client.Login;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
     
@@ -28,6 +31,7 @@ public class ClientDomain
     {
         Login = client.Login;
         Name = client.Name;
+        Email = client.Email;
         Description = client.Description;
     }
 }
