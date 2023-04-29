@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe.Ingredients;
 
 public class IngredientRepository : RepositoryBase, IIngredientRepository
 {
-    public async Task<Ingredient> GetIngredientAsync(int id)
+    public async Task<Ingredient?> GetIngredientAsync(int id)
     {
-        var ingredient = new Ingredient();
-
         var con = GetConnection();
 
         try
@@ -27,16 +25,18 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
 
             while (await reader.ReadAsync())
             {
+                var ingredient = new Ingredient();
                 ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 ingredient.MeasureId = reader.GetInt32(reader.GetOrdinal("measure_id"));
                 ingredient.Name = reader.GetString(reader.GetOrdinal("name"));
+                return ingredient;
             }
 
-            return ingredient;
+            return null;
         }
         catch
         {
-            return new Ingredient();
+            return null;
         }
         finally
         {
@@ -153,6 +153,6 @@ public class IngredientRepository : RepositoryBase, IIngredientRepository
 
     public async Task<int> DeleteIngredientAsync(int id)
     {
-        return await DeleteAsync("ingredient", "id", id.ToString());
+        return await DeleteAsync("ingredient", "id", id);
     }
 }

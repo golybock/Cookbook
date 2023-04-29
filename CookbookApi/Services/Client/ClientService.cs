@@ -1,6 +1,9 @@
 ﻿using CookbookApi.Models.Blank.Client;
 using CookbookApi.Models.Database.Client;
 using CookbookApi.Models.Domain.Client;
+using CookbookApi.Models.Domain.Recipe;
+using CookbookApi.Repositories.Client;
+using CookbookApi.Repositories.Recipe;
 using CookbookApi.Services.Interfaces.ClientInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
@@ -9,14 +12,31 @@ namespace CookbookApi.Services.Client;
 
 public class ClientService : IClientService
 {
-    public async Task<ClientDomain> GetClientInfoAsync(string token)
+    private readonly ClientRepository _clientRepository;
+    private readonly ClientFavRepository _clientFavRepository;
+    private readonly RecipeRepository _recipeRepository;
+    
+    public ClientService()
     {
-        throw new NotImplementedException();
+        _recipeRepository = new RecipeRepository();
+        _clientFavRepository = new ClientFavRepository();
+        _clientRepository = new ClientRepository();
     }
 
-    public async Task<IActionResult> CreateClient(ClientBlank client)
+    public async Task<IActionResult> GetClientInfoAsync(string token)
     {
-        throw new NotImplementedException();
+        var client = await _clientRepository.GetClientAsync(token);
+
+        if (client == null)
+            return new UnauthorizedResult();
+
+        var clientDomain = new ClientDomain(client);
+
+        var recipes = await _recipeRepository.GetClientRecipesAsync(client.Id);
+
+        clientDomain.Recipes = recipes.Select(c => new RecipeDomain(c)).ToList();
+
+        return new OkObjectResult(clientDomain);
     }
 
     public async Task<IActionResult> UpdateClientAsync(string token, ClientBlank client)
@@ -33,23 +53,13 @@ public class ClientService : IClientService
     {
         throw new NotImplementedException();
     }
-
-    public async Task<IActionResult> GetClientImagesAsync(string token)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IActionResult> GetClientImagesAsync(string token, int limit)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public async Task<IActionResult> UploadClientImageAsync(string token, IFormFile file)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<IActionResult> DeleteClientImageAsync(string token, int id)
+    public async Task<IActionResult> DeleteClientImageAsync(string token)
     {
         throw new NotImplementedException();
     }

@@ -82,7 +82,7 @@ public class AuthService : IAuthService
 
         var res = await CreateGuestAsync(token);
 
-        return res > 0 ? new OkObjectResult(token) : new BadRequestResult();
+            return res > 0 ? new OkObjectResult(token) : new BadRequestResult();
     }
 
     private string Md5Password(string password)

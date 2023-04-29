@@ -5,7 +5,7 @@ namespace CookbookApi.Repositories.Interfaces.ClientInterfaces;
 
 public interface IClientFavoriteRepository
 {
-    public Task<FavoriteRecipe> GetFavoriteRecipeAsync(int id);
+    public Task<FavoriteRecipe?> GetFavoriteRecipeAsync(int id);
 
     public Task<List<FavoriteRecipe>> GetFavoriteRecipesAsync(int clientId);
 

@@ -4,7 +4,7 @@ namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterf
 
 public interface IMeasureRepository
 {
-    public Task<Measure> GetMeasureAsync(int id);
+    public Task<Measure?> GetMeasureAsync(int id);
     
     public Task<List<Measure>> GetMeasuresAsync();
     

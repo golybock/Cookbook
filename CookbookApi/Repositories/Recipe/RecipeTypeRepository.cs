@@ -6,10 +6,10 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class RecipeTypeRepository : RepositoryBase, IRecipeTypeRepository
 {
-    public async Task<RecipeType> GetRecipeTypeAsync(int id)
+    public async Task<RecipeType?> GetRecipeTypeAsync(int id)
     {
         var con = GetConnection();
-        var recipeType = new RecipeType();
+        
         try
         {
             await con.OpenAsync();
@@ -22,15 +22,17 @@ public class RecipeTypeRepository : RepositoryBase, IRecipeTypeRepository
 
             while (await reader.ReadAsync())
             {
+                var recipeType = new RecipeType();
                 recipeType.Id = id;
                 recipeType.Name = reader.GetString(reader.GetOrdinal("name"));
+                return recipeType;
             }
 
-            return recipeType;
+            return null;
         }
         catch
         {
-            return new();
+            return null;
         }
         finally
         {

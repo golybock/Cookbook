@@ -14,6 +14,8 @@ public class RecipeDomain
     public string? Description { get; set; }
 
     public string? Code { get; set; }
+    
+    public string? SourceUrl { get; set; }
 
     public RecipeTypeDomain RecipeType { get; set; } = new RecipeTypeDomain();
     
@@ -30,6 +32,7 @@ public class RecipeDomain
     public RecipeDomain(Database.Recipe.Recipe recipe)
     {
         ClientId = recipe.ClientId;
+        SourceUrl = recipe.SourceUrl;
         TypeId = recipe.TypeId;
         Header = recipe.Header;
         Description = recipe.Description;
@@ -40,6 +43,7 @@ public class RecipeDomain
     {
         TypeId = recipe.TypeId;
         Header = recipe.Header;
+        SourceUrl = recipe.SourceUrl;
         Description = recipe.Description;
     }
 }

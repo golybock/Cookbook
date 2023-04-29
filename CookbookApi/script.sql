@@ -36,39 +36,23 @@ create table if not exists client
     password    varchar(150),
     token       varchar(500),
     description varchar(5000),
-    name        varchar(500)
-);
-
-create table if not exists client_images
-(
-    id            serial
-        primary key,
-    path          varchar(500),
-    client_id     integer
-        references client,
-    date_of_added timestamp with time zone default now() not null
+    name        varchar(500),
+    email       varchar(500),
+    image_path  varchar(500)
 );
 
 create table if not exists recipe
 (
-    id           serial
+    id         serial
         primary key,
-    client_id    integer
+    client_id  integer
         references client,
-    type_id      integer
+    type_id    integer
         references recipe_type,
-    header       varchar(500) not null,
-    path_to_text varchar(5000),
-    code         varchar(500)
-);
-
-create table if not exists recipe_images
-(
-    id        serial
-        primary key,
-    recipe_id integer
-        references recipe,
-    path      varchar(500)
+    header     varchar(500) not null,
+    code       varchar(500),
+    image_path varchar(500),
+    source_url varchar(500)
 );
 
 create table if not exists recipe_stats
@@ -114,5 +98,4 @@ create table if not exists recipe_categories
     category_id integer
         references category
 );
-
 

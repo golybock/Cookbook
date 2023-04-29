@@ -14,6 +14,8 @@ public interface IClientRepository
 
     public Task<int> UpdateToken(int id, string token);
     
+    public Task<int> UpdateImage(int id, string image);
+    
     public Task<int> UpdatePassword(int id, string password);
     
     public Task<int> DeleteClientAsync(int id);

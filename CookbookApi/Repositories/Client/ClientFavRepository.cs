@@ -6,12 +6,7 @@ namespace CookbookApi.Repositories.Client;
 
 public class ClientFavRepository : RepositoryBase, IClientFavoriteRepository
 {
-    Task<List<FavoriteRecipe>> IClientFavoriteRepository.GetFavoriteRecipesAsync(int clientId)
-    {
-        return GetFavoriteRecipesAsync(clientId);
-    }
-
-    async Task<int> IClientFavoriteRepository.AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
+    public async Task<int> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
     {
         var con = GetConnection();
 
@@ -143,10 +138,8 @@ public class ClientFavRepository : RepositoryBase, IClientFavoriteRepository
         }
     }
 
-    public async Task<FavoriteRecipe> GetFavoriteRecipeAsync(int id)
+    public async Task<FavoriteRecipe?> GetFavoriteRecipeAsync(int id)
     {
-        var favoriteRecipe = new FavoriteRecipe();
-
         var con = GetConnection();
 
         try
@@ -164,16 +157,18 @@ public class ClientFavRepository : RepositoryBase, IClientFavoriteRepository
 
             while (await reader.ReadAsync())
             {
+                var favoriteRecipe = new FavoriteRecipe();
                 favoriteRecipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 favoriteRecipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 favoriteRecipe.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
+                return favoriteRecipe;
             }
 
-            return favoriteRecipe;
+            return null;
         }
         catch
         {
-            return new FavoriteRecipe();
+            return null;
         }
         finally
         {

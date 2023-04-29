@@ -6,7 +6,7 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class RecipeRepository : RepositoryBase, IRecipeRepository
 {
-    public async Task<RecipeModel> GetRecipeAsync(int id)
+    public async Task<RecipeModel?> GetRecipeAsync(int id)
     {
         var recipe = new RecipeModel();
 
@@ -32,8 +32,8 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                 recipe.TypeId = reader.GetInt32(reader.GetOrdinal("type_id"));
                 recipe.Header = reader.GetString(reader.GetOrdinal("header"));
                 
-                var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text"));
-                recipe.PathToText = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
+                var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
+                recipe.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
 
                 recipe.Code = reader.GetString(reader.GetOrdinal("code"));
             }
@@ -75,8 +75,8 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                 recipe.TypeId = reader.GetInt32(reader.GetOrdinal("type_id"));
                 recipe.Header = reader.GetString(reader.GetOrdinal("header"));
                 
-                var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text"));
-                recipe.PathToText = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
+                var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
+                recipe.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
 
                 recipe.Code = reader.GetString(reader.GetOrdinal("code"));
 
@@ -123,8 +123,8 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                 recipe.TypeId = reader.GetInt32(reader.GetOrdinal("type_id"));
                 recipe.Header = reader.GetString(reader.GetOrdinal("header"));
                 
-                var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text"));
-                recipe.PathToText = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
+                var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
+                recipe.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
 
                 recipe.Code = reader.GetString(reader.GetOrdinal("code"));
 
@@ -152,7 +152,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
             con.Open();
 
             var query = "insert into recipe(client_id, type_id, header," +
-                        " path_to_text, code)" +
+                        " image_path, code)" +
                         " VALUES ($1, $2, $3, $4, $5)" +
                         " returning id";
 
@@ -163,7 +163,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                     new NpgsqlParameter {Value = recipe.ClientId},
                     new NpgsqlParameter {Value = recipe.TypeId == 0 ? DBNull.Value : recipe.TypeId},
                     new NpgsqlParameter {Value = recipe.Header},
-                    new NpgsqlParameter {Value = recipe.PathToText == null ? DBNull.Value : recipe.PathToText},
+                    new NpgsqlParameter {Value = recipe.ImagePath == null ? DBNull.Value : recipe.ImagePath},
                     new NpgsqlParameter {Value = recipe.Code}
                 }
             };
@@ -196,7 +196,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
             con.Open();
 
             var query = "update recipe set type_id = $2, header = $3," +
-                        " path_to_text = $4," +
+                        " image_path = $4," +
                         " code = $5" +
                         " where id = $1";
 
@@ -208,7 +208,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                     new NpgsqlParameter {Value = recipe.TypeId == 0 ? 1 : recipe.TypeId},
                     new NpgsqlParameter {Value = recipe.Header == string.Empty ? "" : recipe.Header},
                     new NpgsqlParameter {Value = recipe.Description == string.Empty ? "" : recipe.Description},
-                    new NpgsqlParameter {Value = recipe.PathToText == string.Empty ? "" : recipe.PathToText},
+                    new NpgsqlParameter {Value = recipe.ImagePath == string.Empty ? "" : recipe.ImagePath},
                     new NpgsqlParameter {Value = string.IsNullOrEmpty(recipe.Code) ? DBNull.Value : recipe.Code}
                 }
             };

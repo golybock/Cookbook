@@ -1,4 +1,5 @@
-﻿using CookbookApi.Models.Domain.Recipe;
+﻿using CookbookApi.Models.Blank.Recipe;
+using CookbookApi.Models.Domain.Recipe;
 
 namespace CookbookApi.Models.Database.Recipe;
 
@@ -13,9 +14,10 @@ public partial class Recipe
     public string Header { get; set; } = string.Empty;
 
     public string? Description { get; set; }
-
-    public string? PathToText { get; set; }
     
+    public string? ImagePath { get; set; }
+
+    public string? SourceUrl { get; set; }
     public string? Code { get; set; }
 
     public Recipe() { }
@@ -26,7 +28,15 @@ public partial class Recipe
         TypeId = recipe.TypeId;
         Header = recipe.Header;
         Description = recipe.Description;
+        SourceUrl = recipe.SourceUrl;
         Code = recipe.Code;
-        
+    }
+    
+    public Recipe(RecipeBlank recipe)
+    {
+        TypeId = recipe.TypeId;
+        Header = recipe.Header;
+        SourceUrl = recipe.SourceUrl;
+        Description = recipe.Description;
     }
 }

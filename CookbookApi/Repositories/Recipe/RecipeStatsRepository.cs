@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class RecipeStatsRepository : RepositoryBase, IRecipeStatsRepository
 {
-    public async Task<RecipeStats> GetRecipeStatsAsync(int id)
+    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
     {
-        var recipeStats = new RecipeStats();
-
         var con = GetConnection();
 
         try
@@ -27,6 +25,7 @@ public class RecipeStatsRepository : RepositoryBase, IRecipeStatsRepository
 
             while (await reader.ReadAsync())
             {
+                var recipeStats = new RecipeStats();
                 recipeStats.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeStats.Squirrels = reader.GetDecimal(reader.GetOrdinal("squirrels"));
                 recipeStats.Fats = reader.GetDecimal(reader.GetOrdinal("fats"));
@@ -34,13 +33,14 @@ public class RecipeStatsRepository : RepositoryBase, IRecipeStatsRepository
                 recipeStats.Kilocalories = reader.GetDecimal(reader.GetOrdinal("kilocalories"));
                 recipeStats.Portions = reader.GetInt32(reader.GetOrdinal("portions"));
                 recipeStats.CookingTime = reader.GetDateTime(reader.GetOrdinal("cooking_time"));
+                return recipeStats;
             }
 
-            return recipeStats;
+            return null;
         }
         catch (Exception e)
         {
-            return new RecipeStats();
+            return null;
         }
         finally
         {

@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class RecipeCategoryRepository : RepositoryBase, IRecipeCategoryRepository
 {
-    public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
+    public async Task<RecipeCategory?> GetRecipeCategoryAsync(int id)
     {
-        var recipeCategory = new RecipeCategory();
-
         var con = GetConnection();
 
         try
@@ -27,16 +25,18 @@ public class RecipeCategoryRepository : RepositoryBase, IRecipeCategoryRepositor
 
             while (await reader.ReadAsync())
             {
+                var recipeCategory = new RecipeCategory();
                 recipeCategory.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeCategory.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
                 recipeCategory.CategoryId = reader.GetInt32(reader.GetOrdinal("category_id"));
+                return recipeCategory;
             }
 
-            return recipeCategory;
+            return null;
         }
         catch
         {
-            return new RecipeCategory();
+            return null;
         }
         finally
         {

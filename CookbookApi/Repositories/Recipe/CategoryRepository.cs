@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class CategoryRepository : RepositoryBase, ICategoryRepository
 {
-    public async Task<Category> GetCategoryAsync(int id)
+    public async Task<Category?> GetCategoryAsync(int id)
     {
-        var category = new Category();
-
         var con = GetConnection();
 
         try
@@ -27,15 +25,17 @@ public class CategoryRepository : RepositoryBase, ICategoryRepository
 
             while (await reader.ReadAsync())
             {
+                var category = new Category();
                 category.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 category.Name = reader.GetString(reader.GetOrdinal("name"));
+                return category;
             }
 
-            return category;
+            return null;
         }
         catch
         {
-            return new Category();
+            return null;
         }
         finally
         {

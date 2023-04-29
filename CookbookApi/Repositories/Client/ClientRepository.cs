@@ -27,18 +27,30 @@ public class ClientRepository : RepositoryBase, IClientRepository
             {
                 var client = new ClientModel();
                 client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                client.Login = reader.GetString(reader.GetOrdinal("login"));
-                client.Password = reader.GetString(reader.GetOrdinal("password"));
+                
+                var login = reader.GetValue(reader.GetOrdinal("login"));
+                client.Login = login == DBNull.Value ? null : login.ToString();
+                
+                var password = reader.GetValue(reader.GetOrdinal("password"));
+                client.Password = password == DBNull.Value ? null : password.ToString();
+                
                 var name = reader.GetValue(reader.GetOrdinal("name"));
                 client.Name = name == DBNull.Value ? null : name.ToString();
+                
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
+                
+                var email = reader.GetValue(reader.GetOrdinal("email"));
+                client.Email = email == DBNull.Value ? null : email.ToString();
+
+                client.Token = reader.GetString(reader.GetOrdinal("token"));
+                
                 return client;
             }
 
             return null;
         }
-        catch
+        catch(Exception e)
         {
             return null;
         }
@@ -56,8 +68,8 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "insert into client(login, password, name, token)" +
-                        " values ($1, $2, $3, $4) returning id";
+            var query = "insert into client(login, password, name, token, email)" +
+                        " values ($1, $2, $3, $4, $5) returning id";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
@@ -66,7 +78,8 @@ public class ClientRepository : RepositoryBase, IClientRepository
                     new NpgsqlParameter {Value = client.Login == null ? DBNull.Value : client.Login},
                     new NpgsqlParameter {Value = client.Password == null ? DBNull.Value : client.Password},
                     new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
-                    new NpgsqlParameter { Value = client.Token}
+                    new NpgsqlParameter { Value = client.Token},
+                    new NpgsqlParameter { Value = client.Email == null ? DBNull.Value : client.Email}
                 }
             };
 
@@ -97,7 +110,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "update client set name = $2, description = $3 where id = $1";
+            var query = "update client set name = $2, description = $3, email = $4 where id = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
@@ -105,7 +118,8 @@ public class ClientRepository : RepositoryBase, IClientRepository
                 {
                     new NpgsqlParameter {Value = client.Id},
                     new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
-                    new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description}
+                    new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description},
+                    new NpgsqlParameter { Value = client.Email == null ? DBNull.Value : client.Email}
                 }
             };
             
@@ -137,6 +151,37 @@ public class ClientRepository : RepositoryBase, IClientRepository
                 {
                     new NpgsqlParameter {Value = id},
                     new NpgsqlParameter {Value = token},
+                }
+            };
+            
+            return await cmd.ExecuteNonQueryAsync();
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
+    public async Task<int> UpdateImage(int id, string image)
+    {
+        var con = GetConnection();
+
+        try
+        {
+            con.Open();
+
+            var query = "update client set image_path = $2 where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new NpgsqlParameter {Value = id},
+                    new NpgsqlParameter {Value = image},
                 }
             };
             
@@ -203,14 +248,23 @@ public class ClientRepository : RepositoryBase, IClientRepository
             while (await reader.ReadAsync())
             {
                 var client = new ClientModel();
-                
                 client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                client.Login = reader.GetString(reader.GetOrdinal("login"));
-                client.Password = reader.GetString(reader.GetOrdinal("password"));
+
+                client.Login = login;
+                
+                var password = reader.GetValue(reader.GetOrdinal("password"));
+                client.Password = password == DBNull.Value ? null : password.ToString();
+                
                 var name = reader.GetValue(reader.GetOrdinal("name"));
                 client.Name = name == DBNull.Value ? null : name.ToString();
+                
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
+                
+                var email = reader.GetValue(reader.GetOrdinal("email"));
+                client.Email = email == DBNull.Value ? null : email.ToString();
+
+                client.Token = reader.GetString(reader.GetOrdinal("token"));
                 
                 return client;
             }
@@ -246,14 +300,24 @@ public class ClientRepository : RepositoryBase, IClientRepository
             while (await reader.ReadAsync())
             {
                 var client = new ClientModel();
-
                 client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                client.Login = reader.GetString(reader.GetOrdinal("login"));
-                client.Password = reader.GetString(reader.GetOrdinal("password"));
+                
+                var login = reader.GetValue(reader.GetOrdinal("login"));
+                client.Login = login == DBNull.Value ? null : login.ToString();
+                
+                var password = reader.GetValue(reader.GetOrdinal("password"));
+                client.Password = password == DBNull.Value ? null : password.ToString();
+                
                 var name = reader.GetValue(reader.GetOrdinal("name"));
                 client.Name = name == DBNull.Value ? null : name.ToString();
+                
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
+                
+                var email = reader.GetValue(reader.GetOrdinal("email"));
+                client.Email = email == DBNull.Value ? null : email.ToString();
+
+                client.Token = reader.GetString(reader.GetOrdinal("token"));
 
                 clients.Add(client);
             }

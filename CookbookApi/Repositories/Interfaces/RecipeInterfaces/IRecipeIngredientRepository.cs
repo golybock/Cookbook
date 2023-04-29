@@ -4,7 +4,7 @@ namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 
 public interface IRecipeIngredientRepository
 {
-    public Task<RecipeIngredient> GetRecipeIngredientAsync(int id);
+    public Task<RecipeIngredient?> GetRecipeIngredientAsync(int id);
 
     public Task<List<RecipeIngredient>> GetRecipeIngredientsAsync(int recipeId);
 

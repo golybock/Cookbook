@@ -34,7 +34,7 @@ namespace CookbookApi.Controllers.Auth
         }
         
         [HttpPost("UpdatePassword")]
-        public async Task<IActionResult> UpdatePassword(string token, string password, string newPassword)
+        public async Task<IActionResult> UpdatePassword([FromHeader] string token, string password, string newPassword)
         {
             return await _authService.UpdatePassword(token, password, newPassword);
         }

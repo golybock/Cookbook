@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe.Ingredients;
 
 public class MeasureRepository : RepositoryBase, IMeasureRepository
 {
-    public async Task<Measure> GetMeasureAsync(int id)
+    public async Task<Measure?> GetMeasureAsync(int id)
     {
-        var measure = new Measure();
-
         var con = GetConnection();
 
         try
@@ -27,15 +25,17 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
 
             while (await reader.ReadAsync())
             {
+                var measure = new Measure();
                 measure.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 measure.Name = reader.GetString(reader.GetOrdinal("name"));
+                return measure;
             }
 
-            return measure;
+            return null;
         }
         catch
         {
-            return new Measure();
+            return null;
         }
         finally
         {
@@ -81,8 +81,6 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
 
     public async Task<int> AddMeasureAsync(Measure measure)
     {
-        int result;
-
         var con = GetConnection();
 
         try
@@ -95,7 +93,6 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
             {
                 Parameters =
                 {
-                    new NpgsqlParameter {Value = measure.Id},
                     new NpgsqlParameter {Value = measure.Name}
                 }
             };
@@ -149,6 +146,6 @@ public class MeasureRepository : RepositoryBase, IMeasureRepository
 
     public async Task<int> DeleteMeasureAsync(int id)
     {
-        return await DeleteAsync("measure", "id", id.ToString());
+        return await DeleteAsync("measure", "id", id);
     }
 }

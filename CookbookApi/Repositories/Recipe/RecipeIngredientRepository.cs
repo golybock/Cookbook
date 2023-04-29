@@ -6,10 +6,8 @@ namespace CookbookApi.Repositories.Recipe;
 
 public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepository
 {
-    public async Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
+    public async Task<RecipeIngredient?> GetRecipeIngredientAsync(int id)
     {
-        var recipeIngredient = new RecipeIngredient();
-
         var con = GetConnection();
 
         try
@@ -27,17 +25,19 @@ public class RecipeIngredientRepository : RepositoryBase, IRecipeIngredientRepos
 
             while (await reader.ReadAsync())
             {
+                var recipeIngredient = new RecipeIngredient();
                 recipeIngredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeIngredient.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
                 recipeIngredient.IngredientId = reader.GetInt32(reader.GetOrdinal("ingredient_id"));
                 recipeIngredient.Count = reader.GetInt32(reader.GetOrdinal("count"));
+                return recipeIngredient;
             }
 
-            return recipeIngredient;
+            return null;
         }
         catch
         {
-            return new RecipeIngredient();
+            return null;
         }
         finally
         {

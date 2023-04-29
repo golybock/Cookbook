@@ -9,23 +9,17 @@ namespace CookbookApi.Services.Interfaces.ClientInterfaces;
 
 public interface IClientService
 {
-    public Task<ClientDomain> GetClientInfoAsync(string token);
-
-    public Task<IActionResult> CreateClient(ClientBlank client);
+    public Task<IActionResult> GetClientInfoAsync(string token);
 
     public Task<IActionResult> UpdateClientAsync(string token, ClientBlank client);
-    
+
     public Task<IActionResult> DeleteClientAsync(string token);
     
     public Task<IActionResult> GetClientImageAsync(string token);
 
-    public Task<IActionResult> GetClientImagesAsync(string token);
-    
-    public Task<IActionResult> GetClientImagesAsync(string token, int limit);
-
     public Task<IActionResult> UploadClientImageAsync(string token, IFormFile file);
 
-    public Task<IActionResult> DeleteClientImageAsync(string token, int id);
+    public Task<IActionResult> DeleteClientImageAsync(string token);
     
     public Task<IActionResult> GetLikedRecipesAsync(string token);
     

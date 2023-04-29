@@ -4,7 +4,7 @@ namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces;
 
 public interface ICategoryRepository
 {
-    public Task<Category> GetCategoryAsync(int id);
+    public Task<Category?> GetCategoryAsync(int id);
     
     public Task<List<Category>> GetCategoriesAsync();
     

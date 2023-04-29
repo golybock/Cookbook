@@ -12,6 +12,8 @@ public class RecipeBlank
 
     public string? Description { get; set; }
     
+    public string? SourceUrl { get; set; }
+
     public RecipeStatsBlank? RecipeStats { get; set; }
 
     public List<RecipeIngredientBlank> Ingredients { get; set; } = new List<RecipeIngredientBlank>();
@@ -25,6 +27,7 @@ public class RecipeBlank
         TypeId = recipe.TypeId;
         Header = recipe.Header;
         Description = recipe.Description;
+        SourceUrl = recipe.SourceUrl;
         RecipeStats = new(recipe.Stats);
 
         Categories = recipe.Categories
@@ -40,6 +43,7 @@ public class RecipeBlank
     {
         TypeId = recipe.TypeId;
         Header = recipe.Header;
+        SourceUrl = recipe.SourceUrl;
         Description = recipe.Description;
     }
 }
