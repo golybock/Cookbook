@@ -57,14 +57,18 @@ public class AuthService : IAuthService
         if (client == null)
             return new UnauthorizedResult();
 
-        int id = client.Id;
+        if (Md5Password(password) != client.Password)
+            return new BadRequestObjectResult("Неверный пароль");
         
-        var result =  await _clientRepository.UpdatePassword(id, newPassword);
+        if (!PasswordValid(newPassword))
+            return new BadRequestObjectResult("Неверный формат нового пароля");
 
-        return result > 0 ? new OkResult() : new BadRequestResult();
+        var result =  await _clientRepository.UpdatePasswordAsync(client.Id, newPassword);
+
+        return result > 0 ? new OkResult() : new BadRequestObjectResult("Не удалось обновить пароль");
     }
     
-    public async Task<int> UpdateToken(string login, string token)
+    private async Task<int> UpdateToken(string login, string token)
     {
         var client = await _clientRepository.GetClientByLoginAsync(login);
 
@@ -73,7 +77,7 @@ public class AuthService : IAuthService
 
         int id = client.Id;
         
-        return await _clientRepository.UpdateToken(id, token);;
+        return await _clientRepository.UpdateTokenAsync(id, token);;
     }
     
     public async Task<IActionResult> Guest()
@@ -106,14 +110,14 @@ public class AuthService : IAuthService
         if (client.Password != null)
             client.Password = Md5Password(client.Password);
 
-        return await _clientRepository.AddClient(client);
+        return await _clientRepository.AddClientAsync(client);
     }
     
     private async Task<int> CreateGuestAsync(string token)
     {
         var client = new Models.Database.Client.Client(){ Token = token };
 
-        return await _clientRepository.AddClient(client);
+        return await _clientRepository.AddClientAsync(client);
     }
 
     private bool PasswordValid(string password)

@@ -16,6 +16,8 @@ public class RecipeDomain
     public string? Code { get; set; }
     
     public string? SourceUrl { get; set; }
+    
+    public bool IsLiked { get; set; }
 
     public RecipeTypeDomain RecipeType { get; set; } = new RecipeTypeDomain();
     

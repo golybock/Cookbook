@@ -44,7 +44,7 @@ public class ClientFavRepository : RepositoryBase, IClientFavoriteRepository
 
     public Task<int> DeleteFavoriteRecipeAsync(int id)
     {
-        return DeleteAsync("favorite_recipes", "id", id.ToString());
+        return DeleteAsync("favorite_recipes", "id", id);
     }
 
     public async Task<int> DeleteFavoriteRecipeAsync(int recipeId, int clientId)
