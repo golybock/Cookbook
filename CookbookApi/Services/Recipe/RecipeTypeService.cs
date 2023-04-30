@@ -1,17 +1,34 @@
 ﻿using CookbookApi.Models.Database.Recipe;
+using CookbookApi.Models.Domain.Recipe;
+using CookbookApi.Repositories.Recipe;
 using CookbookApi.Services.Interfaces.RecipeInterfaces;
 
 namespace CookbookApi.Services.Recipe;
 
 public class RecipeTypeService : IRecipeTypeService
 {
-    public async Task<RecipeType> GetRecipeTypeAsync(int id)
+    private readonly RecipeTypeRepository _recipeTypeRepository;
+
+    public RecipeTypeService()
     {
-        throw new NotImplementedException();
+        _recipeTypeRepository = new RecipeTypeRepository();
     }
 
-    public async Task<List<RecipeType>> GetRecipeTypesAsync()
+    // public async Task<RecipeType?> GetRecipeTypeAsync(int id)
+    // {
+    //     var recipeType = await _recipeTypeRepository.GetRecipeTypeAsync(id);
+    //
+    //     return recipeType;
+    // }
+
+    public async Task<List<RecipeTypeDomain>> GetRecipeTypesAsync()
     {
-        throw new NotImplementedException();
+        var recipeTypes = await _recipeTypeRepository.GetRecipeTypesAsync();
+
+        var recipeTypesDomain = recipeTypes
+            .Select(c => new RecipeTypeDomain(c))
+            .ToList();
+
+        return recipeTypesDomain;
     }
 }

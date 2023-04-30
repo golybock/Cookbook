@@ -10,7 +10,7 @@ public class RecipeIngredientDomain
     
     public int IngredientId { get; set; }
     
-    public IngredientDomain Ingredient { get; set; } = new IngredientDomain();
+    public IngredientDomain? Ingredient { get; set; } = new IngredientDomain();
 
     public decimal Count { get; set; }
 
@@ -25,7 +25,6 @@ public class RecipeIngredientDomain
     
     public RecipeIngredientDomain(RecipeIngredientBlank recipeIngredient)
     {
-        RecipeId = recipeIngredient.RecipeId;
         IngredientId = recipeIngredient.IngredientId;
         Count = recipeIngredient.Count;
     }

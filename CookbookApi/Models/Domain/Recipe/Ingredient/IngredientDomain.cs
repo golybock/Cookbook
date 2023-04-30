@@ -8,6 +8,8 @@ public class IngredientDomain
 
     public string Name { get; set; } = string.Empty;
 
+    public MeasureDomain? Measure = new MeasureDomain();
+
     public IngredientDomain() { }
 
     public IngredientDomain(Database.Recipe.Ingredient.Ingredient ingredient)

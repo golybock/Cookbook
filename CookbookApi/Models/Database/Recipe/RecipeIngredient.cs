@@ -18,7 +18,6 @@ public class RecipeIngredient
     public RecipeIngredient(RecipeIngredientBlank recipeIngredient)
     {
         IngredientId = recipeIngredient.IngredientId;
-        RecipeId = recipeIngredient.RecipeId;
         Count = recipeIngredient.Count;
     }
     

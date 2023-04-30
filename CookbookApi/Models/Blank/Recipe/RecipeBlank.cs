@@ -13,12 +13,14 @@ public class RecipeBlank
     public string? Description { get; set; }
     
     public string? SourceUrl { get; set; }
-
+    
     public RecipeStatsBlank? RecipeStats { get; set; }
 
     public List<RecipeIngredientBlank> Ingredients { get; set; } = new List<RecipeIngredientBlank>();
 
     public List<RecipeCategoryBlank> Categories { get; set; } = new List<RecipeCategoryBlank>();
+
+    public List<RecipeStepBlank> Steps { get; set; } = new List<RecipeStepBlank>();
 
     public RecipeBlank() { }
 
@@ -32,10 +34,6 @@ public class RecipeBlank
 
         Categories = recipe.Categories
             .Select(c => new RecipeCategoryBlank(c))
-            .ToList();
-        
-        Ingredients = recipe.Ingredients
-            .Select(c => new RecipeIngredientBlank(c))
             .ToList();
     }
     

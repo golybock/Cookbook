@@ -43,16 +43,17 @@ create table if not exists client
 
 create table if not exists recipe
 (
-    id         serial
+    id          serial
         primary key,
-    client_id  integer
+    client_id   integer
         references client,
-    type_id    integer
+    type_id     integer
         references recipe_type,
-    header     varchar(500) not null,
-    code       varchar(500),
-    image_path varchar(500),
-    source_url varchar(500)
+    header      varchar(500) not null,
+    code        varchar(500),
+    image_path  varchar(500),
+    source_url  varchar(500),
+    description varchar(200)
 );
 
 create table if not exists recipe_stats
@@ -97,5 +98,15 @@ create table if not exists recipe_categories
         references recipe,
     category_id integer
         references category
+);
+
+create table if not exists recipe_step
+(
+    id        serial
+        primary key,
+    recipe_id integer not null
+        references recipe,
+    number    integer not null,
+    text      text    not null
 );
 

@@ -17,17 +17,19 @@ public class RecipeDomain
     
     public string? SourceUrl { get; set; }
     
+    public string? ImagePath { get; set; }
+    
     public bool IsLiked { get; set; }
 
-    public RecipeTypeDomain RecipeType { get; set; } = new RecipeTypeDomain();
+    public RecipeTypeDomain? RecipeType { get; set; } = new RecipeTypeDomain();
     
-    public RecipeStatsDomain Stats { get; set; } = new RecipeStatsDomain();
+    public RecipeStatsDomain? Stats { get; set; } = new RecipeStatsDomain();
 
     public List<RecipeIngredientDomain> Ingredients { get; set; } = new List<RecipeIngredientDomain>();
 
     public List<CategoryDomain> Categories { get; set; } = new List<CategoryDomain>();
 
-    public List<string> Images { get; set; } = new List<string>();
+    public List<RecipeStepDomain> Steps { get; set; } = new List<RecipeStepDomain>();
 
     public RecipeDomain() { }
 
@@ -35,6 +37,7 @@ public class RecipeDomain
     {
         ClientId = recipe.ClientId;
         SourceUrl = recipe.SourceUrl;
+        ImagePath = recipe.ImagePath;
         TypeId = recipe.TypeId;
         Header = recipe.Header;
         Description = recipe.Description;
