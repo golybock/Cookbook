@@ -126,6 +126,10 @@ public class RecipeService : IRecipeService
 
         await SetRecipeSteps(recipe.Steps, code);
 
+        // если присутствуют
+        if (recipe.RecipeStats != null) 
+            await CreateRecipeStatsAsync(recipe.RecipeStats, code);
+
         return new OkObjectResult(code);
     }
 
@@ -154,6 +158,10 @@ public class RecipeService : IRecipeService
         await SetRecipeCategories(recipeBlank.Categories, recipeCode);
 
         await SetRecipeSteps(recipeBlank.Steps, recipeCode);
+        
+        // если присутствуют
+        if (recipeBlank.RecipeStats != null) 
+            await CreateRecipeStatsAsync(recipeBlank.RecipeStats, recipeCode);
 
         return new OkObjectResult(recipeCode);
     }
@@ -443,6 +451,33 @@ public class RecipeService : IRecipeService
         var res = await _recipeRepository.AddRecipeAsync(recipe);
 
         return res > 0 ? code : null;
+    }
+    
+    private async Task CreateRecipeStatsAsync(RecipeStatsBlank recipeStatsBlank, int recipeId)
+    {
+        await _recipeStatsRepository.DeleteRecipeStatsAsync(recipeId);
+        
+        RecipeStats recipeStats = new RecipeStats(recipeStatsBlank);
+
+        recipeStats.Id = recipeId;
+
+        await _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
+    }
+    
+    private async Task CreateRecipeStatsAsync(RecipeStatsBlank recipeStatsBlank, string recipeCode)
+    {
+        var recipe = await _recipeRepository.GetRecipeAsync(recipeCode);
+        
+        if(recipe == null)
+            return;
+        
+        await _recipeStatsRepository.DeleteRecipeStatsAsync(recipe.Id);
+        
+        RecipeStats recipeStats = new RecipeStats(recipeStatsBlank);
+
+        recipeStats.Id = recipe.Id;
+
+        await _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
     }
     
     private async Task<string?> UpdateRecipeAsync(int recipeId, RecipeBlank recipeBlank)
