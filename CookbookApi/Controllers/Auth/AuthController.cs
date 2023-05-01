@@ -22,7 +22,7 @@ namespace CookbookApi.Controllers.Auth
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(string login, string password)
+        public async Task<IActionResult> Login([FromHeader] string login, [FromHeader] string password)
         {
             return await _authService.Login(login, password);
         }
