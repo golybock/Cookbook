@@ -5,6 +5,7 @@ namespace Cookbook.Api;
 
 public class ApiBase
 {
+    // client token from appsettings.json
     protected string? Token {
         
         get => App.Settings?.Token;
@@ -27,8 +28,10 @@ public class ApiBase
         } 
     }
     
+    // base request url
     protected readonly string BaseUrl = "https://localhost:7234/api";
 
+    // controller names
     protected readonly string Auth = "Auth";
 
     protected readonly string Category = "Category";
@@ -43,5 +46,6 @@ public class ApiBase
     
     protected readonly string RecipeType = "RecipeType";
 
+    // client
     protected HttpClient GetHttpClient() => new HttpClient();
 }

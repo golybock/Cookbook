@@ -20,7 +20,7 @@ public class AuthApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Login}";
+        string url = $"{BaseUrl}/{Auth}/{Login}";
         
         client.DefaultRequestHeaders.Add("login", login);
         client.DefaultRequestHeaders.Add("password", password);
@@ -37,7 +37,7 @@ public class AuthApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Registration}";
+        string url = $"{BaseUrl}/{Auth}/{Registration}";
         
         var res = await client.PostAsJsonAsync(new Uri(url), clientBlank);
 
@@ -51,7 +51,7 @@ public class AuthApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{UpdatePasswsord}?password={password}&newPassword={newPassword}";
+        string url = $"{BaseUrl}/{Auth}/{UpdatePasswsord}?password={password}&newPassword={newPassword}";
 
         client.DefaultRequestHeaders.Add("token", Token);
         
@@ -67,7 +67,7 @@ public class AuthApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Guest}";
+        string url = $"{BaseUrl}/{Auth}/{Guest}";
 
         var res = await client.PostAsync(new Uri(url), null);
 
