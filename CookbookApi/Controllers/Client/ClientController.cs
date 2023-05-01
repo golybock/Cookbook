@@ -22,7 +22,7 @@ namespace CookbookApi.Controllers.Client
             return await _clientService.GetClientInfoAsync(token);
         }
 
-        [HttpPut("Update")]
+        [HttpPost("Update")]
         public async Task<IActionResult> UpdateClientAsync([FromHeader] string token, ClientBlank client)
         {
             return await _clientService.UpdateClientAsync(token, client);
