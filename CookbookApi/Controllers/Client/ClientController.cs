@@ -22,13 +22,13 @@ namespace CookbookApi.Controllers.Client
             return await _clientService.GetClientInfoAsync(token);
         }
 
-        [HttpPost("Update")]
+        [HttpPost("Client")]
         public async Task<IActionResult> UpdateClientAsync([FromHeader] string token, ClientBlank client)
         {
             return await _clientService.UpdateClientAsync(token, client);
         }
 
-        [HttpDelete("DeleteClient")]
+        [HttpDelete("Client")]
         public async Task<IActionResult> DeleteClientAsync([FromHeader] string token)
         {
             return await _clientService.DeleteClientAsync(token);
@@ -59,15 +59,15 @@ namespace CookbookApi.Controllers.Client
         }
 
         [HttpPost("Like")]
-        public async Task<IActionResult> LikeRecipeAsync([FromHeader] string token, int recipeId)
+        public async Task<IActionResult> LikeRecipeAsync([FromHeader] string token, string recipeCode)
         {
-            return await _clientService.LikeRecipeAsync(token, recipeId);
+            return await _clientService.LikeRecipeAsync(token, recipeCode);
         }
 
         [HttpPost("UnLike")]
-        public async Task<IActionResult> UnLikeRecipeAsync([FromHeader] string token, int recipeId)
+        public async Task<IActionResult> UnLikeRecipeAsync([FromHeader] string token, string recipeCode)
         {
-            return await _clientService.UnLikeRecipeAsync(token, recipeId);
+            return await _clientService.UnLikeRecipeAsync(token, recipeCode);
         }
     }
 }

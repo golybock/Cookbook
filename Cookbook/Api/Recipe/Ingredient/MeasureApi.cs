@@ -12,15 +12,17 @@ namespace Cookbook.Api.Recipe.Ingredient;
 
 public class MeasureApi : ApiBase
 {
-    private readonly string Measure = "Measure";
+    // method names
+    private readonly string _measure = "Measure";
     
-    private readonly string Measures = "Measures";
+    private readonly string _measures = "Measures";
     
-    public async Task<MeasureDomain?> GetCategoryAsync(int id)
+    // method calls
+    public async Task<MeasureDomain?> GetMeasureAsync(int id)
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Measure}?id={id}";
+        string url = $"{BaseUrl}/{Measure}/{_measure}?id={id}";
 
         var res = await client.GetAsync(url);
 
@@ -34,11 +36,11 @@ public class MeasureApi : ApiBase
         return null;
     }
     
-    public async Task<List<MeasureDomain>?> GetCategoriesAsync()
+    public async Task<List<MeasureDomain>?> GetMeasuresAsync()
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Measure}";
+        string url = $"{BaseUrl}/{Measure}/{_measure}";
 
         var res = await client.GetAsync(url);
 
@@ -56,7 +58,7 @@ public class MeasureApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Measure}/{Measure}";
+        string url = $"{BaseUrl}/{Measure}/{_measure}";
 
         var res = await client.PostAsJsonAsync(new Uri(url), measureBlank);
 
@@ -70,11 +72,11 @@ public class MeasureApi : ApiBase
         return null;
     }
     
-    public async Task<bool> DeleteCategoryAsync(int id)
+    public async Task<bool> DeleteMeasureAsync(int id)
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Category}?id={id}";
+        string url = $"{BaseUrl}/{Measure}/{_measure}?id={id}";
 
         var res = await client.DeleteAsync(new Uri(url));
         

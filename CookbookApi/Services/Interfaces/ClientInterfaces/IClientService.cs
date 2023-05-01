@@ -23,7 +23,7 @@ public interface IClientService
     
     public Task<IActionResult> GetLikedRecipesAsync(string token);
     
-    public Task<IActionResult> LikeRecipeAsync(string token, int recipeId);
+    public Task<IActionResult> LikeRecipeAsync(string token, string recipeCode);
     
-    public Task<IActionResult> UnLikeRecipeAsync(string token, int recipeId);
+    public Task<IActionResult> UnLikeRecipeAsync(string token, string recipeCode);
 }

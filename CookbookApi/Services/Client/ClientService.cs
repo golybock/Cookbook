@@ -135,17 +135,17 @@ public class ClientService : IClientService
         return new OkObjectResult(recipes);
     }
 
-    public async Task<IActionResult> LikeRecipeAsync(string token, int recipeId)
+    public async Task<IActionResult> LikeRecipeAsync(string token, string recipeCode)
     {
         var client = await _clientRepository.GetClientAsync(token);
 
         if (client == null)
             return new UnauthorizedResult();
 
-        var recipe = await _recipeRepository.GetRecipeAsync(recipeId);
+        var recipe = await _recipeRepository.GetRecipeAsync(recipeCode);
 
         if (recipe == null)
-            return new NotFoundObjectResult("Рецепт не найден");
+            return new NotFoundResult();
 
         var favRecipe = new FavoriteRecipe()
         {
@@ -158,14 +158,19 @@ public class ClientService : IClientService
         return res > 0 ? new OkResult() : new BadRequestResult();
     }
 
-    public async Task<IActionResult> UnLikeRecipeAsync(string token, int recipeId)
+    public async Task<IActionResult> UnLikeRecipeAsync(string token, string recipeCode)
     {
         var client = await _clientRepository.GetClientAsync(token);
 
         if (client == null)
             return new UnauthorizedResult();
+
+        var recipe = await _recipeRepository.GetRecipeAsync(recipeCode);
+
+        if (recipe == null)
+            return new NotFoundResult();
         
-        var res = await _clientFavRepository.DeleteFavoriteRecipeAsync(client.Id, recipeId);
+        var res = await _clientFavRepository.DeleteFavoriteRecipeAsync(client.Id, recipe.Id);
         
         return res > 0 ? new OkResult() : new NotFoundResult();
     }

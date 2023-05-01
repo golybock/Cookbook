@@ -48,7 +48,7 @@ namespace CookbookApi.Controllers.Recipe
             return await _recipeService.CreateRecipeAsync(token, recipe);
         }
 
-        [HttpPost("Recipe")]
+        [HttpPut("Recipe")]
         public async Task<IActionResult> UpdateRecipeAsync([FromHeader] string token, string recipeCode, RecipeBlank recipe)
         {
             return await _recipeService.UpdateRecipeAsync(token, recipeCode, recipe);
