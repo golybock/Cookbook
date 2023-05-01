@@ -1,4 +1,5 @@
 ﻿using Cookbook.Command;
+using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
@@ -53,6 +54,11 @@ public class NavigationViewModel : ViewModelBase
             CurrentPage = new SettingsPage();
             return;
         }
+
+        var selected = args.InvokedItemContainer as NavigationViewItem;
+
+        if (selected?.Tag.ToString() == "Recipes")
+            CurrentPage = new RecipeListPage();
     }
 
     private async void QuerySubmitted()

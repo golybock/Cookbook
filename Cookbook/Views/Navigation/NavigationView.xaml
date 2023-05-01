@@ -123,6 +123,7 @@
 
                 <Label Content="{Binding Path=Content.Title, ElementName=MainFrame}"
                        FontSize="30"
+                       Margin="12"
                        VerticalContentAlignment="Center" />
 
             </ui:NavigationView.Header>

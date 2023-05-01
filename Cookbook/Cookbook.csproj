@@ -22,15 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="DocX" Version="2.4.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <PackageReference Include="ModernWpfUI" Version="0.9.6" />
       <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
       <PackageReference Include="System.Text.Json" Version="7.0.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Converters\" />
-      <Folder Include="FileGenerating\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -46,6 +42,8 @@
       <Resource Include="Resources\AppIcon\book.ico" />
       <None Remove="Resources\AppIcon\book.png" />
       <Resource Include="Resources\AppIcon\book.png" />
+      <None Remove="Resources\dore.png" />
+      <Resource Include="Resources\dore.png" />
     </ItemGroup>
 
 </Project>
