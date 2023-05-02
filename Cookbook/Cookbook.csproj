@@ -46,6 +46,10 @@
       <Resource Include="Resources\dore.png" />
       <None Remove="Resources\Icons\food.png" />
       <Resource Include="Resources\Icons\food.png" />
+      <None Remove="Resources\Icons\github.png" />
+      <Resource Include="Resources\Icons\github.png" />
+      <None Remove="Resources\Icons\info.png" />
+      <Resource Include="Resources\Icons\info.png" />
     </ItemGroup>
 
 </Project>
