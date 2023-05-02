@@ -1,4 +1,5 @@
-﻿using Cookbook.Command;
+﻿using System;
+using Cookbook.Command;
 using Cookbook.Pages.Auth;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
@@ -13,9 +14,24 @@ public class NavigationViewModel : ViewModelBase
     private Page? _currentPage;
 
     private string? _searchText;
+    
+    private bool _backVisible = true;
+
+    public bool BackVisible
+    {
+        get => _backVisible;
+        set
+        {
+            if (value == _backVisible) return;
+            _backVisible = value;
+            OnPropertyChanged();
+        }
+    }
 
     public NavigationViewModel()
     {
+        BackVisible = false;
+        BackVisible = true;
         CurrentPage = new RecipeListPage();
     }
 
@@ -66,7 +82,7 @@ public class NavigationViewModel : ViewModelBase
         if (selected?.Tag.ToString() == "Recipes")
             CurrentPage = new RecipeListPage();
         
-        if (selected?.Tag.ToString() == "Recipes")
+        if (selected?.Tag.ToString() == "Liked")
             CurrentPage = new RecipeListPage();
 
         if (selected?.Tag.ToString() == "Profile")

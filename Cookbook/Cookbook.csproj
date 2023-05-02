@@ -44,6 +44,8 @@
       <Resource Include="Resources\AppIcon\book.png" />
       <None Remove="Resources\dore.png" />
       <Resource Include="Resources\dore.png" />
+      <None Remove="Resources\Icons\food.png" />
+      <Resource Include="Resources\Icons\food.png" />
     </ItemGroup>
 
 </Project>

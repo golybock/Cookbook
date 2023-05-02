@@ -16,7 +16,7 @@ public class RecipeTypeApi : ApiBase
     {
         var client = GetHttpClient();
 
-        string url = $"{BaseUrl}/{Measure}/{_recipeTypes}";
+        string url = $"{BaseUrl}/{RecipeType}/{_recipeTypes}";
 
         var res = await client.GetAsync(url);
 

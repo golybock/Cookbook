@@ -4,9 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
+             xmlns:controls="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    
     <Grid>
+    
+        <controls:ItemsRepeater ItemsSource="{Binding Recipes, UpdateSourceTrigger=PropertyChanged}">
+            
+            <controls:ItemsRepeater.Layout>
+                
+                <controls:UniformGridLayout MinItemWidth="200"
+                                            ItemsStretch="Fill"
+                                            MinItemHeight="350"
+                                            MinColumnSpacing="12"
+                                            MinRowSpacing="12"
+                                            ItemsJustification="Start"/>
+                
+            </controls:ItemsRepeater.Layout>
+            
+            <controls:ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <local:RecipeCard/>    
+                </DataTemplate>
+            </controls:ItemsRepeater.ItemTemplate>
+            
+        </controls:ItemsRepeater>
         
     </Grid>
+    
 </UserControl>
