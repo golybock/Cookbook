@@ -15,7 +15,7 @@ public class NavigationViewModel : ViewModelBase
 
     private string? _searchText;
     
-    private bool _backVisible = true;
+    private bool _backVisible = false;
 
     public bool BackVisible
     {
@@ -31,7 +31,6 @@ public class NavigationViewModel : ViewModelBase
     public NavigationViewModel()
     {
         BackVisible = false;
-        BackVisible = true;
         CurrentPage = new RecipeListPage();
     }
 
