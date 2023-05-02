@@ -91,7 +91,7 @@
 
                 </ui:NavigationViewItem>
 
-                <ui:NavigationViewItem Tag="Liked"
+                <ui:NavigationViewItem Tag="Profile"
                                        Content="Профиль">
 
                     <ui:NavigationViewItem.Icon>

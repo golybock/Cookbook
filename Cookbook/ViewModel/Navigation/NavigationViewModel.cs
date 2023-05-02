@@ -1,4 +1,5 @@
 ﻿using Cookbook.Command;
+using Cookbook.Pages.Auth;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
 using ModernWpf.Controls;
@@ -12,6 +13,11 @@ public class NavigationViewModel : ViewModelBase
     private Page? _currentPage;
 
     private string? _searchText;
+
+    public NavigationViewModel()
+    {
+        CurrentPage = new RecipeListPage();
+    }
 
     public Page? CurrentPage
     {
@@ -59,6 +65,12 @@ public class NavigationViewModel : ViewModelBase
 
         if (selected?.Tag.ToString() == "Recipes")
             CurrentPage = new RecipeListPage();
+        
+        if (selected?.Tag.ToString() == "Recipes")
+            CurrentPage = new RecipeListPage();
+
+        if (selected?.Tag.ToString() == "Profile")
+            CurrentPage = new LoginPage();
     }
 
     private async void QuerySubmitted()

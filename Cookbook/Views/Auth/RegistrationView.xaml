@@ -4,9 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Auth"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
         
+        <ui:SimpleStackPanel Orientation="Vertical"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Spacing="12">
+            
+            <TextBlock Text="Регистрация"
+                       FontSize="26"
+                       Margin="5"/>
+            
+            <TextBox Name="LoginTextBox"
+                     Width="200"
+                     ui:ControlHelper.Header="Логин"
+                     ui:ControlHelper.PlaceholderText="Логин"/>
+            
+            <ui:AutoSuggestBox Name="EmailTextBox"
+                     Width="200"
+                     Header="Email"
+                     PlaceholderText="Email"/>
+            
+            <TextBox Name="NameTextBox"
+                     Width="200"
+                     ui:ControlHelper.Header="Имя"
+                     ui:ControlHelper.PlaceholderText="Имя"/>
+            
+            <PasswordBox Name="PasswordBox"
+                         Width="200"
+                         PasswordChanged="PasswordBox_OnPasswordChanged"
+                         ui:ControlHelper.Header="Пароль"
+                         ui:ControlHelper.PlaceholderText="Пароль"/>
+            
+            <StackPanel Orientation="Horizontal">
+            
+                <Button Width="95"
+                        Margin="5"
+                        Content="Гость"
+                        Command="{Binding GuestCommand}"/>
+                
+                <Button Width="95"
+                        Margin="5"
+                        Content="Регистрация"
+                        Command="{Binding RegistrationCommand}"/>
+                
+            </StackPanel>
+            
+            <ui:HyperlinkButton Content="Уже есть аккаунт?"
+                                HorizontalAlignment="Center"
+                                Command="{Binding LoginCommand}"/>
+            
+                    
+        </ui:SimpleStackPanel>
+        
     </Grid>
+    
 </UserControl>
