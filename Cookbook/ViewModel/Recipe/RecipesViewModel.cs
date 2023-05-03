@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Cookbook.Models.Domain.Recipe;
 using Cookbook.UI.Sort;
+using Domain.Recipe;
 using Xceed.Document.NET;
 
 namespace Cookbook.ViewModel.Recipe;

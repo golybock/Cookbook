@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Database\" />
+      <Folder Include="Domain\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blank\Blank.csproj" />
+      <ProjectReference Include="..\Database\Database.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+</Project>

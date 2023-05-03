@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Cookbook.Models.Domain.Recipe;
-using Cookbook.Models.Domain.Recipe.Ingredient;
+using Domain.Recipe;
 
 namespace Cookbook.Api.Recipe;
 

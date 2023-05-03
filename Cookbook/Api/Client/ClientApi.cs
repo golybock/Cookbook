@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Cookbook.Models.Blank.Client;
-using Cookbook.Models.Domain.Client;
-using Cookbook.Models.Domain.Recipe;
+using Blank.Client;
+using Domain.Client;
+using Domain.Recipe;
 
 namespace Cookbook.Api.Client;
 

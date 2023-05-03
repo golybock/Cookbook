@@ -66,4 +66,9 @@
       <Resource Include="Resources\Icons\download.png" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Blank\Blank.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>

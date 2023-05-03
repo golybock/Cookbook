@@ -21,4 +21,10 @@
       <Folder Include="wwwroot\RecipeImages\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Blank\Blank.csproj" />
+      <ProjectReference Include="..\Database\Database.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>

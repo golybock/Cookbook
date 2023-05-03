@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using Cookbook.Models.Domain.Recipe;
+using Domain.Recipe;
 using ModernWpf.Controls;
 using Xceed.Words.NET;
 

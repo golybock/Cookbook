@@ -1,4 +1,4 @@
-﻿using CookbookApi.Models.Blank.Client;
+﻿using Blank.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookbookApi.Services.Interfaces.AuthInterfaces;

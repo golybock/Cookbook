@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Cookbook.Models.Blank.Recipe.Category;
-using Cookbook.Models.Blank.Recipe.Ingredient;
-using Cookbook.Models.Domain.Recipe.Category;
-using Cookbook.Models.Domain.Recipe.Ingredient;
+using Blank.Recipe.Ingredient;
+using Domain.Recipe.Ingredient;
 
 namespace Cookbook.Api.Recipe.Ingredient;
 

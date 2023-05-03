@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Unicode;
-using CookbookApi.Models.Blank.Client;
+using Blank.Client;
 using CookbookApi.Repositories.Client;
 using CookbookApi.Services.Interfaces.AuthInterfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -103,7 +103,7 @@ public class AuthService : IAuthService
 
     private async Task<int> CreateClientAsync(ClientBlank clientBlank, string token)
     {
-        var client = new Models.Database.Client.Client(clientBlank);
+        var client = new Database.Client.Client(clientBlank);
 
         client.Token = token;
         

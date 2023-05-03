@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Cookbook.Models.Blank.Client;
+using Blank.Client;
 
 namespace Cookbook.Api.Auth;
 

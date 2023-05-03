@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CookbookApi.Models.Blank.Client;
+using Blank.Client;
 using CookbookApi.Services.Auth;
 using CookbookApi.Services.Interfaces.AuthInterfaces;
 using Microsoft.AspNetCore.Http;

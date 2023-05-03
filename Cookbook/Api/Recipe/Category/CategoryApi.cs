@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Cookbook.Models.Blank.Recipe.Category;
-using Cookbook.Models.Domain.Recipe.Category;
+using Blank.Recipe.Category;
+using Domain.Recipe.Category;
 
 namespace Cookbook.Api.Recipe.Category;
 

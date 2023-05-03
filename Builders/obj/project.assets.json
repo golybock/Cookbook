@@ -1,0 +1,127 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "Blank/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Blank.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Blank.dll": {}
+        }
+      },
+      "Database/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Database.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Database.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Blank/1.0.0": {
+      "type": "project",
+      "path": "../Blank/Blank.csproj",
+      "msbuildProject": "../Blank/Blank.csproj"
+    },
+    "Database/1.0.0": {
+      "type": "project",
+      "path": "../Database/Database.csproj",
+      "msbuildProject": "../Database/Database.csproj"
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "Blank >= 1.0.0",
+      "Database >= 1.0.0",
+      "Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\teplo\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Builders\\Builders.csproj",
+      "projectName": "Builders",
+      "projectPath": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Builders\\Builders.csproj",
+      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Builders\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Blank\\Blank.csproj": {
+              "projectPath": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Blank\\Blank.csproj"
+            },
+            "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Database\\Database.csproj": {
+              "projectPath": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Database\\Database.csproj"
+            },
+            "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\teplo\\Desktop\\finally\\Cookbook\\Domain\\Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
