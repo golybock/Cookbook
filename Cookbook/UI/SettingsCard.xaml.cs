@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Cookbook.Command;
 
 namespace Cookbook.UI;
 
@@ -15,9 +17,7 @@ public partial class SettingsCard : UserControl
         InitializeComponent();
         DataContext = this;
     }
-
-    #region InnerContent
-
+    
     public new FrameworkElement Content
     {
         get => (FrameworkElement)GetValue(ContentProperty);
@@ -28,16 +28,19 @@ public partial class SettingsCard : UserControl
             ArrayForwardVisibility = Visibility.Collapsed;
         }
     }
+    
+    public static readonly DependencyProperty ClickCommandProperty =
+        DependencyProperty.Register(
+            "ClickCommand",
+            typeof(ICommand),
+            typeof(SettingsCard));
 
-    // Using a DependencyProperty as the backing store for InnerContent.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty ContentProperty =
+    public new static readonly DependencyProperty ContentProperty =
         DependencyProperty.Register(
             nameof(Content),
             typeof(FrameworkElement),
             typeof(SettingsCard),
             new UIPropertyMetadata(null));
-
-    #endregion
 
     public static readonly DependencyProperty HeaderProperty =
         DependencyProperty.Register(
@@ -62,6 +65,12 @@ public partial class SettingsCard : UserControl
             nameof(ArrayForwardVisibility),
             typeof(Visibility),
             typeof(SettingsCard));
+
+    public ICommand? ClickCommand
+    {
+        get => (ICommand)GetValue(ClickCommandProperty);
+        set => SetValue(ClickCommandProperty, value);
+    }
     
     public string Header
     {
