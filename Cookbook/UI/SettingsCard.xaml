@@ -109,7 +109,7 @@
                Visibility="{Binding ArrayForwardVisibility, TargetNullValue=Collapsed, FallbackValue=Collapsed}"
                Source="../../Resources/Icons/array_forward.png"/>
         
-        <ContentControl x:Name="ContentControl"
+        <ContentControl Name="ContentControl"
                         Grid.Row="0"
                         Margin="10"
                         Grid.RowSpan="2"

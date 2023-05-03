@@ -52,6 +52,8 @@
       <Resource Include="Resources\Icons\info.png" />
       <None Remove="Resources\Icons\array_forward.png" />
       <Resource Include="Resources\Icons\array_forward.png" />
+      <None Remove="Resources\Icons\theme.png" />
+      <Resource Include="Resources\Icons\theme.png" />
     </ItemGroup>
 
 </Project>

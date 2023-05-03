@@ -35,6 +35,39 @@
                               ToolTip="Открыть в браузере"
                               ClickCommand="{Binding DataContext.OpenGitHubCommand, ElementName=this}"/>
             
+            <ui1:SettingsCard Header="О приложении"
+                              ImageSource="../../Resources/Icons/info.png"
+                              Description="{Binding DataContext.AppSettings.Version, ElementName=this, StringFormat=Версия: {0}}"
+                              ArrayForwardVisibility="Collapsed"
+                              ToolTip="Версия приложения"/>
+
+            <ui1:SettingsCard Header="Тема приложения"
+                              ImageSource="../../Resources/Icons/info.png"
+                              Description="Выбор темы приложения"
+                              ArrayForwardVisibility="Collapsed"
+                              ToolTip="Выбор темы приложения">
+                
+                <StackPanel DataContext="{Binding ElementName=this, Path=DataContext}">
+                   
+                    <ui:SplitButton Height="30"
+                                    Width="200"
+                                    Content="">
+                        
+                        <ui:SplitButton.Flyout>
+                            <ui:Flyout>
+                                <ListView>
+                                    <TextBlock Text="Default"/>
+                                    <TextBlock Text="Dark"/>
+                                    <TextBlock Text="Light"/>
+                                </ListView>
+                            </ui:Flyout>
+                        </ui:SplitButton.Flyout>
+                    </ui:SplitButton>
+                    
+                </StackPanel>
+                
+            </ui1:SettingsCard>
+            
         </ui:SimpleStackPanel>
 
     </Grid>
