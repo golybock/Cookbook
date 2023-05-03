@@ -16,7 +16,7 @@ public partial class ContentCard : UserControl
         DependencyProperty.Register(
             nameof(Content),
             typeof(FrameworkElement),
-            typeof(SettingsCard),
+            typeof(ContentCard),
             new UIPropertyMetadata(null));
     
     public new FrameworkElement Content

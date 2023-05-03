@@ -74,7 +74,6 @@
                Grid.Row="0"
                Grid.RowSpan="2"
                Grid.Column="0"
-               Source="{Binding ImageSource}"
                Margin="10"
                Loaded="Icon_OnLoaded"/>
         
