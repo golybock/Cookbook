@@ -68,7 +68,15 @@
                    VerticalAlignment="Top"
                    FontSize="12"/>
         
-        <ContentControl Name="ContentControl"
+        <Image x:Name="ArrayForward"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Grid.Column="2"
+               Margin="15"
+               Visibility="{Binding ArrayForwardVisibility, TargetNullValue=Collapsed, FallbackValue=Collapsed}"
+               Source="../../Resources/Icons/array_forward.png"/>
+        
+        <ContentControl x:Name="ContentControl"
                         Grid.Row="0"
                         Margin="10"
                         Grid.RowSpan="2"

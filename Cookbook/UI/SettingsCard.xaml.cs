@@ -25,6 +25,7 @@ public partial class SettingsCard : UserControl
         {
             SetValue(ContentProperty, value);
             ContentControl.Content = value;
+            ArrayForwardVisibility = Visibility.Collapsed;
         }
     }
 
@@ -55,8 +56,13 @@ public partial class SettingsCard : UserControl
             nameof(ImageSource),
             typeof(ImageSource),
             typeof(SettingsCard));
-
-
+    
+    public static readonly DependencyProperty ArrayForwardVisibilityProperty =
+        DependencyProperty.Register(
+            nameof(ArrayForwardVisibility),
+            typeof(Visibility),
+            typeof(SettingsCard));
+    
     public string Header
     {
         get => (string)GetValue(HeaderProperty);
@@ -86,4 +92,18 @@ public partial class SettingsCard : UserControl
             Icon.Source = value;
         }
     }
+
+    public Visibility ArrayForwardVisibility
+    {
+        get => (Visibility)GetValue(ArrayForwardVisibilityProperty);
+        set
+        {
+            SetValue(ArrayForwardVisibilityProperty, value);
+            ArrayForward.Visibility = value;
+            ContentControl.Visibility = InvertVisibility(value);
+        }
+    }
+
+    private Visibility InvertVisibility(Visibility visibility) =>
+        visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 }

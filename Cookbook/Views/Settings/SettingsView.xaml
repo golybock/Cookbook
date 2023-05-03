@@ -25,11 +25,12 @@
         <ui:SimpleStackPanel VerticalAlignment="Top"
                              Spacing="12">
             
-            <ui1:SettingsCard Header="Biba"
+            <ui1:SettingsCard Header="Github"
                               ImageSource="../../Resources/Icons/github.png"
-                              Description="Desct biba">
+                              Description="Репозиторий проекта"
+                              ArrayForwardVisibility="Collapsed">
                 
-                <Button Content="xui"></Button>
+                <Button Content="Перейти"/>
                 
             </ui1:SettingsCard>
             

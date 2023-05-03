@@ -50,6 +50,8 @@
       <Resource Include="Resources\Icons\github.png" />
       <None Remove="Resources\Icons\info.png" />
       <Resource Include="Resources\Icons\info.png" />
+      <None Remove="Resources\Icons\array_forward.png" />
+      <Resource Include="Resources\Icons\array_forward.png" />
     </ItemGroup>
 
 </Project>
