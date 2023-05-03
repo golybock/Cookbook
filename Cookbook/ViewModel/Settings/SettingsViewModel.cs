@@ -8,7 +8,7 @@ namespace Cookbook.ViewModel.Settings;
 
 public class SettingsViewModel : ViewModelBase
 {
-    public List<Theme> Themes { get; set; } = UI.Theme.Themes.SystemThemes;
+    public List<Theme> Themes => UI.Theme.Themes.SystemThemes;
 
     private string _selectedTheme = string.Empty;
     public AppSettings? AppSettings { get; set; } = App.Settings;
