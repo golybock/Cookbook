@@ -8,6 +8,6 @@ public partial class RecipeListPage : Page
     public RecipeListPage()
     {
         InitializeComponent();
-        DataContext = new RecipeListViewModel();
+        DataContext = new RecipesViewModel();
     }
 }

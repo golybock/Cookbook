@@ -17,9 +17,9 @@
                                  Spacing="5">
                 
                 <ui:SplitButton Height="35"
-                                Width="125"
+                                Width="175"
                                 FontSize="12"
-                                Content="{Binding SelectedRecipeType.Name}">
+                                Content="{Binding SelectedRecipeType.Name, UpdateSourceTrigger=PropertyChanged}">
 
                     <ui:SplitButton.Flyout>
                         <ui:Flyout>
@@ -38,14 +38,14 @@
                 </ui:SplitButton>
                 
                 <ui:SplitButton Height="35"
-                                Width="125"
+                                Width="175"
                                 FontSize="12"
-                                Content="{Binding SelectedSortType.Name}">
+                                Content="{Binding SelectedSortType.Name, UpdateSourceTrigger=PropertyChanged}">
 
                     <ui:SplitButton.Flyout>
                         <ui:Flyout>
-                            <ListView ItemsSource="{Binding RecipeTypes}"
-                                      SelectedItem="{Binding SelectedRecipeType}">
+                            <ListView ItemsSource="{Binding SortTypes}"
+                                      SelectedItem="{Binding SelectedSortType}">
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
