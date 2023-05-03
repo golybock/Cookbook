@@ -15,23 +15,11 @@ public partial class SettingsCard : UserControl
     public SettingsCard()
     {
         InitializeComponent();
-        DataContext = this;
     }
-    
-    public new FrameworkElement Content
-    {
-        get => (FrameworkElement)GetValue(ContentProperty);
-        set
-        {
-            SetValue(ContentProperty, value);
-            ContentControl.Content = value;
-            ArrayForwardVisibility = Visibility.Collapsed;
-        }
-    }
-    
+
     public static readonly DependencyProperty ClickCommandProperty =
         DependencyProperty.Register(
-            "ClickCommand",
+            nameof(ClickCommand),
             typeof(ICommand),
             typeof(SettingsCard));
 
@@ -72,13 +60,23 @@ public partial class SettingsCard : UserControl
         set => SetValue(ClickCommandProperty, value);
     }
     
+    public new FrameworkElement Content
+    {
+        get => (FrameworkElement)GetValue(ContentProperty);
+        set
+        {
+            SetValue(ContentProperty, value);
+            ContentControl.Content = value;
+        }
+    }
+    
     public string Header
     {
         get => (string)GetValue(HeaderProperty);
         set
         {
             SetValue(HeaderProperty, value);
-            HeaderTextBlock.Text = HeaderProperty.ToString();
+            HeaderTextBlock.Text = value;
         }
     }
 
@@ -88,7 +86,7 @@ public partial class SettingsCard : UserControl
         set
         {
             SetValue(HeaderProperty, value);
-            DescriptionTextBlock.Text = DescriptionProperty.ToString();
+            DescriptionTextBlock.Text = value;
         }
     }
 
@@ -115,4 +113,38 @@ public partial class SettingsCard : UserControl
 
     private Visibility InvertVisibility(Visibility visibility) =>
         visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+
+    private void HeaderTextBlock_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        HeaderTextBlock.Text = Header;
+    }
+
+    private void DescriptionTextBlock_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        DescriptionTextBlock.Text = Description;
+    }
+
+    private void ArrayForward_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ArrayForward.Visibility = ArrayForwardVisibility;
+    }
+
+    private void ContentControl_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ContentControl.Content = Content;
+    }
+
+    private void Icon_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        Icon.Source = ImageSource;
+    }
+
+    private void SettingsCard_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        this.MouseDown += delegate(object o, MouseButtonEventArgs args)
+        {
+            if (ClickCommand != null) 
+                ClickCommand.Execute(null);
+        };
+    }
 }

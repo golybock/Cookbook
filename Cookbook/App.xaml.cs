@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Cookbook.Settings;
+using ModernWpf;
 
 namespace Cookbook
 {
@@ -21,6 +22,26 @@ namespace Cookbook
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             SettingsManager.CreateAppSettingsIfNotExists();
+            SetTheme();
+        }
+
+        private void SetTheme()
+        {
+            var selectedTheme = Settings?.Theme;
+
+            if (selectedTheme == null)
+                return;
+
+            if(selectedTheme.Name == UI.Theme.Themes.NightTheme.Name)
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
+            
+            if(selectedTheme.Name == UI.Theme.Themes.DayTheme.Name)
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+
+            // default
+            if (selectedTheme.Name == UI.Theme.Themes.Default.Name)
+                ThemeManager.Current.ApplicationTheme = null;
+
         }
     }
 }

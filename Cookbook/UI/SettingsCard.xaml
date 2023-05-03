@@ -10,17 +10,8 @@
              Height="50"
              MinWidth="300"
              d:DesignHeight="50"
-             d:DesignWidth="300">
-    
-    <b:Interaction.Triggers>
-
-        <b:EventTrigger EventName="MouseDown">
-
-            <b:InvokeCommandAction Command="{Binding ClickCommand}" />
-
-        </b:EventTrigger>
-
-    </b:Interaction.Triggers>
+             d:DesignWidth="300"
+             Loaded="SettingsCard_OnLoaded">
     
     <UserControl.Resources>
         
@@ -84,37 +75,38 @@
                Grid.RowSpan="2"
                Grid.Column="0"
                Source="{Binding ImageSource}"
-               Margin="10"/>
+               Margin="10"
+               Loaded="Icon_OnLoaded"/>
         
         <TextBlock x:Name="HeaderTextBlock"
                    Grid.Row="0"
                    Grid.Column="1"
-                   Text="{Binding Header}"
                    VerticalAlignment="Bottom"
                    FontWeight="Bold"
+                   Loaded="HeaderTextBlock_OnLoaded"
                    FontSize="16"/>
         
         <TextBlock x:Name="DescriptionTextBlock"
                    Grid.Row="1"
                    Grid.Column="1"
-                   Text="{Binding Description}"
                    VerticalAlignment="Top"
-                   FontSize="12"/>
+                   FontSize="12"
+                   Loaded="DescriptionTextBlock_OnLoaded"/>
         
         <Image x:Name="ArrayForward"
                Grid.Row="0"
                Grid.RowSpan="2"
                Grid.Column="2"
                Margin="15"
-               Visibility="{Binding ArrayForwardVisibility, TargetNullValue=Collapsed, FallbackValue=Collapsed}"
-               Source="../../Resources/Icons/array_forward.png"/>
+               Source="../../Resources/Icons/array_forward.png"
+               Loaded="ArrayForward_OnLoaded"/>
         
-        <ContentControl Name="ContentControl"
+        <ContentControl x:Name="ContentControl"
                         Grid.Row="0"
                         Margin="10"
                         Grid.RowSpan="2"
                         Grid.Column="2"
-                        Content="{Binding Content}" />
+                        Loaded="ContentControl_OnLoaded"/>
         
     </Grid>
     

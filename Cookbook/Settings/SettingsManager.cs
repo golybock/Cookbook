@@ -2,6 +2,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using Cookbook.UI.Theme;
 
 namespace Cookbook.Settings;
 
@@ -26,7 +27,7 @@ public class SettingsManager
 
     private static AppSettings DefaultSettings => new AppSettings()
     {
-        Theme = 0,
+        Theme = Themes.Default,
         Github = "https://github.com/golybock",
         Version = "1.0",
         Description = ""

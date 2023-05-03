@@ -50,12 +50,14 @@
                 <StackPanel>
 
                     <ui:SplitButton Height="30"
-                                    Width="200"
-                                    Content="{Binding DataContext.SelectedTheme, UpdateSourceTrigger=PropertyChanged, ElementName=this}">
+                                    Width="125"
+                                    FontSize="12"
+                                    Content="{Binding SelectedTheme.Name}">
 
                         <ui:SplitButton.Flyout>
                             <ui:Flyout>
-                                <ListView ItemsSource="{Binding DataContext.Themes, ElementName=this}">
+                                <ListView ItemsSource="{Binding Themes}"
+                                          SelectedItem="{Binding SelectedTheme}">
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
