@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Settings"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:ui1="clr-namespace:Cookbook.UI"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -20,70 +21,20 @@
     </UserControl.Resources>
     
     <Grid>
-    
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <Border Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="3">
+        <ui:SimpleStackPanel VerticalAlignment="Top"
+                             Spacing="12">
             
-            <Border.Background>
-                <SolidColorBrush Color="{ui:ThemeResource SystemChromeMediumColor}" />
-            </Border.Background>
+            <ui1:SettingsCard Header="Biba"
+                              ImageSource="../../Resources/Icons/github.png"
+                              Description="Desct biba">
+                
+                <Button Content="xui"></Button>
+                
+            </ui1:SettingsCard>
             
-        </Border>
-        
-        <Image Grid.Row="0"
-               Grid.Column="0"
-               Source="../../Resources/Icons/github.png"
-               Width="25"
-               Height="25"
-               Margin="5"/>
-        
-        <ui:HyperlinkButton Grid.Row="0"
-                            Grid.Column="1"
-                            Content="Github" 
-                            Margin="5"
-                            Height="30"
-                            NavigateUri="{Binding AppSettings.Github}"/>
-        
-        <Border Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="3">
-            
-            <Border.Background>
-                <SolidColorBrush Color="{ui:ThemeResource SystemChromeMediumColor}" />
-            </Border.Background>
-            
-        </Border>
-        
-        <Image Grid.Row="1"
-               Grid.Column="0"
-               Source="../../Resources/Icons/info.png"
-               Width="25"
-               Height="25"
-               Margin="5"/>
-        
-        <TextBlock Grid.Row="1"
-                   Grid.Column="1"
-                   Height="30"
-                   VerticalAlignment="Center"
-                   Text="{Binding AppSettings.Version, StringFormat=Версия: {0}}"
-                   Margin="5"/>
-        
-        <!-- <TextBlock Text="{Binding AppSettings.Description}"/> -->
-        <!-- -->
+        </ui:SimpleStackPanel>
+
     </Grid>
     
 </UserControl>
