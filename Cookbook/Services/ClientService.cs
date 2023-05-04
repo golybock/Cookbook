@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Cookbook.Api.Client;
 using Cookbook.Models.Domain.Client;
@@ -13,13 +14,6 @@ public class ClientService
 
     public async Task<ClientDomain?> GetClientDomain()
     {
-        try
-        {
-            return await _clientApi.GetClientAsync();
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
+        return await _clientApi.GetClientAsync();
     }
 }

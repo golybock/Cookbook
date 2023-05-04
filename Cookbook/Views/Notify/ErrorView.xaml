@@ -7,22 +7,17 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-    
-        <StackPanel VerticalAlignment="Center" 
+
+        <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Orientation="Horizontal">
-            
-            <Image Source="../../Resources/dore.png" 
-                   Width="250"
-                   Height="350"/>
-            
-            <Label Content="Возникла непредвиденная ошибка(" 
-                   VerticalAlignment="Center"
-                   FontSize="30"
-                   Foreground="Red"/>
-            
+
+            <TextBlock Text="Возникла непредвиденная ошибка("
+                       VerticalAlignment="Center"
+                       FontSize="22" />
+
         </StackPanel>
-        
+
     </Grid>
-    
+
 </UserControl>

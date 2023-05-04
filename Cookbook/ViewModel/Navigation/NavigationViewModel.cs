@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Cookbook.Command;
 using Cookbook.Pages.Auth;
 using Cookbook.Pages.Client;
@@ -99,15 +100,26 @@ public class NavigationViewModel : ViewModelBase
     private async void ShowProfile()
     {
         CurrentPage = new LoadingPage();
-        
-        var client = await _clientService.GetClientDomain();
 
-        if (client == null)
+        try
         {
-            CurrentPage = new NoAuthPage();
+            var client = await _clientService.GetClientDomain();
+
+            if (client == null)
+            {
+                CurrentPage = new NoAuthPage();
+                return;
+            }
+        }
+        catch (HttpRequestException e)
+        {
+            CurrentPage = new ConnectionErrorPage();
             return;
         }
-            
+        catch (Exception e)
+        {
+            CurrentPage = new ErrorPage();
+        }
         
         CurrentPage = new ClientPage();
     }
