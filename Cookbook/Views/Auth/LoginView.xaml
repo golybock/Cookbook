@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Cookbook.Views.Auth"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300">
     
     <Grid>
         
@@ -14,10 +14,6 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Spacing="12">
-            
-            <TextBlock Text="Авторизация"
-                       FontSize="26"
-                       Margin="5"/>
             
             <TextBox Name="LoginTextBox"
                      Width="200"
@@ -30,24 +26,10 @@
                          ui:ControlHelper.Header="Пароль"
                          ui:ControlHelper.PlaceholderText="Пароль"/>
             
-            <StackPanel Orientation="Horizontal">
-            
-                <Button Width="95"
-                        Margin="5"
-                        Content="Гость"
-                        Command="{Binding GuestCommand}"/>
-                
-                <Button Width="95"
-                        Margin="5"
-                        Content="Войти"
-                        Command="{Binding LoginCommand}"/>
-                
-            </StackPanel>
-            
-            <ui:HyperlinkButton Content="Регистрация"
-                                HorizontalAlignment="Center"
-                                Command="{Binding RegistrationCommand}"/>
-            
+            <Button Width="200"
+                    Margin="5"
+                    Content="Войти"
+                    Command="{Binding LoginCommand}"/>
                     
         </ui:SimpleStackPanel>
         

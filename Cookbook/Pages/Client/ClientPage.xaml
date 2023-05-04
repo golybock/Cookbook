@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Client"
       mc:Ignorable="d"
-      Title="ClientPage" Height="450" Width="800">
+      Title="Профиль"
+      Tag="Profile">
     <Grid>
         
     </Grid>

@@ -1,8 +1,11 @@
 ﻿using System;
 using Cookbook.Command;
 using Cookbook.Pages.Auth;
+using Cookbook.Pages.Client;
+using Cookbook.Pages.Notify;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
+using Cookbook.Services;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
 
@@ -11,6 +14,8 @@ namespace Cookbook.ViewModel.Navigation;
 
 public class NavigationViewModel : ViewModelBase
 {
+    private readonly ClientService _clientService = new ClientService();
+    
     private Page? _currentPage;
 
     private string? _searchText;
@@ -78,6 +83,9 @@ public class NavigationViewModel : ViewModelBase
 
         var selected = args.InvokedItemContainer as NavigationViewItem;
 
+        if (ReferenceEquals(selected?.Tag.ToString(), CurrentPage?.Tag))
+            return;
+        
         if (selected?.Tag.ToString() == "Recipes")
             CurrentPage = new RecipeListPage();
         
@@ -85,9 +93,25 @@ public class NavigationViewModel : ViewModelBase
             CurrentPage = new RecipeListPage();
 
         if (selected?.Tag.ToString() == "Profile")
-            CurrentPage = new LoginPage();
+            ShowProfile();
     }
 
+    private async void ShowProfile()
+    {
+        CurrentPage = new LoadingPage();
+        
+        var client = await _clientService.GetClientDomain();
+
+        if (client == null)
+        {
+            CurrentPage = new NoAuthPage();
+            return;
+        }
+            
+        
+        CurrentPage = new ClientPage();
+    }
+    
     private async void QuerySubmitted()
     {
 

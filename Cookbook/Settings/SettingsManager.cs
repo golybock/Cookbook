@@ -38,7 +38,7 @@ public class SettingsManager
         using StreamReader sr = new StreamReader(_appSettings);
 
         string json = sr.ReadToEnd();
-
+        
         return JsonSerializer.Deserialize<AppSettings>(json);
     }
     

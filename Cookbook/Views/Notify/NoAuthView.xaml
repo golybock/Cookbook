@@ -22,7 +22,13 @@
                         HorizontalAlignment="Center">
                 
                 <ui:HyperlinkButton Content="Войти"
-                                    Margin="10"/>
+                                    Margin="10"
+                                    Command="{Binding AuthCommand}"/>
+                
+                <ui:HyperlinkButton Content="Регистрация"
+                                    Margin="10"
+                                    Command="{Binding RegistrationCommand}"/>
+
                 
             </StackPanel>
 
