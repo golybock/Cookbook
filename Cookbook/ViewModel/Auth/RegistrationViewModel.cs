@@ -6,15 +6,15 @@ using ModernWpf.Controls;
 
 namespace Cookbook.ViewModel.Auth;
 
-public class RegistrationViewModel : ViewModelBase
+public class RegistrationViewModel : ViewModelBase, INavigationItem
 {
-    public NavigationViewModel Parent { get; set; }
+    public INavHost Host { get; set; }
     
     public ContentDialog? View { get; set; }
     
-    public RegistrationViewModel(NavigationViewModel parent)
+    public RegistrationViewModel(INavHost host)
     {
-        Parent = parent;
+        Host = host;
     }
 
     private string _error = string.Empty;
@@ -35,8 +35,9 @@ public class RegistrationViewModel : ViewModelBase
 
     private async void Registration()
     {
-        Parent.CurrentPage = new ClientPage();
+        Host.CurrentPage = new ClientPage(Host);
         
         View?.Hide();
     }
+    
 }

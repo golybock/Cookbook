@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using Cookbook.Command;
 using Cookbook.Pages.Auth;
@@ -13,15 +14,16 @@ using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.ViewModel.Navigation;
 
-public class NavigationViewModel : ViewModelBase
+public class NavigationViewModel : ViewModelBase, INavHost
 {
     private readonly ClientService _clientService = new ClientService();
     
-    private Page? _currentPage;
+
 
     private string? _searchText;
     
     private bool _backVisible = false;
+    private Page? _currentPage;
 
     public bool BackVisible
     {
@@ -29,7 +31,6 @@ public class NavigationViewModel : ViewModelBase
         set
         {
             if (value == _backVisible) return;
-            _backVisible = value;
             OnPropertyChanged();
         }
     }
@@ -39,17 +40,7 @@ public class NavigationViewModel : ViewModelBase
         BackVisible = false;
         CurrentPage = new RecipeListPage();
     }
-
-    public Page? CurrentPage
-    {
-        get => _currentPage;
-        set
-        {
-            if (Equals(value, _currentPage)) return;
-            _currentPage = value;
-            OnPropertyChanged();
-        }
-    }
+    
 
     public string? SearchText
     {
@@ -121,7 +112,7 @@ public class NavigationViewModel : ViewModelBase
             CurrentPage = new ErrorPage();
         }
         
-        CurrentPage = new ClientPage();
+        CurrentPage = new ClientPage(this);
     }
     
     private async void QuerySubmitted()
@@ -139,4 +130,17 @@ public class NavigationViewModel : ViewModelBase
         
     }
 
+    public Page? CurrentPage
+    {
+        get => _currentPage;
+        set
+        {
+            if (Equals(value, _currentPage)) return;
+            _currentPage = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int CurrentPageIndex { get; set; }
+    public List<Page> Items { get; set; }
 }

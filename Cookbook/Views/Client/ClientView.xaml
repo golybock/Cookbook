@@ -44,23 +44,48 @@
                            MaxHeight="140"
                            TextWrapping="Wrap"/>
                 
-                <Button Height="35"
-                        FontSize="14"
-                        Command="{Binding EditCommand}">
+                <!-- toolbar -->
+                <ui:SimpleStackPanel HorizontalAlignment="Left"
+                                     Orientation="Horizontal"
+                                     Spacing="12">
                     
-                    <StackPanel Orientation="Horizontal">
-                        
-                        <Image Margin="1"
-                               Source="../../Resources/Icons/edit.png"/>
-                        
-                        <TextBlock TextAlignment="Center"
-                                   Margin="5,0,5,0"
-                                   VerticalAlignment="Center"
-                                   Text="Редактировать"/>
-                        
-                    </StackPanel>
+                    <Button Height="35"
+                            FontSize="14"
+                            Command="{Binding EditCommand}">
                     
-                </Button>
+                        <StackPanel Orientation="Horizontal">
+                        
+                            <Image Margin="1"
+                                   Source="../../Resources/Icons/edit.png"/>
+                        
+                            <TextBlock TextAlignment="Center"
+                                       Margin="5,0,5,0"
+                                       VerticalAlignment="Center"
+                                       Text="Редактировать"/>
+                        
+                        </StackPanel>
+                    
+                    </Button>
+                    
+                    <Button Height="35"
+                            FontSize="14"
+                            Command="{Binding ShareCommand}">
+                    
+                        <StackPanel Orientation="Horizontal">
+                        
+                            <Image Margin="1"
+                                   Source="../../Resources/Icons/share.png"/>
+                        
+                            <TextBlock TextAlignment="Center"
+                                       Margin="5,0,5,0"
+                                       VerticalAlignment="Center"
+                                       Text="Поделиться"/>
+                        
+                        </StackPanel>
+                    
+                    </Button>
+                    
+                </ui:SimpleStackPanel>
                 
             </ui:SimpleStackPanel>
             

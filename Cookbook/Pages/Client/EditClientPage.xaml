@@ -4,9 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Client"
+      xmlns:client="clr-namespace:Cookbook.Views.Client"
       mc:Ignorable="d"
-      Title="EditClientPage" Height="450" Width="800">
+      Title="Редактирование профиля">
     <Grid>
-        
+        <client:EditClientView x:Name="EditClientView"/>
     </Grid>
 </Page>

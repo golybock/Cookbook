@@ -6,14 +6,11 @@ using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.ViewModel.Auth;
 
-public class NoAuthViewModel : ViewModelBase
+public class NoAuthViewModel : ViewModelBase, INavigationItem
 {
-    
-    public NavigationViewModel Parent { get; set; }
-    
-    public NoAuthViewModel(NavigationViewModel parent)
+    public NoAuthViewModel(INavHost host)
     {
-        Parent = parent;
+        Host = host;
     }
     
     public CommandHandler AuthCommand =>
@@ -39,7 +36,7 @@ public class NoAuthViewModel : ViewModelBase
     
     private async void ShowRegistrationDialog()
     {
-        var context = new RegistrationViewModel(Parent);
+        var context = new RegistrationViewModel(Host);
         
         var registrationDialog = new ContentDialog
         {
@@ -53,4 +50,6 @@ public class NoAuthViewModel : ViewModelBase
 
         await registrationDialog.ShowAsync();
     }
+
+    public INavHost Host { get; set; }
 }
