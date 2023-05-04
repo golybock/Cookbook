@@ -64,6 +64,8 @@
       <Resource Include="Resources\Icons\delete.png" />
       <None Remove="Resources\Icons\download.png" />
       <Resource Include="Resources\Icons\download.png" />
+      <None Remove="Resources\Icons\edit.png" />
+      <Resource Include="Resources\Icons\edit.png" />
     </ItemGroup>
 
 </Project>

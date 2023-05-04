@@ -1,11 +1,21 @@
 ﻿using Cookbook.Command;
+using Cookbook.ViewModel.Navigation;
 using Cookbook.Views.Auth;
 using ModernWpf.Controls;
+using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.ViewModel.Auth;
 
 public class NoAuthViewModel : ViewModelBase
 {
+    
+    public NavigationViewModel Parent { get; set; }
+    
+    public NoAuthViewModel(NavigationViewModel parent)
+    {
+        Parent = parent;
+    }
+    
     public CommandHandler AuthCommand =>
         new CommandHandler(ShowLoginDialog);
 
@@ -29,7 +39,7 @@ public class NoAuthViewModel : ViewModelBase
     
     private async void ShowRegistrationDialog()
     {
-        var context = new RegistrationViewModel();
+        var context = new RegistrationViewModel(Parent);
         
         var registrationDialog = new ContentDialog
         {
@@ -38,6 +48,8 @@ public class NoAuthViewModel : ViewModelBase
             Content = new RegistrationView(),
             CloseButtonText = "Отмена"
         };
+
+        context.View = registrationDialog;
 
         await registrationDialog.ShowAsync();
     }

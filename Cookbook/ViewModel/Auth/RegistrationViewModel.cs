@@ -1,10 +1,23 @@
-﻿using Cookbook.Command;
+﻿using System.Windows.Controls;
+using Cookbook.Command;
+using Cookbook.Pages.Client;
+using Cookbook.ViewModel.Navigation;
+using ModernWpf.Controls;
 
 namespace Cookbook.ViewModel.Auth;
 
 public class RegistrationViewModel : ViewModelBase
 {
-    private string _error;
+    public NavigationViewModel Parent { get; set; }
+    
+    public ContentDialog? View { get; set; }
+    
+    public RegistrationViewModel(NavigationViewModel parent)
+    {
+        Parent = parent;
+    }
+
+    private string _error = string.Empty;
 
     public string Error
     {
@@ -22,6 +35,8 @@ public class RegistrationViewModel : ViewModelBase
 
     private async void Registration()
     {
-        Error = "Беба";
+        Parent.CurrentPage = new ClientPage();
+        
+        View?.Hide();
     }
 }

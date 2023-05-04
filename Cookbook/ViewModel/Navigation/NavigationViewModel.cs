@@ -107,7 +107,7 @@ public class NavigationViewModel : ViewModelBase
 
             if (client == null)
             {
-                CurrentPage = new NoAuthPage();
+                CurrentPage = new NoAuthPage(this);
                 return;
             }
         }

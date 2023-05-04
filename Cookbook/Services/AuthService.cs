@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Cookbook.Api.Auth;
 using Cookbook.Models.Domain.Client;
@@ -24,10 +25,10 @@ public class AuthService
             
             SettingsManager.SaveSettings(_appSettings);
         }
-        catch (Exception e)
+        catch (HttpRequestException e)
         {
             Console.WriteLine(e);
-            throw;
+            throw;  
         }
     }
 
