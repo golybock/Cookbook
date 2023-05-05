@@ -10,7 +10,8 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
              d:DesignHeight="350"
-             d:DesignWidth="200">
+             d:DesignWidth="200"
+             MouseDown="RecipeCard_OnMouseDown">
     
     <UserControl.Resources>
         

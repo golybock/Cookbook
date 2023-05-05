@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Cookbook.Views.Recipe.RecipeListView"
+             Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,12 +7,14 @@
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300"
+             d:DesignWidth="300">
     
     <Grid>
     
-        <controls:ItemsRepeater ItemsSource="{Binding Recipes, UpdateSourceTrigger=PropertyChanged}">
+        <controls:ItemsRepeater ItemsSource="{Binding DataContext.Recipes, UpdateSourceTrigger=PropertyChanged, ElementName=this}">
             
+
             <controls:ItemsRepeater.Layout>
                 
                 <controls:UniformGridLayout MinItemWidth="200"
@@ -25,7 +28,7 @@
             
             <controls:ItemsRepeater.ItemTemplate>
                 <DataTemplate>
-                    <local:RecipeCard/>    
+                    <local:RecipeCard ClickCommand="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>    
                 </DataTemplate>
             </controls:ItemsRepeater.ItemTemplate>
             

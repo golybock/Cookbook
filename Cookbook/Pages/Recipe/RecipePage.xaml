@@ -4,9 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Recipe"
+      xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Title="RecipePage" Height="450" Width="800">
+      Tag="Recipe"
+      Title="Рецепт">
     <Grid>
-        
+        <recipe:RecipeView x:Name="RecipeView"/>
     </Grid>
 </Page>

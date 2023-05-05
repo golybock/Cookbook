@@ -4,9 +4,116 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
+             xmlns:ui="clr-namespace:Cookbook.UI"
+             xmlns:controls="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+    
     <Grid>
         
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Заголовок рецепта -->
+        <ui:ContentCard Grid.Row="0" 
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+            
+            <controls:SimpleStackPanel Orientation="Horizontal"
+                                       Spacing="12">
+                
+                <Image Source="../../Resources/dore.png"
+                       Width="250"
+                       Height="250"
+                       Margin="10"/>
+                
+                <controls:SimpleStackPanel Orientation="Vertical"
+                                           Spacing="12">
+                    
+                    <TextBlock Text="{Binding Recipe.Header, FallbackValue=Дора}"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"
+                               FontSize="28"/>
+                    
+                    <TextBlock Text="{Binding Recipe.Description, FallbackValue=Потому что дора дура}"
+                               FontSize="20"
+                               MaxHeight="140"
+                               TextWrapping="Wrap"/>
+                    
+                    <!-- toolbar -->
+                    <controls:SimpleStackPanel HorizontalAlignment="Left"
+                                               Orientation="Horizontal"
+                                               Spacing="12">
+                    
+                        <Button Height="35"
+                                FontSize="14"
+                                Command="{Binding EditCommand}">
+                    
+                            <StackPanel Orientation="Horizontal">
+                        
+                                <Image Margin="1"
+                                       Source="../../Resources/Icons/edit.png"/>
+                        
+                                <TextBlock TextAlignment="Center"
+                                           Margin="5,0,5,0"
+                                           VerticalAlignment="Center"
+                                           Text="Редактировать"/>
+                        
+                            </StackPanel>
+                    
+                        </Button>
+                    
+                        <Button Height="35"
+                                FontSize="14"
+                                Command="{Binding ShareCommand}">
+                    
+                            <StackPanel Orientation="Horizontal">
+                        
+                                <Image Margin="1"
+                                       Source="../../Resources/Icons/share.png"/>
+                        
+                                <TextBlock TextAlignment="Center"
+                                           Margin="5,0,5,0"
+                                           VerticalAlignment="Center"
+                                           Text="Поделиться"/>
+                        
+                            </StackPanel>
+                    
+                        </Button>
+                    
+                    </controls:SimpleStackPanel>
+                    
+                </controls:SimpleStackPanel>
+                
+            </controls:SimpleStackPanel>
+            
+        </ui:ContentCard>
+        
+        
+        <ui:ContentCard Grid.Row="1" 
+                        Grid.Column="0"
+                        Margin="0,10,5,5">
+            
+            
+            
+        </ui:ContentCard>
+        
+        <ui:ContentCard Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="5,10,0,5">
+            
+            
+            
+        </ui:ContentCard>
+        
     </Grid>
+    
 </UserControl>

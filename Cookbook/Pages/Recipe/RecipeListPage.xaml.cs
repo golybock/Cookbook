@@ -1,13 +1,14 @@
 ﻿using System.Windows.Controls;
+using Cookbook.ViewModel.Navigation;
 using Cookbook.ViewModel.Recipe;
 
 namespace Cookbook.Pages.Recipe;
 
 public partial class RecipeListPage : Page
 {
-    public RecipeListPage()
+    public RecipeListPage(INavHost host)
     {
         InitializeComponent();
-        DataContext = new RecipesViewModel();
+        DataContext = new RecipesViewModel(host);
     }
 }

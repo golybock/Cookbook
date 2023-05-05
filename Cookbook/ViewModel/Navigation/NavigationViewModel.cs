@@ -35,7 +35,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
     public NavigationViewModel()
     {
         BackVisible = false;
-        NavController.Navigate(new RecipeListPage());
+        NavController.Navigate(new RecipeListPage(this));
     }
     
 
@@ -76,10 +76,10 @@ public class NavigationViewModel : ViewModelBase, INavHost
             return;
         
         if (selected?.Tag.ToString() == "Recipes")
-            NavController.Navigate(new RecipeListPage());
+            NavController.Navigate(new RecipeListPage(this));
 
         if (selected?.Tag.ToString() == "Liked")
-            NavController.Navigate(new RecipeListPage());
+            NavController.Navigate(new RecipeListPage(this));
 
         if (selected?.Tag.ToString() == "Profile")
             ShowProfile();
