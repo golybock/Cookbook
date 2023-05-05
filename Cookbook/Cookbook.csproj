@@ -6,6 +6,11 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Resources\AppIcon\book.ico</ApplicationIcon>
+        <PackageIcon>Resources\AppIcon\book.png</PackageIcon>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
     </PropertyGroup>
 
     <ItemGroup>
@@ -41,7 +46,10 @@
       <None Remove="Resources\AppIcon\book.ico" />
       <Resource Include="Resources\AppIcon\book.ico" />
       <None Remove="Resources\AppIcon\book.png" />
-      <Resource Include="Resources\AppIcon\book.png" />
+      <Resource Include="Resources\AppIcon\book.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </Resource>
       <None Remove="Resources\dore.png" />
       <Resource Include="Resources\dore.png" />
       <None Remove="Resources\Icons\food.png" />

@@ -4,9 +4,9 @@ using Cookbook.ViewModel.Recipe;
 
 namespace Cookbook.Pages.Recipe;
 
-public partial class RecipeListPage : Page
+public partial class RecipesPage : Page
 {
-    public RecipeListPage(INavHost host)
+    public RecipesPage(INavHost host)
     {
         InitializeComponent();
         DataContext = new RecipesViewModel(host);

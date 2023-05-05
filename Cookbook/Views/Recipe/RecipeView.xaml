@@ -18,14 +18,15 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*" />
-            <ColumnDefinition Width="80*" />
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="25*" />
         </Grid.ColumnDefinitions>
 
         <!-- Заголовок рецепта -->
         <ui:ContentCard Grid.Row="0"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2">
+                        Grid.ColumnSpan="3">
 
             <controls:SimpleStackPanel Orientation="Horizontal"
                                        Spacing="12">
@@ -43,9 +44,13 @@
                                TextWrapping="Wrap"
                                FontSize="28" />
 
+                    <TextBlock Text="{Binding Recipe.RecipeType.Name, FallbackValue=Type}"
+                               FontSize="20"
+                               TextWrapping="Wrap" />
+                    
                     <TextBlock Text="{Binding Recipe.Description, FallbackValue=Потому что дора дура}"
                                FontSize="20"
-                               MaxHeight="140"
+                               MaxHeight="100"
                                TextWrapping="Wrap" />
 
                     <!-- toolbar -->
@@ -102,85 +107,164 @@
                         Grid.Column="0"
                         Margin="0,10,5,5">
 
+            <controls:SimpleStackPanel Grid.Column="0"
+                                       Orientation="Vertical"
+                                       Spacing="12">
+
+                <TextBlock Text="Ингредиенты"
+                           FontSize="20"
+                           Margin="5,0,0,0"
+                           FontWeight="Bold" />
+
+                <controls:ItemsRepeater Margin="5"
+                                        ItemsSource="{Binding Recipe.Ingredients, UpdateSourceTrigger=PropertyChanged}">
+
+                    <controls:ItemsRepeater.Layout>
+
+                        <controls:StackLayout Spacing="5" />
+
+                    </controls:ItemsRepeater.Layout>
+
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <ui:ContentCard2>
+
+                            <WrapPanel Orientation="Horizontal">
+                                
+                                <TextBlock Text="{Binding Ingredient.Name}"
+                                           Margin="0,0,5,0"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Left"
+                                           FontSize="16" />
+                                
+                                <TextBlock Text="{Binding Count}"
+                                           Margin="5,0,5,0"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Left"
+                                           FontSize="16" />
+                                
+                            </WrapPanel>
+
+                            </ui:ContentCard2>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+
+                </controls:ItemsRepeater>
+
+            </controls:SimpleStackPanel>
 
         </ui:ContentCard>
 
-        <!-- steps and stats -->
+        <!-- steps -->
         <ui:ContentCard Grid.Row="1"
                         Grid.Column="1"
+                        Margin="5,10,5,5">
+            <controls:SimpleStackPanel Grid.Column="0"
+                                       Orientation="Vertical"
+                                       Spacing="12">
+
+                <TextBlock Text="Шаги приготовления"
+                           FontSize="20"
+                           FontWeight="Bold" />
+
+                <controls:ItemsRepeater Margin="5"
+                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}">
+
+                    <controls:ItemsRepeater.Layout>
+
+                        <controls:StackLayout Spacing="5" />
+
+                    </controls:ItemsRepeater.Layout>
+
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <ui:ContentCard2>
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:SimpleStackPanel Grid.Column="0"
+                                                               Orientation="Horizontal"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center">
+
+                                        <TextBlock Text="{Binding Text}"
+                                                   TextWrapping="Wrap"
+                                                   VerticalAlignment="Center"
+                                                   TextAlignment="Left"
+                                                   FontSize="16" />
+
+                                    </controls:SimpleStackPanel>
+
+                                </Grid>
+
+                            </ui:ContentCard2>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+
+                </controls:ItemsRepeater>
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
+        <!-- stats -->
+        <ui:ContentCard Grid.Row="1"
+                        Grid.Column="2"
                         Margin="5,10,0,5">
 
-            <Grid>
+            <controls:SimpleStackPanel Grid.Column="1"
+                                       Spacing="12"
+                                       Orientation="Vertical">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="65*" />
-                    <ColumnDefinition Width="35*" />
-                </Grid.ColumnDefinitions>
+                <TextBlock Text="Информация"
+                           FontSize="20"
+                           FontWeight="Bold" />
 
-                <!-- steps -->
-                <controls:SimpleStackPanel Grid.Column="0"
-                                           Orientation="Vertical"
-                                           Spacing="12">
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Килокалорий"
+                                    IsEnabled="False"
+                                    Value="{Binding Recipe.Stats.Kilocalories}" />
 
-                    <TextBlock Text="Ингредиенты"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               Margin="5,0,0,0" />
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Белки"
+                                    IsEnabled="False"
+                                    Value="{Binding Recipe.Stats.Squirrels}" />
 
-                    <controls:ItemsRepeater Margin="5"
-                                            ItemsSource="{Binding Recipe.Steps}">
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Жиры"
+                                    IsEnabled="False"
+                                    Value="{Binding Recipe.Stats.Fats}" />
 
-                        <controls:ItemsRepeater.Layout>
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Углеводы"
+                                    IsEnabled="False"
+                                    Value="{Binding Recipe.Stats.Carbohydrates}" />
 
-                            <controls:StackLayout Spacing="5" />
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Порций"
+                                    IsEnabled="False"
+                                    Value="{Binding Recipe.Stats.Portions}" />
 
-                        </controls:ItemsRepeater.Layout>
+                <TextBox Margin="5,0,0,0"
+                         controls:ControlHelper.Header="Время приготовления"
+                         TextWrapping="Wrap"
+                         Text="{Binding Recipe.Stats.CookingTime, StringFormat=t}"
+                         IsEnabled="False" />
+                
+                <TextBox Margin="5,0,0,0"
+                         controls:ControlHelper.Header="Источник"
+                         TextWrapping="Wrap"
+                         Text="{Binding Recipe.SourceUrl}"
+                         IsEnabled="False" />
 
-                        <controls:ItemsRepeater.ItemTemplate>
-                            <DataTemplate>
-                                <ui:ContentCard2>
-
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="70*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <controls:SimpleStackPanel Grid.Column="0"
-                                                                   Orientation="Horizontal"
-                                                                   HorizontalAlignment="Left"
-                                                                   VerticalAlignment="Center">
-
-                                            <TextBlock Text="{Binding Text}"
-                                                       VerticalAlignment="Center"
-                                                       TextAlignment="Left"
-                                                       FontSize="16" />
-
-                                        </controls:SimpleStackPanel>
-
-                                        <controls:SimpleStackPanel Grid.Column="1"
-                                                                   Orientation="Horizontal"
-                                                                   HorizontalAlignment="Right"
-                                                                   VerticalAlignment="Center">
-
-                                            <Button Content="Delete" />
-
-                                        </controls:SimpleStackPanel>
-
-                                    </Grid>
-                                    
-                                </ui:ContentCard2>
-                            </DataTemplate>
-                        </controls:ItemsRepeater.ItemTemplate>
-
-                    </controls:ItemsRepeater>
-                    
-                    <Button Content="Добавить"
-                            Margin="5,0,0,0"/>
-
-                </controls:SimpleStackPanel>
-
-            </Grid>
+            </controls:SimpleStackPanel>
 
         </ui:ContentCard>
 
