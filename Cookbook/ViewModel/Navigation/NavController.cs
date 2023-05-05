@@ -33,7 +33,7 @@ public class NavController : ViewModelBase
                 return null;
             }
         }
-        set
+        private set
         {
             if (value != null)
                 Items.Add(value);
