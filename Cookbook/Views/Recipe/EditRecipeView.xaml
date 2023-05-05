@@ -164,6 +164,18 @@
                                                VerticalAlignment="Center"
                                                TextAlignment="Left"
                                                FontSize="16" />
+                                    
+                                    <Button Grid.Column="1"
+                                            Height="35"
+                                            FontSize="14"
+                                            Margin="5"
+                                            Command="{Binding DataContext.DeleteIngredientCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
+
+                                        <Image Margin="1"
+                                               Source="../../Resources/Icons/delete.png" />
+
+                                    </Button>
 
                                 </WrapPanel>
 
@@ -172,6 +184,25 @@
                     </controls:ItemsRepeater.ItemTemplate>
 
                 </controls:ItemsRepeater>
+
+                <Button Height="35"
+                        FontSize="14"
+                        Margin="5,0,0,0"
+                        Command="{Binding AddIngredientButton}">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Margin="1"
+                               Source="../../Resources/Icons/add.png" />
+
+                        <TextBlock TextAlignment="Center"
+                                   Margin="5,0,5,0"
+                                   VerticalAlignment="Center"
+                                   Text="Добавить" />
+
+                    </StackPanel>
+
+                </Button>
 
             </controls:SimpleStackPanel>
 
@@ -204,17 +235,59 @@
                         <DataTemplate>
                             <ui:ContentCard2>
 
-                                <TextBlock Text="{Binding Name}"
-                                           TextWrapping="Wrap"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Left"
-                                           FontSize="16" />
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding Name}"
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Left"
+                                               FontSize="16" />
+
+                                    <Button Grid.Column="1"
+                                            Height="35"
+                                            FontSize="14"
+                                            Margin="5"
+                                            Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
+
+                                        <Image Margin="1"
+                                               Source="../../Resources/Icons/delete.png" />
+
+                                    </Button>
+
+                                </Grid>
+
 
                             </ui:ContentCard2>
                         </DataTemplate>
                     </controls:ItemsRepeater.ItemTemplate>
 
                 </controls:ItemsRepeater>
+
+                <Button Height="35"
+                        Margin="5,0,0,0"
+                        FontSize="14"
+                        Command="{Binding AddCategoryButton}">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Margin="1"
+                               Source="../../Resources/Icons/add.png" />
+
+                        <TextBlock TextAlignment="Center"
+                                   Margin="5,0,5,0"
+                                   VerticalAlignment="Center"
+                                   Text="Добавить" />
+
+                    </StackPanel>
+
+                </Button>
 
             </controls:SimpleStackPanel>
 
@@ -225,6 +298,7 @@
                         Grid.RowSpan="2"
                         Grid.Column="1"
                         Margin="5,10,5,5">
+
             <controls:SimpleStackPanel Grid.Column="0"
                                        Orientation="Vertical"
                                        Spacing="12">
@@ -250,22 +324,27 @@
                                 <Grid>
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="70*" />
+                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <controls:SimpleStackPanel Grid.Column="0"
-                                                               Orientation="Horizontal"
-                                                               HorizontalAlignment="Left"
-                                                               VerticalAlignment="Center">
+                                    <TextBox Grid.Column="0" Text="{Binding Text}"
+                                             TextWrapping="Wrap"
+                                             VerticalAlignment="Center"
+                                             TextAlignment="Left"
+                                             FontSize="16" />
 
-                                        <TextBlock Text="{Binding Text}"
-                                                   TextWrapping="Wrap"
-                                                   VerticalAlignment="Center"
-                                                   TextAlignment="Left"
-                                                   FontSize="16" />
+                                    <Button Grid.Column="1"
+                                            Height="35"
+                                            FontSize="14"
+                                            Margin="5"
+                                            Command="{Binding DataContext.DeleteStepCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
 
-                                    </controls:SimpleStackPanel>
+                                        <Image Margin="1"
+                                               Source="../../Resources/Icons/delete.png" />
+
+                                    </Button>
 
                                 </Grid>
 
@@ -274,6 +353,25 @@
                     </controls:ItemsRepeater.ItemTemplate>
 
                 </controls:ItemsRepeater>
+
+                <Button Height="35"
+                        FontSize="14"
+                        Margin="5,0,0,0"
+                        Command="{Binding AddStepButton}">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Margin="1"
+                               Source="../../Resources/Icons/add.png" />
+
+                        <TextBlock TextAlignment="Center"
+                                   Margin="5,0,5,0"
+                                   VerticalAlignment="Center"
+                                   Text="Добавить" />
+
+                    </StackPanel>
+
+                </Button>
 
             </controls:SimpleStackPanel>
 
@@ -294,22 +392,27 @@
                            FontWeight="Bold" />
 
                 <controls:NumberBox Margin="5,0,0,0"
+                                    Minimum="0"
                                     Header="Килокалорий"
                                     Value="{Binding Recipe.Stats.Kilocalories}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Белки"
+                                    Minimum="0"
                                     Value="{Binding Recipe.Stats.Squirrels}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
+                                    Minimum="0"
                                     Header="Жиры"
                                     Value="{Binding Recipe.Stats.Fats}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
+                                    Minimum="0"
                                     Header="Углеводы"
                                     Value="{Binding Recipe.Stats.Carbohydrates}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
+                                    Minimum="1"
                                     Header="Порций"
                                     Value="{Binding Recipe.Stats.Portions}" />
 
