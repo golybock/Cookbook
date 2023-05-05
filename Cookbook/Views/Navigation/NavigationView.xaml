@@ -88,7 +88,7 @@
 
                     <ui:NavigationViewItem.Icon>
 
-                        <ui:BitmapIcon UriSource="../../Resources/Icons/heart_icon.png" />
+                        <ui:BitmapIcon UriSource="../../Resources/Icons/bookmark.png" />
 
                     </ui:NavigationViewItem.Icon>
 

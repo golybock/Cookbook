@@ -4,9 +4,329 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
+             xmlns:ui="clr-namespace:Cookbook.UI"
+             xmlns:controls="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
     <Grid>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="25*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- header -->
+        <ui:ContentCard Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3">
+
+            <controls:SimpleStackPanel Orientation="Horizontal"
+                                       Spacing="12">
+
+                <Image Source="../../Resources/dore.png"
+                       Width="250"
+                       Height="250"
+                       Margin="10" />
+
+                <controls:SimpleStackPanel Orientation="Vertical"
+                                           Spacing="12">
+
+                    <TextBox Text="{Binding Recipe.Header}"
+                             FontWeight="Bold"
+                             TextWrapping="Wrap"
+                             FontSize="28"
+                             controls:ControlHelper.Header="Заголовок" />
+
+                    <TextBlock Text="{Binding Recipe.RecipeType.Name, FallbackValue=Type}"
+                               FontSize="20"
+                               TextWrapping="Wrap" />
+
+                    <TextBox Text="{Binding Recipe.Description}"
+                             FontSize="20"
+                             MaxHeight="100"
+                             TextWrapping="Wrap" />
+
+                    <!-- toolbar -->
+                    <controls:SimpleStackPanel HorizontalAlignment="Left"
+                                               Orientation="Horizontal"
+                                               Spacing="12">
+
+                        <Button Height="35"
+                                FontSize="14"
+                                Command="{Binding SaveCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Margin="1"
+                                       Source="../../Resources/Icons/save.png" />
+
+                                <TextBlock TextAlignment="Center"
+                                           Margin="5,0,5,0"
+                                           VerticalAlignment="Center"
+                                           Text="Сохранить" />
+
+                            </StackPanel>
+
+                        </Button>
+
+                        <Button Height="35"
+                                FontSize="14"
+                                Command="{Binding CancelCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Margin="1"
+                                       Source="../../Resources/Icons/close.png" />
+
+                                <TextBlock TextAlignment="Center"
+                                           Margin="5,0,5,0"
+                                           VerticalAlignment="Center"
+                                           Text="Отмена" />
+
+                            </StackPanel>
+
+                        </Button>
+
+                        <Button Height="35"
+                                FontSize="14"
+                                Command="{Binding ChooseImageButton}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Margin="1"
+                                       Source="../../Resources/Icons/image.png" />
+
+                                <TextBlock TextAlignment="Center"
+                                           Margin="5,0,5,0"
+                                           VerticalAlignment="Center"
+                                           Text="Выбрать изображение" />
+
+                            </StackPanel>
+
+                        </Button>
+
+                    </controls:SimpleStackPanel>
+
+                </controls:SimpleStackPanel>
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
+        <!-- ingredients -->
+        <ui:ContentCard Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,10,5,5">
+
+            <controls:SimpleStackPanel Grid.Column="0"
+                                       Orientation="Vertical"
+                                       Spacing="12">
+
+                <TextBlock Text="Ингредиенты"
+                           FontSize="20"
+                           Margin="5,0,0,0"
+                           FontWeight="Bold" />
+
+                <controls:ItemsRepeater Margin="5"
+                                        ItemsSource="{Binding Recipe.Ingredients, UpdateSourceTrigger=PropertyChanged}">
+
+                    <controls:ItemsRepeater.Layout>
+
+                        <controls:StackLayout Spacing="5" />
+
+                    </controls:ItemsRepeater.Layout>
+
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <ui:ContentCard2>
+
+                                <WrapPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="{Binding Ingredient.Name}"
+                                               Margin="0,0,5,0"
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Left"
+                                               FontSize="16" />
+
+                                    <TextBlock Text="{Binding Count}"
+                                               Margin="5,0,5,0"
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Left"
+                                               FontSize="16" />
+
+                                </WrapPanel>
+
+                            </ui:ContentCard2>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+
+                </controls:ItemsRepeater>
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
+        <!-- categories -->
+        <ui:ContentCard Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0,10,5,5">
+
+            <controls:SimpleStackPanel Grid.Column="0"
+                                       Orientation="Vertical"
+                                       Spacing="12">
+
+                <TextBlock Text="Категории"
+                           FontSize="20"
+                           Margin="5,0,0,0"
+                           FontWeight="Bold" />
+
+                <controls:ItemsRepeater Margin="5"
+                                        ItemsSource="{Binding Recipe.Categories, UpdateSourceTrigger=PropertyChanged}">
+
+                    <controls:ItemsRepeater.Layout>
+
+                        <controls:StackLayout Spacing="5" />
+
+                    </controls:ItemsRepeater.Layout>
+
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <ui:ContentCard2>
+
+                                <TextBlock Text="{Binding Name}"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Left"
+                                           FontSize="16" />
+
+                            </ui:ContentCard2>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+
+                </controls:ItemsRepeater>
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
+        <!-- steps -->
+        <ui:ContentCard Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Margin="5,10,5,5">
+            <controls:SimpleStackPanel Grid.Column="0"
+                                       Orientation="Vertical"
+                                       Spacing="12">
+
+                <TextBlock Text="Шаги приготовления"
+                           FontSize="20"
+                           Margin="5,0,0,0"
+                           FontWeight="Bold" />
+
+                <controls:ItemsRepeater Margin="5"
+                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}">
+
+                    <controls:ItemsRepeater.Layout>
+
+                        <controls:StackLayout Spacing="5" />
+
+                    </controls:ItemsRepeater.Layout>
+
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <ui:ContentCard2>
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:SimpleStackPanel Grid.Column="0"
+                                                               Orientation="Horizontal"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center">
+
+                                        <TextBlock Text="{Binding Text}"
+                                                   TextWrapping="Wrap"
+                                                   VerticalAlignment="Center"
+                                                   TextAlignment="Left"
+                                                   FontSize="16" />
+
+                                    </controls:SimpleStackPanel>
+
+                                </Grid>
+
+                            </ui:ContentCard2>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+
+                </controls:ItemsRepeater>
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
+        <!-- stats -->
+        <ui:ContentCard Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Margin="5,10,0,5">
+
+            <controls:SimpleStackPanel Spacing="12"
+                                       Orientation="Vertical">
+
+                <TextBlock Text="Информация"
+                           FontSize="20"
+                           Margin="5,0,0,0"
+                           FontWeight="Bold" />
+
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Килокалорий"
+                                    Value="{Binding Recipe.Stats.Kilocalories}" />
+
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Белки"
+                                    Value="{Binding Recipe.Stats.Squirrels}" />
+
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Жиры"
+                                    Value="{Binding Recipe.Stats.Fats}" />
+
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Углеводы"
+                                    Value="{Binding Recipe.Stats.Carbohydrates}" />
+
+                <controls:NumberBox Margin="5,0,0,0"
+                                    Header="Порций"
+                                    Value="{Binding Recipe.Stats.Portions}" />
+
+                <TextBox Margin="5,0,0,0"
+                         controls:ControlHelper.Header="Время приготовления"
+                         TextWrapping="Wrap"
+                         Text="{Binding Recipe.Stats.CookingTime, StringFormat=HH:mm}" />
+
+                <TextBox Margin="5,0,0,0"
+                         controls:ControlHelper.Header="Источник"
+                         TextWrapping="Wrap"
+                         Text="{Binding Recipe.SourceUrl}" />
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+
     </Grid>
+
 </UserControl>

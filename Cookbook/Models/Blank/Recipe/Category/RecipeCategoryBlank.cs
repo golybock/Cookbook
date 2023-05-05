@@ -5,10 +5,11 @@ namespace Cookbook.Models.Blank.Recipe.Category;
 
 public class RecipeCategoryBlank
 {
-    [JsonPropertyName("categoryId")]
-    public int CategoryId { get; set; }
-    [JsonPropertyName("recipeId")]
-    public int RecipeId { get; set; }
+    [JsonPropertyName("categoryId")] public int CategoryId { get; set; }
+    [JsonPropertyName("recipeId")] public int RecipeId { get; set; }
+
+    [JsonIgnore]
+    public string Name { get; set; }
 
     public RecipeCategoryBlank() { }
 
@@ -21,6 +22,7 @@ public class RecipeCategoryBlank
     public RecipeCategoryBlank(CategoryDomain recipeCategory)
     {
         CategoryId = recipeCategory.Id;
+        Name = recipeCategory.Name;
     }
 
 }

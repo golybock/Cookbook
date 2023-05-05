@@ -17,7 +17,7 @@ public class RecipeBlank
     [JsonPropertyName("sourceUrl")] 
     public string? SourceUrl { get; set; }
     [JsonPropertyName("recipeStats")] 
-    public RecipeStatsBlank? RecipeStats { get; set; }
+    public RecipeStatsBlank? Stats { get; set; }
 
     [JsonPropertyName("ingredients")]
     public List<RecipeIngredientBlank> Ingredients { get; set; } = new List<RecipeIngredientBlank>();
@@ -37,10 +37,20 @@ public class RecipeBlank
         Header = recipe.Header;
         Description = recipe.Description;
         SourceUrl = recipe.SourceUrl;
-        RecipeStats = new(recipe.Stats);
+
+        if (recipe.Stats != null) 
+            Stats = new RecipeStatsBlank(recipe.Stats);
 
         Categories = recipe.Categories
             .Select(c => new RecipeCategoryBlank(c))
+            .ToList();
+
+        Ingredients = recipe.Ingredients
+            .Select(c => new RecipeIngredientBlank(c))
+            .ToList();
+
+        Steps = recipe.Steps
+            .Select(c => new RecipeStepBlank(c))
             .ToList();
     }
 }
