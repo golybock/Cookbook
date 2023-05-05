@@ -1,4 +1,5 @@
-﻿using Cookbook.Models.Domain.Recipe;
+﻿using System.Collections.Generic;
+using Cookbook.Models.Domain.Recipe;
 using Cookbook.ViewModel.Navigation;
 
 namespace Cookbook.ViewModel.Recipe;
@@ -17,6 +18,20 @@ public class RecipeViewModel : ViewModelBase, INavItem
     }
     
     public INavHost Host { get; set; }
-    
-    public RecipeDomain Recipe { get; set; }
+
+    public RecipeDomain Recipe { get; set; } = new RecipeDomain()
+    {
+        Steps = new List<RecipeStepDomain>()
+        {
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" },
+            new RecipeStepDomain() { Text = "aa" }
+        }
+    };
 }
