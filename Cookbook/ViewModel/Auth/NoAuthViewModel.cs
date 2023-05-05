@@ -6,7 +6,7 @@ using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.ViewModel.Auth;
 
-public class NoAuthViewModel : ViewModelBase, INavigationItem
+public class NoAuthViewModel : ViewModelBase, INavItem
 {
     public NoAuthViewModel(INavHost host)
     {

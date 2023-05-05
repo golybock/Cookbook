@@ -18,12 +18,9 @@ public class NavigationViewModel : ViewModelBase, INavHost
 {
     private readonly ClientService _clientService = new ClientService();
     
-
-
     private string? _searchText;
     
     private bool _backVisible = false;
-    private Page? _currentPage;
 
     public bool BackVisible
     {
@@ -38,7 +35,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
     public NavigationViewModel()
     {
         BackVisible = false;
-        CurrentPage = new RecipeListPage();
+        NavController.Navigate(new RecipeListPage());
     }
     
 
@@ -69,20 +66,20 @@ public class NavigationViewModel : ViewModelBase, INavHost
     {
         if (args.IsSettingsInvoked)
         {
-            CurrentPage = new SettingsPage();
+            NavController.Navigate(new SettingsPage());
             return;
         }
 
         var selected = args.InvokedItemContainer as NavigationViewItem;
 
-        if (ReferenceEquals(selected?.Tag.ToString(), CurrentPage?.Tag))
+        if (ReferenceEquals(selected?.Tag.ToString(), NavController.CurrentPage?.Tag))
             return;
         
         if (selected?.Tag.ToString() == "Recipes")
-            CurrentPage = new RecipeListPage();
-        
+            NavController.Navigate(new RecipeListPage());
+
         if (selected?.Tag.ToString() == "Liked")
-            CurrentPage = new RecipeListPage();
+            NavController.Navigate(new RecipeListPage());
 
         if (selected?.Tag.ToString() == "Profile")
             ShowProfile();
@@ -90,7 +87,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
     private async void ShowProfile()
     {
-        CurrentPage = new LoadingPage();
+        NavController.Navigate(new LoadingPage());
 
         try
         {
@@ -98,21 +95,21 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
             if (client == null)
             {
-                CurrentPage = new NoAuthPage(this);
+                NavController.Navigate(new NoAuthPage(this));
                 return;
             }
         }
         catch (HttpRequestException e)
         {
-            CurrentPage = new ConnectionErrorPage();
+            NavController.Navigate(new ConnectionErrorPage());
             return;
         }
         catch (Exception e)
         {
-            CurrentPage = new ErrorPage();
+            NavController.Navigate(new ErrorPage());
         }
         
-        CurrentPage = new ClientPage(this);
+        NavController.Navigate(new ClientPage(this));
     }
     
     private async void QuerySubmitted()
@@ -130,17 +127,5 @@ public class NavigationViewModel : ViewModelBase, INavHost
         
     }
 
-    public Page? CurrentPage
-    {
-        get => _currentPage;
-        set
-        {
-            if (Equals(value, _currentPage)) return;
-            _currentPage = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public int CurrentPageIndex { get; set; }
-    public List<Page> Items { get; set; }
+    public NavController NavController { get; set; } = new NavController();
 }

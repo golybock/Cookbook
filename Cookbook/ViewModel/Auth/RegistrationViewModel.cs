@@ -6,7 +6,7 @@ using ModernWpf.Controls;
 
 namespace Cookbook.ViewModel.Auth;
 
-public class RegistrationViewModel : ViewModelBase, INavigationItem
+public class RegistrationViewModel : ViewModelBase, INavItem
 {
     public INavHost Host { get; set; }
     
@@ -35,7 +35,7 @@ public class RegistrationViewModel : ViewModelBase, INavigationItem
 
     private async void Registration()
     {
-        Host.CurrentPage = new ClientPage(Host);
+        Host.NavController.Navigate(new ClientPage(Host)); ;
         
         View?.Hide();
     }

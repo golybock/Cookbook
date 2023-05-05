@@ -116,7 +116,7 @@
                               Margin="12,0,12,12"
                               Padding="12,0,12,24"
                               IsTabStop="True"
-                              Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" />
+                              Content="{Binding NavController.CurrentPage, UpdateSourceTrigger=PropertyChanged}" />
 
                 </ScrollViewer>
 

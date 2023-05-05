@@ -5,7 +5,7 @@ using Cookbook.ViewModel.Navigation;
 
 namespace Cookbook.ViewModel.Client;
 
-public class ClientViewModel : ViewModelBase, INavigationItem
+public class ClientViewModel : ViewModelBase, INavItem
 {
     public INavHost Host { get; set; }
     
@@ -25,7 +25,7 @@ public class ClientViewModel : ViewModelBase, INavigationItem
 
     private void Edit()
     {
-        Host.CurrentPage = new EditClientPage(Host);
+        Host.NavController.Navigate(new EditClientPage(Host));
     }
 
     public ClientDomain Client

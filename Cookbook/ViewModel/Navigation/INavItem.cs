@@ -1,6 +1,6 @@
 ﻿namespace Cookbook.ViewModel.Navigation;
 
-public interface INavigationItem
+public interface INavItem
 {
     public INavHost Host { get; set; }
 }
