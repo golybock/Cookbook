@@ -23,7 +23,7 @@
                 
                 <ui:HyperlinkButton Content="Войти"
                                     Margin="10"
-                                    Command="{Binding AuthCommand}"/>
+                                    Command="{Binding LoginCommand}"/>
                 
                 <ui:HyperlinkButton Content="Регистрация"
                                     Margin="10"

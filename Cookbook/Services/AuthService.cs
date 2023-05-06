@@ -111,4 +111,11 @@ public class AuthService
             throw;
         }
     }
+
+    public async Task UnLogin()
+    {
+        _appSettings.Token = null;
+            
+        SettingsManager.SaveSettings(_appSettings);
+    }
 }

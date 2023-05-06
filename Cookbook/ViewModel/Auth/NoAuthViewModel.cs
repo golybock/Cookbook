@@ -1,55 +1,24 @@
 ﻿using Cookbook.Command;
+using Cookbook.Pages.Auth;
 using Cookbook.ViewModel.Navigation;
-using Cookbook.Views.Auth;
-using ModernWpf.Controls;
-using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.ViewModel.Auth;
 
 public class NoAuthViewModel : ViewModelBase, INavItem
 {
-    public NoAuthViewModel(INavHost host)
-    {
-        Host = host;
-    }
+    public INavHost Host { get; set; }
     
-    public CommandHandler AuthCommand =>
-        new CommandHandler(ShowLoginDialog);
+    public NoAuthViewModel(INavHost host) => Host = host;
+
+    public CommandHandler LoginCommand =>
+        new CommandHandler(Login);
 
     public CommandHandler RegistrationCommand =>
-        new CommandHandler(ShowRegistrationDialog);
+        new CommandHandler(Registration);
     
-    private async void ShowLoginDialog()
-    {
-        var context = new LoginViewModel();
-        
-        var loginDialog = new ContentDialog
-        {
-            Title = "Авторизация",
-            Content = new LoginView(),
-            DataContext = context,
-            CloseButtonText = "Отмена"
-        };
+    private void Login() =>
+        Host.NavController.Navigate(new LoginPage(Host));
 
-        await loginDialog.ShowAsync();
-    }
-    
-    private async void ShowRegistrationDialog()
-    {
-        var context = new RegistrationViewModel(Host);
-        
-        var registrationDialog = new ContentDialog
-        {
-            Title = "Регистрация",
-            DataContext = context,
-            Content = new RegistrationView(),
-            CloseButtonText = "Отмена"
-        };
-
-        context.View = registrationDialog;
-
-        await registrationDialog.ShowAsync();
-    }
-
-    public INavHost Host { get; set; }
+    private void Registration() =>
+        Host.NavController.Navigate(new RegistrationPage(Host));
 }

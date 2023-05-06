@@ -1,6 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using Cookbook.Command;
 using Cookbook.Pages.Client;
+using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using ModernWpf.Controls;
 
@@ -8,9 +10,17 @@ namespace Cookbook.ViewModel.Auth;
 
 public class RegistrationViewModel : ViewModelBase, INavItem
 {
+    private readonly AuthService _authService = new AuthService();
+    
     public INavHost Host { get; set; }
     
-    public ContentDialog? View { get; set; }
+    public string Login { get; set; }
+    
+    public string Password { get; set; }
+    
+    public string Email { get; set; }
+    
+    public string Name { get; set; }
     
     public RegistrationViewModel(INavHost host)
     {
@@ -32,12 +42,28 @@ public class RegistrationViewModel : ViewModelBase, INavItem
 
     public CommandHandler RegistrationCommand =>
         new CommandHandler(Registration);
-
+    
+    public CommandHandler CancelCommand =>
+        new CommandHandler(CanselAsync);
+    
     private async void Registration()
     {
-        Host.NavController.Navigate(new ClientPage(Host)); ;
-        
-        View?.Hide();
+        throw new NotImplementedException();
     }
-    
+
+    private async void CanselAsync()
+    {
+        var cancel = new ContentDialog()
+        {
+            Title = "Отмена",
+            Content = "Вы хотите отменить регистрацию?",
+            CloseButtonText = "Остаться",
+            PrimaryButtonText = "Отменить"
+        };
+
+        var result = await cancel.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+            Host.NavController.GoBack();
+    }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using Cookbook.Api.Client;
+using Cookbook.Api.Recipe;
 using Cookbook.Command;
 using Cookbook.Pages.Auth;
 using Cookbook.Pages.Client;
@@ -16,7 +18,8 @@ namespace Cookbook.ViewModel.Navigation;
 
 public class NavigationViewModel : ViewModelBase, INavHost
 {
-    private readonly ClientService _clientService = new ClientService();
+    private readonly ClientApi _clientApi = new ClientApi();
+    private readonly RecipeApi _recipeApi = new RecipeApi();
     
     private string? _searchText;
     
@@ -91,7 +94,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
         try
         {
-            var client = await _clientService.GetClientDomain();
+            var client = await _clientApi.GetClientAsync();
 
             if (client == null)
             {
@@ -110,6 +113,16 @@ public class NavigationViewModel : ViewModelBase, INavHost
         }
         
         NavController.Navigate(new ClientPage(this));
+    }
+
+    private void SetRecipes()
+    {
+        var recipes = await _recipeApi.
+    }
+
+    private void SetRecipes(string search)
+    {
+        
     }
     
     private async void QuerySubmitted()
