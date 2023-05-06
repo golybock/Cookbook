@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cookbook.Api.Auth;
+using Cookbook.Models.Blank.Client;
 using Cookbook.Models.Domain.Client;
 using Cookbook.Settings;
 
@@ -20,15 +21,20 @@ public class AuthService
 
             if (token == null)
                 throw new Exception("Непредвиденная ошибка");
-            
+
             _appSettings.Token = token;
-            
+
             SettingsManager.SaveSettings(_appSettings);
         }
         catch (HttpRequestException e)
         {
             Console.WriteLine(e);
-            throw;  
+            throw;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 
@@ -39,11 +45,65 @@ public class AuthService
             var token = await _authApi.LoginAsync(login, password);
 
             if (token == null)
-                throw new Exception("Непредвиденная ошибка");
+                throw new Exception("Неверный логин или пароль");
             
             _appSettings.Token = token;
             
             SettingsManager.SaveSettings(_appSettings);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    public async Task RegistrationAsync(ClientBlank clientBlank)
+    {
+        try
+        {
+            var token = await _authApi.RegistrationAsync(clientBlank);
+
+            if (token == null)
+                throw new Exception("Возникла непредвиденная ошибка");
+            
+            _appSettings.Token = token;
+            
+            SettingsManager.SaveSettings(_appSettings);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    public async Task UpdatePasswordAsync(string password, string newPassword)
+    {
+        try
+        {
+            var res = await _authApi.UpdatePasswordAsync(password, newPassword);
+
+            if (res is true)
+                SettingsManager.SaveSettings(_appSettings);
+
+            else
+                throw new Exception("Возникла непредвиденная ошибка");
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
         catch (Exception e)
         {

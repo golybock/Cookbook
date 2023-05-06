@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Client"
       xmlns:client="clr-namespace:Cookbook.Views.Client"
       mc:Ignorable="d"
-      Title="Редактирование профиля">
+      Title="Редактирование профиля"
+      Tag="EditProfile">
     <Grid>
         <client:EditClientView x:Name="EditClientView"/>
     </Grid>

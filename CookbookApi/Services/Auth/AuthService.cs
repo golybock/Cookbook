@@ -58,7 +58,7 @@ public class AuthService : IAuthService
             return new UnauthorizedResult();
 
         if (Md5Password(password) != client.Password)
-            return new BadRequestObjectResult("Неверный пароль");
+            return new BadRequestObjectResult("Пароли не совпадают");
         
         if (!PasswordValid(newPassword))
             return new BadRequestObjectResult("Неверный формат нового пароля");

@@ -12,7 +12,7 @@
     
     <Grid>
         
-        <recipe:RecipesView/>
+        <recipe:RecipesView x:Name="RecipesView"/>
         
     </Grid>
     

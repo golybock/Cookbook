@@ -25,6 +25,20 @@ public class RecipesViewModel : ViewModelBase, INavItem
         OnPropertyChanged("Recipes");
     }
     
+    public RecipesViewModel(INavHost host, List<RecipeDomain> recipeDomains)
+    {
+        Host = host;
+        
+        Recipes.Add(new RecipeDomain() { Header = "Beba"});
+        Recipes.Add(new RecipeDomain() { Header = "Boba"});
+        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+        OnPropertyChanged("Recipes");
+    }
+    
     public CommandHandler<RecipeDomain> CardClickCommand =>
         new CommandHandler<RecipeDomain>(OpenRecipe);
 

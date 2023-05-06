@@ -30,6 +30,12 @@ public class AuthApi : ApiBase
         if (res.IsSuccessStatusCode)
             return await res.Content.ReadAsStringAsync();
 
+        if (res.StatusCode == HttpStatusCode.BadRequest)
+            throw new Exception("Beba");
+
+        if (res.StatusCode == HttpStatusCode.Unauthorized)
+            throw new Exception("Неверный логин или пароль");
+            
         return null;
     }
     
@@ -44,6 +50,9 @@ public class AuthApi : ApiBase
         if (res.IsSuccessStatusCode)
             return await res.Content.ReadAsStringAsync();
 
+        if (res.StatusCode == HttpStatusCode.BadRequest)
+            throw new Exception(await res.Content.ReadAsStringAsync());
+        
         return null;
     }
     
@@ -59,6 +68,9 @@ public class AuthApi : ApiBase
 
         if (res.StatusCode == HttpStatusCode.Unauthorized)
             throw new Exception("Сессия недействительна");
+
+        if (res.StatusCode == HttpStatusCode.BadRequest)
+            throw new Exception(await res.Content.ReadAsStringAsync());
         
         return res.IsSuccessStatusCode;
     }
