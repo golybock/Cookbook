@@ -40,7 +40,7 @@ public class RecipeApi : ApiBase
         return null;
     }
     
-    public async Task<string?> CreateRecipeAsync(RecipeBlank recipeBlank)
+    public async Task<string?> PostRecipeAsync(RecipeBlank recipeBlank)
     {
         var client = GetHttpClient();
 
@@ -84,26 +84,23 @@ public class RecipeApi : ApiBase
         return null;
     }
     
-    public async Task<string?> DeleteRecipeAsync(string recipeCode)
+    public async Task<bool?> DeleteRecipeAsync(string Code)
     {
         var client = GetHttpClient();
 
         client.DefaultRequestHeaders.Add("token", Token);
         
-        string url = $"{BaseUrl}/{Recipe}/{_recipe}?recipeCode={recipeCode}";
+        string url = $"{BaseUrl}/{Recipe}/{_recipe}?recipeCode={Code}";
 
         var res = await client.DeleteAsync(new Uri(url));
-
-        if (res.IsSuccessStatusCode)
-            return await res.Content.ReadAsStringAsync();
-
+        
         if (res.StatusCode == HttpStatusCode.Unauthorized)
             throw new Exception("Сессия недействительна");
 
         if (res.StatusCode == HttpStatusCode.BadRequest)
             throw new Exception(await res.Content.ReadAsStringAsync());
-        
-        return null;
+
+        return res.IsSuccessStatusCode;
     }
     
     public async Task<List<RecipeDomain>?> GetRecipesAsync()

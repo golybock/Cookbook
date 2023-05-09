@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Cookbook.Api.Recipe;
 using Cookbook.Api.Recipe.Category;
 using Cookbook.Api.Recipe.Ingredient;
+using Cookbook.Models.Blank.Recipe;
 using Cookbook.Models.Blank.Recipe.Category;
 using Cookbook.Models.Blank.Recipe.Ingredient;
+using Cookbook.Models.Domain.Recipe;
 using Cookbook.Models.Domain.Recipe.Category;
 using Cookbook.Models.Domain.Recipe.Ingredient;
 
@@ -12,14 +14,15 @@ namespace Cookbook.Services;
 
 public class RecipeService
 {
-    private readonly RecipeTypeApi _recipeTypeApi;
-    private readonly RecipeApi _recipeApi;
-
     public Category Category { get; set; } = new Category();
 
     public Measure Measure { get; set; } = new Measure();
 
     public Ingredient Ingredient { get; set; } = new Ingredient();
+
+    public RecipeType RecipeType { get; set; } = new RecipeType();
+
+    public Recipe Recipe { get; set; } = new Recipe();
 }
 
 public class Category
@@ -54,7 +57,7 @@ public class Category
     /// </summary>
     /// <param name="id">Id удаляемой категории</param>
     /// <returns>Возвращает булево значение, было ли удалено на стороне сервера</returns>
-    public Task<bool> Delete(int id) => 
+    public Task<bool> Delete(int id) =>
         _categoryApi.DeleteCategoryAsync(id);
 }
 
@@ -90,7 +93,7 @@ public class Measure
     /// </summary>
     /// <param name="id">Id удаляемой меры измерения</param>
     /// <returns>Возвращает булево значение, было ли удалено на стороне сервера</returns>
-    public Task<bool> Delete(int id) => 
+    public Task<bool> Delete(int id) =>
         _measureApi.DeleteMeasureAsync(id);
 }
 
@@ -126,6 +129,93 @@ public class Ingredient
     /// </summary>
     /// <param name="id">Id удаляемого ингредиента</param>
     /// <returns>Возвращает булево значение, было ли удалено на стороне сервера</returns>
-    public Task<bool> Delete(int id) => 
+    public Task<bool> Delete(int id) =>
         _ingredientApi.DeleteIngredientAsync(id);
+}
+
+public class RecipeType
+{
+    private readonly RecipeTypeApi _recipeTypeApi = new RecipeTypeApi();
+
+    /// <summary>
+    /// Получение списка всех типов рецепта
+    /// </summary>
+    /// <returns>Список типов рецепта</returns>
+    public Task<List<RecipeTypeDomain>?> Get() =>
+        _recipeTypeApi.GetRecipeTypesAsync();
+}
+
+public class Recipe
+{
+    private readonly RecipeApi _recipeApi = new RecipeApi();
+
+    /// <summary>
+    /// Получение рецепта
+    /// </summary>
+    /// <returns>Рецепт, если такой найден</returns>
+    public Task<RecipeDomain?> Get(string code) =>
+        _recipeApi.GetRecipeAsync(code);
+
+    /// <summary>
+    /// Создание рецепта
+    /// </summary>
+    /// <param name="recipeBlank">Бланк рецепта с данными</param>
+    /// <returns>Код созданного рецепта</returns>
+    public Task<string?> Create(RecipeBlank recipeBlank) =>
+        _recipeApi.PostRecipeAsync(recipeBlank);
+
+    /// <summary>
+    /// Обновление рецепта
+    /// </summary>
+    /// <param name="recipeBlank">Бланк рецепта с данными</param>
+    /// <param name="code">Идентификатор обновляемого рецепта</param>
+    /// <returns>Идентификатор обновляемого рецепта, при успешном обновлении</returns>
+    public Task<string?> Update(RecipeBlank recipeBlank, string code) =>
+        _recipeApi.UpdateRecipeAsync(recipeBlank, code);
+
+    /// <summary>
+    /// Удаление рецепта
+    /// </summary>
+    /// <param name="code">Идентификатор удаляемого рецепта</param>
+    /// <returns>Булевое значение, удален ли рецепт на сервере</returns>
+    public Task<bool?> Delete(string code) =>
+        _recipeApi.DeleteRecipeAsync(code);
+
+    /// <summary>
+    /// Получение всех рецептов с сервера
+    /// </summary>
+    /// <returns>Список рецептов на сервере</returns>
+    public Task<List<RecipeDomain>?> Get() =>
+        _recipeApi.GetRecipesAsync();
+
+    /// <summary>
+    /// Получение всех сохраненных рецептов с сервера
+    /// </summary>
+    /// <returns>Список сохранных пользователем рецептов на сервере</returns>
+    public Task<List<RecipeDomain>?> GetLiked() =>
+        _recipeApi.GetLikedRecipesAsync();
+
+    /// <summary>
+    /// Получение всех рецептов пользователя с сервера
+    /// </summary>
+    /// <returns>Список рецептов пользователя на сервере</returns>
+    public Task<List<RecipeDomain>?> GetClient() =>
+        _recipeApi.GetClientRecipesAsync();
+
+    /// <summary>
+    /// Загрузка фотографии рецепта
+    /// </summary>
+    /// <param name="path">Путь до файла с изображением</param>
+    /// <param name="code">Идентификатор рецепта</param>
+    /// <returns>Url на загруженное изображение</returns>
+    public Task<string?> UploadRecipeImage(string path, string code) =>
+        _recipeApi.UploadRecipeImageAsync(path, code);
+
+    /// <summary>
+    /// Удаляет фотографию рецепта на сервере
+    /// </summary>
+    /// <param name="code">Идентификатор рецепта</param>
+    /// <returns>Булево значение, удалена ли фотография</returns>
+    public Task<bool> DeleteRecipeImage(string code) =>
+        _recipeApi.DeleteRecipeImageAsync(code);
 }
