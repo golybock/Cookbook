@@ -118,10 +118,24 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
     private async void SetRecipes()
     {
-        var recipes = await _recipeApi.GetRecipesAsync();
+        NavController.Navigate(new LoadingPage());
 
-        if (recipes != null) 
-            NavController.Navigate(new RecipesPage(this, recipes));
+        try
+        {
+            var recipes = await _recipeApi.GetRecipesAsync();
+            
+            if (recipes != null) 
+                NavController.Navigate(new RecipesPage(this, recipes));
+
+        }
+        catch (HttpRequestException e)
+        {
+            NavController.Navigate(new ConnectionErrorPage());
+        }
+        catch (Exception e)
+        {
+            NavController.Navigate(new ErrorPage());
+        }
     }
 
     private void SetRecipes(string search)

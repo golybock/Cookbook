@@ -6,6 +6,63 @@ namespace CookbookApi.Repositories.Client;
 
 public class ClientRepository : RepositoryBase, IClientRepository
 {
+    public async Task<ClientModel?> GetClientAsync(int id)
+    {
+        var con = GetConnection();
+
+        try
+        {
+            con.Open();
+
+            var query = "select * from client where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters = {new NpgsqlParameter {Value = id}}
+            };
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                var client = new ClientModel();
+                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
+
+                var login = reader.GetValue(reader.GetOrdinal("login"));
+                client.Login = login == DBNull.Value ? null : login.ToString();
+
+                var password = reader.GetValue(reader.GetOrdinal("password"));
+                client.Password = password == DBNull.Value ? null : password.ToString();
+
+                var name = reader.GetValue(reader.GetOrdinal("name"));
+                client.Name = name == DBNull.Value ? null : name.ToString();
+
+                var description = reader.GetValue(reader.GetOrdinal("description"));
+                client.Description = description == DBNull.Value ? null : description.ToString();
+
+                var email = reader.GetValue(reader.GetOrdinal("email"));
+                client.Email = email == DBNull.Value ? null : email.ToString();
+
+                var image = reader.GetValue(reader.GetOrdinal("image_path"));
+                client.ImagePath = image == DBNull.Value ? null : image.ToString();
+
+                client.Token = reader.GetString(reader.GetOrdinal("token"));
+
+                return client;
+            }
+
+            return null;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+    
     public async Task<ClientModel?> GetClientAsync(string token)
     {
         var con = GetConnection();

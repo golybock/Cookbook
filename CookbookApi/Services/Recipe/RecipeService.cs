@@ -250,10 +250,12 @@ public class RecipeService : IRecipeService
         var recipeTypeTask = _recipeTypeRepository.GetRecipeTypeAsync(recipe.TypeId);
         var recipeCategoriesTask = _recipeCategoryRepository.GetRecipeCategoriesAsync(recipe.Id);
         var recipeIngredientsTask = _recipeIngredientRepository.GetRecipeIngredientsAsync(recipe.Id);
+        var ownerTask = _clientRepository.GetClientAsync(recipe.ClientId);
 
         var recipeStats = await recipeStatsTask;
         var recipeType = await recipeTypeTask;
         var recipeCategories = await recipeCategoriesTask;
+        var owner = await ownerTask;
         var recipeIngredients = await recipeIngredientsTask;
 
         if (recipeStats != null)
@@ -262,10 +264,14 @@ public class RecipeService : IRecipeService
         if (recipeType != null)
             recipeDomain.RecipeType = new RecipeTypeDomain(recipeType);
 
+        if (owner != null) 
+            recipeDomain.ClientOwner = owner.Login;
+
         recipeDomain.Categories = await GetCategoriesDomain(recipeCategories);
         recipeDomain.Ingredients = await GetIngredientsDomain(recipeIngredients);
         recipeDomain.Steps = await GetStepsDomain(recipe.Id);
-
+        
+        
         return recipeDomain;
     }
 

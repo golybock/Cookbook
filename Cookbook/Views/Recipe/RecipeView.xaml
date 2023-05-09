@@ -10,6 +10,10 @@
              d:DesignHeight="600"
              d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -33,7 +37,7 @@
             <controls:SimpleStackPanel Orientation="Horizontal"
                                        Spacing="12">
 
-                <Image Source="../../Resources/dore.png"
+                <Image Source="{Binding Recipe.ImagePath}"
                        Width="250"
                        Height="250"
                        Margin="10" />
@@ -63,7 +67,8 @@
                         <Button Height="35"
                                 FontSize="14"
                                 Command="{Binding EditCommand}"
-                                ToolTip="Редактировать">
+                                ToolTip="Редактировать"
+                                Visibility="{Binding CanEdit, Converter={StaticResource VisibilityConverter}}">
 
                             <Image Margin="1"
                                    Source="../../Resources/Icons/edit.png" />
@@ -73,7 +78,8 @@
                         <Button Height="35"
                                 FontSize="14"
                                 Command="{Binding DeleteCommand}"
-                                ToolTip="Удалить">
+                                ToolTip="Удалить"
+                                Visibility="{Binding CanEdit, Converter={StaticResource VisibilityConverter}}">
 
                             <Image Margin="1"
                                    Source="../../Resources/Icons/delete.png" />
@@ -83,7 +89,7 @@
                         <Button Height="35"
                                 FontSize="14"
                                 Command="{Binding SaveCommand}"
-                                ToolTip="Сохранить">
+                                ToolTip="Сохранить как документ">
 
                             <Image Margin="1"
                                    Source="../../Resources/Icons/pdf.png" />
@@ -92,8 +98,8 @@
 
                         <Button Height="35"
                                 FontSize="14"
-                                Command="{Binding SaveCommand}"
-                                ToolTip="Сохранить">
+                                Command="{Binding LikeCommand}"
+                                ToolTip="Сохранить в избранное">
 
                             <Image Margin="1"
                                    Source="../../Resources/Icons/bookmark.png" />
@@ -122,9 +128,18 @@
                            Margin="5,0,0,0"
                            FontWeight="Bold" />
 
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding RecipeIngredientsNotVisible, Converter={StaticResource VisibilityConverter}}">
+                    
+                    <TextBlock Text="Нет игредиентов"/>
+                    
+                </StackPanel>
+                
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Ingredients, UpdateSourceTrigger=PropertyChanged}">
-
+                                        ItemsSource="{Binding Recipe.Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeIngredientsVisible, Converter={StaticResource VisibilityConverter}}">
+                    
                     <controls:ItemsRepeater.Layout>
 
                         <controls:StackLayout Spacing="5" />
@@ -164,8 +179,7 @@
         </ui:ContentCard>
 
         <!-- categories -->
-        <ui:ContentCard Grid.Row="2"
-                        Grid.RowSpan="2"
+        <ui:ContentCard Grid.Row="1"
                         Grid.Column="1"
                         Margin="5">
 
@@ -177,9 +191,18 @@
                            FontSize="20"
                            Margin="5,0,0,0"
                            FontWeight="Bold" />
+                
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding RecipeCategoriesNotVisible, Converter={StaticResource VisibilityConverter}}">
+                    
+                    <TextBlock Text="Нет категорий"/>
+                    
+                </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Categories, UpdateSourceTrigger=PropertyChanged}">
+                                        ItemsSource="{Binding Recipe.Categories, UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeCategoriesVisible, Converter={StaticResource VisibilityConverter}}">
 
                     <controls:ItemsRepeater.Layout>
 
@@ -208,7 +231,8 @@
         </ui:ContentCard>
 
         <!-- steps -->
-        <ui:ContentCard Grid.Row="1"
+        <ui:ContentCard Grid.Row="2"
+                        Grid.RowSpan="2"
                         Grid.Column="1"
                         Margin="5">
             <controls:SimpleStackPanel Grid.Column="0"
@@ -219,8 +243,17 @@
                            FontSize="20"
                            FontWeight="Bold" />
 
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding RecipeStepsNotVisible, Converter={StaticResource VisibilityConverter}}">
+                    
+                    <TextBlock Text="Нет шагов приготовления"/>
+                    
+                </StackPanel>
+                
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}">
+                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeStepsVisible, Converter={StaticResource VisibilityConverter}}">
 
                     <controls:ItemsRepeater.Layout>
 

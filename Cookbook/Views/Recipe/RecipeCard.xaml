@@ -85,7 +85,7 @@
             </Grid.RowDefinitions>
 
             <Image Grid.Row="0"
-                   Source="{Binding ImagePath, FallbackValue=../../Resources/Icons/food.png}" />
+                   Source="{Binding ImagePath}" />
 
             <ui:SimpleStackPanel Grid.Row="1"
                                  Spacing="12"

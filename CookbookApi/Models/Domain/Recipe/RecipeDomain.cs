@@ -7,6 +7,8 @@ public class RecipeDomain
 {
     public int ClientId { get; set; }
 
+    public string? ClientOwner { get; set; }
+    
     public int TypeId { get; set; }
 
     public string Header { get; set; } = string.Empty;

@@ -7,8 +7,8 @@ namespace Cookbook.Models.Domain.Recipe;
 
 public class RecipeDomain
 {
-    [JsonPropertyName("clientId")]
-    public int ClientId { get; set; }
+    [JsonPropertyName("clientOwner")]
+    public string? ClientOwner { get; set; }
     [JsonPropertyName("typeId")]
     public int TypeId { get; set; }
     [JsonPropertyName("header")]
