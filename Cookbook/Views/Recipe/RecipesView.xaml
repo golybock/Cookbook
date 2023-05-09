@@ -18,7 +18,7 @@
                 
                 <ui:SplitButton Height="35"
                                 Width="175"
-                                FontSize="12"
+                                FontSize="14"
                                 Content="{Binding SelectedRecipeType.Name, UpdateSourceTrigger=PropertyChanged}">
 
                     <ui:SplitButton.Flyout>
@@ -39,7 +39,7 @@
                 
                 <ui:SplitButton Height="35"
                                 Width="175"
-                                FontSize="12"
+                                FontSize="14"
                                 Content="{Binding SelectedSortType.Name, UpdateSourceTrigger=PropertyChanged}">
 
                     <ui:SplitButton.Flyout>

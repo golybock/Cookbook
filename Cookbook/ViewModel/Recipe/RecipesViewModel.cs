@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Cookbook.Command;
 using Cookbook.Models.Domain.Recipe;
 using Cookbook.Pages.Recipe;
+using Cookbook.Services;
 using Cookbook.UI.Sort;
 using Cookbook.ViewModel.Navigation;
 using Xceed.Document.NET;
@@ -22,11 +24,21 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
         Recipes = new ObservableCollection<RecipeDomain>(recipeDomains);
         OnPropertyChanged("Recipes");
+        
+        LoadRecipeTypes();
     }
     
     public CommandHandler<RecipeDomain> CardClickCommand =>
         new CommandHandler<RecipeDomain>(OpenRecipe);
 
+    public CommandHandler AddCommand =>
+        new CommandHandler(CreateRecipe);
+
+    private void CreateRecipe()
+    {
+        Host.NavController.Navigate(new EditRecipePage(Host));
+    }
+    
     private void OpenRecipe(RecipeDomain recipeDomain)
     {
         Host.NavController.Navigate(new RecipePage(Host, recipeDomain));
@@ -44,6 +56,8 @@ public class RecipesViewModel : ViewModelBase, INavItem
     public ObservableCollection<RecipeTypeDomain> RecipeTypes { get; set; } =
         new ObservableCollection<RecipeTypeDomain>();
 
+    private readonly RecipeService _recipeService = new RecipeService();
+    
     public SortType SelectedSortType
     {
         get => _selectedSortType;
@@ -68,7 +82,16 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
     public async void LoadRecipeTypes()
     {
+        RecipeTypes = new((await _recipeService.RecipeType.Get())!);
         
+        RecipeTypes.Add(new RecipeTypeDomain()
+        {
+            Id = 0, Name = "Все типы"
+        });
+
+        SelectedRecipeType = RecipeTypes.LastOrDefault();
+        
+        OnPropertyChanged("RecipeTypes");
     }
     
     public INavHost Host { get; set; }
