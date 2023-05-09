@@ -17,7 +17,12 @@ public class RecipeViewModel : ViewModelBase, INavItem
 {
     private readonly ClientApi _clientApi = new ClientApi();
     private readonly RecipeService _recipeService = new RecipeService();
+
     private bool _canEdit = false;
+
+    public INavHost Host { get; set; }
+
+    public RecipeDomain Recipe { get; set; } = new RecipeDomain();
 
     public RecipeViewModel(INavHost host)
     {
@@ -34,7 +39,36 @@ public class RecipeViewModel : ViewModelBase, INavItem
         LoadAccess();
     }
 
-    public INavHost Host { get; set; }
+
+    public bool RecipeIngredientsVisible =>
+        Recipe.Ingredients.Count > 0;
+
+    public bool RecipeCategoriesVisible =>
+        Recipe.Categories.Count > 0;
+
+    public bool RecipeStepsVisible =>
+        Recipe.Steps.Count > 0;
+
+    public bool RecipeStepsNotVisible =>
+        !RecipeStepsVisible;
+
+    public bool RecipeCategoriesNotVisible =>
+        !RecipeCategoriesVisible;
+
+    public bool RecipeIngredientsNotVisible =>
+        !RecipeIngredientsVisible;
+
+    public CommandHandler EditCommand =>
+        new CommandHandler(Edit);
+
+    public CommandHandler SaveCommand =>
+        new CommandHandler(Save);
+
+    public CommandHandler DeleteCommand =>
+        new CommandHandler(Delete);
+
+    public CommandHandler LikeCommand =>
+        new CommandHandler(Like);
 
     private async void LoadAccess()
     {
@@ -65,43 +99,11 @@ public class RecipeViewModel : ViewModelBase, INavItem
         }
     }
 
-    public bool RecipeIngredientsVisible =>
-        Recipe.Ingredients.Count > 0;
-
-    public bool RecipeCategoriesVisible =>
-        Recipe.Categories.Count > 0;
-
-    public bool RecipeStepsVisible =>
-        Recipe.Steps.Count > 0;
-
-    public bool RecipeStepsNotVisible =>
-        !RecipeStepsVisible;
-
-    public bool RecipeCategoriesNotVisible =>
-        !RecipeCategoriesVisible;
-
-    public bool RecipeIngredientsNotVisible =>
-        !RecipeIngredientsVisible;
-
-    public RecipeDomain Recipe { get; set; } = new RecipeDomain();
-
-    public CommandHandler EditCommand =>
-        new CommandHandler(Edit);
-
-    public CommandHandler SaveCommand =>
-        new CommandHandler(Save);
-
-    public CommandHandler DeleteCommand =>
-        new CommandHandler(Delete);
-
-    public CommandHandler LikeCommand =>
-        new CommandHandler(Like);
-
     private async void Delete()
     {
         try
         {
-            if (Recipe.Code != null) 
+            if (Recipe.Code != null)
                 await _recipeService.Recipe.Delete(Recipe.Code);
 
             var notify = new ContentDialog()
@@ -112,7 +114,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
             };
 
             await notify.ShowAsync();
-            
+
             Host.NavController.GoBack();
         }
         catch (Exception e)
@@ -138,6 +140,6 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
     private void Save()
     {
-        MessageBox.Show("Сохранено");
+        throw new NotImplementedException();
     }
 }
