@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Cookbook.Api.Client;
 using Cookbook.Api.Recipe;
 using Cookbook.Command;
@@ -38,7 +39,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
     public NavigationViewModel()
     {
         BackVisible = false;
-        NavController.Navigate(new RecipesPage(this));
+        SetRecipes();
     }
     
 
@@ -79,7 +80,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
             return;
         
         if (selected?.Tag.ToString() == "Recipes")
-            NavController.Navigate(new RecipesPage(this));
+            SetRecipes();
 
         if (selected?.Tag.ToString() == "Liked")
             NavController.Navigate(new RecipesPage(this));
@@ -115,9 +116,12 @@ public class NavigationViewModel : ViewModelBase, INavHost
         NavController.Navigate(new ClientPage(this));
     }
 
-    private void SetRecipes()
+    private async void SetRecipes()
     {
-        var recipes = await _recipeApi.
+        var recipes = await _recipeApi.GetRecipesAsync();
+
+        if (recipes != null) 
+            NavController.Navigate(new RecipesPage(this, recipes));
     }
 
     private void SetRecipes(string search)

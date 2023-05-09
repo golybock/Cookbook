@@ -55,7 +55,7 @@ namespace CookbookApi.Controllers.Recipe
         }
 
         [HttpPost("RecipeImage")]
-        public async Task<IActionResult> UploadRecipeImageAsync(string token, string code, IFormFile file)
+        public async Task<IActionResult> UploadRecipeImageAsync([FromHeader] string token, string code, IFormFile file)
         {
             return await _recipeService.UploadRecipeImageAsync(token, code, file);
         }
@@ -67,7 +67,7 @@ namespace CookbookApi.Controllers.Recipe
         }
 
         [HttpDelete("RecipeImage")]
-        public async Task<IActionResult> DeleteRecipeImageAsync(string token, string recipeCode)
+        public async Task<IActionResult> DeleteRecipeImageAsync([FromHeader] string token, string recipeCode)
         {
             return await _recipeService.DeleteRecipeImageAsync(token, recipeCode);
         }

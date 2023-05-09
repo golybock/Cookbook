@@ -14,28 +14,13 @@ public class RecipesViewModel : ViewModelBase, INavItem
     public RecipesViewModel(INavHost host)
     {
         Host = host;
-        
-        Recipes.Add(new RecipeDomain() { Header = "Beba"});
-        Recipes.Add(new RecipeDomain() { Header = "Boba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        OnPropertyChanged("Recipes");
     }
     
     public RecipesViewModel(INavHost host, List<RecipeDomain> recipeDomains)
     {
         Host = host;
-        
-        Recipes.Add(new RecipeDomain() { Header = "Beba"});
-        Recipes.Add(new RecipeDomain() { Header = "Boba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
-        Recipes.Add(new RecipeDomain() { Header = "Biba"});
+
+        Recipes = new ObservableCollection<RecipeDomain>(recipeDomains);
         OnPropertyChanged("Recipes");
     }
     
@@ -44,10 +29,13 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
     private void OpenRecipe(RecipeDomain recipeDomain)
     {
-        Host.NavController.Navigate(new RecipePage(Host));
+        Host.NavController.Navigate(new RecipePage(Host, recipeDomain));
     }
     
     private SortType _selectedSortType = UI.Sort.SortTypes.Default;
+    
+    private RecipeTypeDomain _selectedRecipeType = new RecipeTypeDomain();
+
     public ObservableCollection<RecipeDomain> Recipes { get; set; } = new ObservableCollection<RecipeDomain>();
 
     public List<SortType> SortTypes => 
@@ -67,7 +55,21 @@ public class RecipesViewModel : ViewModelBase, INavItem
         }
     }
 
-    public RecipeTypeDomain SelectedRecipeType { get; set; } = new RecipeTypeDomain();
+    public RecipeTypeDomain SelectedRecipeType
+    {
+        get => _selectedRecipeType;
+        set
+        {
+            if (Equals(value, _selectedRecipeType)) return;
+            _selectedRecipeType = value;
+            OnPropertyChanged();
+        }
+    }
 
+    public async void LoadRecipeTypes()
+    {
+        
+    }
+    
     public INavHost Host { get; set; }
 }
