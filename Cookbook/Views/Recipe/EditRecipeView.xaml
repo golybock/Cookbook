@@ -38,7 +38,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Grid.Column="0"
-                       Source="{Binding Recipe.ImagePath}"
+                       Source="{Binding ImageUrl}"
                        Width="250"
                        Height="250"
                        Margin="20" />
@@ -54,78 +54,88 @@
                     <controls:SimpleStackPanel Grid.Row="0"
                                                Spacing="12"
                                                VerticalAlignment="Top"
-                                               HorizontalAlignment="Left">
+                                               HorizontalAlignment="Left"
+                                               Margin="5">
 
-                        <TextBlock Text="{Binding Recipe.Header}"
-                                   FontWeight="Bold"
-                                   TextWrapping="Wrap"
-                                   FontSize="28" />
+                        <TextBox Text="{Binding Recipe.Header}"
+                                 controls:ControlHelper.Header="Заголовок"
+                                 FontWeight="Bold"
+                                 TextWrapping="Wrap"
+                                 FontSize="28" />
 
-                        <TextBlock Text="{Binding Recipe.RecipeType.Name}"
-                                   FontSize="20"
-                                   TextWrapping="Wrap" />
 
-                        <TextBlock Text="{Binding Recipe.Description}"
-                                   TextWrapping="Wrap"
-                                   MaxHeight="140"
-                                   FontSize="20" />
+                        <controls:SplitButton Height="35"
+                                              Width="175"
+                                              FontSize="14"
+                                              Content="{Binding SelectedRecipeTypeDomain.Name, UpdateSourceTrigger=PropertyChanged}">
+
+                            <controls:SplitButton.Flyout>
+                                <controls:Flyout>
+                                    <ListView ItemsSource="{Binding RecipeTypeDomains}"
+                                              SelectedItem="{Binding SelectedRecipeTypeDomain}">
+
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+
+                                    </ListView>
+                                </controls:Flyout>
+                            </controls:SplitButton.Flyout>
+                        </controls:SplitButton>
+
+                        <TextBox Text="{Binding Recipe.Description}"
+                                 TextWrapping="Wrap"
+                                 MaxHeight="140"
+                                 FontSize="20" />
 
                     </controls:SimpleStackPanel>
 
                     <!-- toolbar -->
-                    <controls:SimpleStackPanel HorizontalAlignment="Left"
+                    <controls:SimpleStackPanel Grid.Row="1"
+                                               HorizontalAlignment="Left"
                                                Orientation="Horizontal"
-                                               Spacing="12">
+                                               Spacing="12"
+                                               Margin="5">
 
                         <Button Height="35"
                                 FontSize="14"
-                                Command="{Binding SaveCommand}">
+                                Command="{Binding SaveCommand}"
+                                ToolTip="Сохранить">
 
                             <StackPanel Orientation="Horizontal">
 
                                 <Image Margin="1"
                                        Source="../../Resources/Icons/save.png" />
 
-                                <TextBlock TextAlignment="Center"
-                                           Margin="5,0,5,0"
-                                           VerticalAlignment="Center"
-                                           Text="Сохранить" />
-
                             </StackPanel>
 
                         </Button>
 
                         <Button Height="35"
                                 FontSize="14"
-                                Command="{Binding CancelCommand}">
+                                Command="{Binding CancelCommand}"
+                                ToolTip="Отмена">
 
                             <StackPanel Orientation="Horizontal">
 
                                 <Image Margin="1"
                                        Source="../../Resources/Icons/close.png" />
 
-                                <TextBlock TextAlignment="Center"
-                                           Margin="5,0,5,0"
-                                           VerticalAlignment="Center"
-                                           Text="Отмена" />
-
                             </StackPanel>
 
                         </Button>
 
                         <Button Height="35"
                                 FontSize="14"
-                                Command="{Binding ChooseImageButton}">
+                                Command="{Binding ChooseImageButton}"
+                                ToolTip="Выбрать изображение">
 
                             <StackPanel Orientation="Horizontal">
 
                                 <Image Margin="1"
                                        Source="../../Resources/Icons/image.png" />
-
-                                <TextBlock TextAlignment="Center"
-                                           Margin="5,0,5,0"
-                                           VerticalAlignment="Center"
-                                           Text="Выбрать изображение" />
 
                             </StackPanel>
 
