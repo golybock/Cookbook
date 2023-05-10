@@ -10,38 +10,48 @@
              d:DesignWidth="300">
     
     <controls:SimpleStackPanel Spacing="12"
+                               Margin="20"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center">
         
-        <controls:SplitButton Height="35"
-                              Width="200"
-                              FontSize="16"
-                              Content="{Binding SelectedIngredient.Name, UpdateSourceTrigger=PropertyChanged}">
+        <controls:SimpleStackPanel Spacing="5">
 
-            <controls:SplitButton.Flyout>
+            <TextBlock Text="Ингредиент"
+                       FontSize="16" />
+
+            <controls:SplitButton Height="35"
+                                  Width="200"
+                                  FontSize="16"
+                                  Content="{Binding SelectedIngredient.Name, UpdateSourceTrigger=PropertyChanged}">
+
+                <controls:SplitButton.Flyout>
                 
-                <controls:Flyout>
+                    <controls:Flyout>
                     
-                    <ListView ItemsSource="{Binding Ingredients}"
-                              SelectedItem="{Binding SelectedIngredient}">
+                        <ListView ItemsSource="{Binding Ingredients}"
+                                  SelectedItem="{Binding SelectedIngredient}">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
-                    </ListView>
+                        </ListView>
                     
-                </controls:Flyout>
+                    </controls:Flyout>
                 
-            </controls:SplitButton.Flyout>
+                </controls:SplitButton.Flyout>
             
-        </controls:SplitButton>
+            </controls:SplitButton>
+
+        </controls:SimpleStackPanel>
         
         <controls:NumberBox Value="{Binding Count}"
                             Width="200"
                             FontSize="16"
+                            Minimum="1"
+                            Maximum="100000"
                             Header="Кол-во"/>
         
     </controls:SimpleStackPanel>

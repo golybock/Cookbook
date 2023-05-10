@@ -10,8 +10,8 @@ public class IngredientDomain
     public int MeasureId { get; set; }
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
-
-    public MeasureDomain? Measure = new MeasureDomain();
+    [JsonPropertyName("measure")]
+    public MeasureDomain? Measure { get; set; } = new MeasureDomain();
 
     public IngredientDomain() { }
 

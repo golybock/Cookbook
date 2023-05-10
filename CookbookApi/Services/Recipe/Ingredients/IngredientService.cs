@@ -10,17 +10,30 @@ namespace CookbookApi.Services.Recipe.Ingredients;
 public class IngredientService : IIngredientService
 {
     private readonly IngredientRepository _ingredientRepository;
+    private readonly MeasureRepository _measureRepository;
 
     public IngredientService()
     {
         _ingredientRepository = new IngredientRepository();
+        _measureRepository = new MeasureRepository();
     }
 
     public async Task<List<IngredientDomain>> GetIngredientsAsync()
     {
         var ingredients = await _ingredientRepository.GetIngredientsAsync();
 
-        return ingredients.Select(c => new IngredientDomain(c)).ToList();
+        var ingredientsDomain = ingredients.Select(c => new IngredientDomain(c)).ToList();
+
+        foreach (var ingredient in ingredientsDomain)
+        {
+            var measure = await _measureRepository.GetMeasureAsync(ingredient.MeasureId);
+
+            if (measure != null) 
+                ingredient.Measure = new(measure);
+        }
+            
+
+        return ingredientsDomain;
     }
 
     public async Task<IActionResult> CreateIngredientAsync(IngredientBlank ingredient)

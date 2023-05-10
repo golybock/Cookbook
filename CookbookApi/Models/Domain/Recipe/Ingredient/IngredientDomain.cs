@@ -8,7 +8,7 @@ public class IngredientDomain
 
     public string Name { get; set; } = string.Empty;
 
-    public MeasureDomain? Measure = new MeasureDomain();
+    public MeasureDomain? Measure { get; set; } = new MeasureDomain();
 
     public IngredientDomain() { }
 

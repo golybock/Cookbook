@@ -19,7 +19,7 @@ public class ChooseIngredientViewModel : ViewModelBase
     
     private IngredientDomain _selectedIngredient = new IngredientDomain();
     
-    private int _count;
+    private int _count = 1;
 
     public IngredientDomain SelectedIngredient
     {
