@@ -7,6 +7,8 @@ namespace Cookbook.Models.Domain.Recipe;
 
 public class RecipeDomain
 {
+    private string? _imagePath;
+
     [JsonPropertyName("clientOwner")]
     public string? ClientOwner { get; set; }
     [JsonPropertyName("typeId")]
@@ -19,8 +21,14 @@ public class RecipeDomain
     public string? Code { get; set; }
     [JsonPropertyName("sourceUrl")]
     public string? SourceUrl { get; set; }
+
     [JsonPropertyName("imagePath")]
-    public string? ImagePath { get; set; }
+    public string? ImagePath
+    {
+        get => "https://localhost:7234/RecipeImages/" + _imagePath;
+        set => _imagePath = value;
+    }
+
     [JsonPropertyName("isLiked")]
     public bool IsLiked { get; set; }
     [JsonPropertyName("recipeType")]

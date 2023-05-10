@@ -19,6 +19,9 @@ public class RecipeStatsDomain
     [JsonPropertyName("cookingTime")]
     public DateTime CookingTime { get; set; }
 
+    [JsonIgnore] 
+    public int CookingTimeMinutes => CookingTime.Minute;
+
     public RecipeStatsDomain() { }
 
     public RecipeStatsDomain(RecipeStatsBlank recipeStats)

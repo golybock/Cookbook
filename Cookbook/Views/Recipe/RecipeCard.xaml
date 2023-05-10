@@ -98,7 +98,7 @@
                 <TextBlock Text="{Binding RecipeType.Name, FallbackValue=Тип}"
                            FontSize="16" />
 
-                <TextBlock Text="{Binding Stats.CookingTime, StringFormat=t, FallbackValue=Время приготовления}"
+                <TextBlock Text="{Binding Stats.CookingTimeMinutes,StringFormat=Минут: {0}}"
                            FontSize="16" />
 
             </ui:SimpleStackPanel>

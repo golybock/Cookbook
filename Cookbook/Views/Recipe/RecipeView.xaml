@@ -339,7 +339,7 @@
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Время приготовления"
                          TextWrapping="Wrap"
-                         Text="{Binding Recipe.Stats.CookingTime, StringFormat=t}"
+                         Text="{Binding Recipe.Stats.CookingTimeMinutes}"
                          IsEnabled="False" />
 
                 <TextBox Margin="5,0,0,0"
