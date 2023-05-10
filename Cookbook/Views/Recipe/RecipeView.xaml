@@ -33,34 +33,52 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="5">
+            
+            <Grid>
 
-            <controls:SimpleStackPanel Orientation="Horizontal"
-                                       Spacing="12">
-
-                <Image Source="{Binding Recipe.ImagePath}"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Image Grid.Column="0"
+                       Source="{Binding Recipe.ImagePath}"
                        Width="250"
                        Height="250"
-                       Margin="10" />
+                       Margin="20" />
 
-                <controls:SimpleStackPanel Orientation="Vertical"
-                                           Spacing="12">
+                <Grid Grid.Column="1"
+                      Margin="20">
 
-                    <TextBlock Text="{Binding Recipe.Header}"
-                               FontWeight="Bold"
-                               TextWrapping="Wrap"
-                               FontSize="28" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80*"/>
+                        <RowDefinition Height="20*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <controls:SimpleStackPanel Grid.Row="0"
+                                               Spacing="12"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left">
+                        
+                        <TextBlock Text="{Binding Recipe.Header}"
+                                   FontWeight="Bold"
+                                   TextWrapping="Wrap"
+                                   FontSize="28" />
 
-                    <TextBlock Text="{Binding Recipe.RecipeType.Name}"
-                               FontSize="20"
-                               TextWrapping="Wrap" />
-
-                    <TextBlock Text="{Binding Recipe.Description}"
-                               FontSize="20"
-                               MaxHeight="100"
-                               TextWrapping="Wrap" />
-
+                        <TextBlock Text="{Binding Recipe.RecipeType.Name}"
+                                   FontSize="20"
+                                   TextWrapping="Wrap" />
+                        
+                        <TextBlock Text="{Binding Recipe.Description}"
+                                   TextWrapping="Wrap"
+                                   MaxHeight="140"
+                                   FontSize="20"/>
+                        
+                    </controls:SimpleStackPanel>
+                    
                     <!-- toolbar -->
-                    <controls:SimpleStackPanel HorizontalAlignment="Left"
+                    <controls:SimpleStackPanel Grid.Row="1"
+                                               HorizontalAlignment="Left"
                                                Orientation="Horizontal"
                                                Spacing="12">
 
@@ -108,9 +126,9 @@
 
                     </controls:SimpleStackPanel>
 
-                </controls:SimpleStackPanel>
+                </Grid>
 
-            </controls:SimpleStackPanel>
+            </Grid>
 
         </ui:ContentCard>
 
@@ -339,7 +357,7 @@
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Время приготовления"
                          TextWrapping="Wrap"
-                         Text="{Binding Recipe.Stats.CookingTimeMinutes}"
+                         Text="{Binding Recipe.Stats.CookingTimeMinutes, Mode=OneWay}"
                          IsEnabled="False" />
 
                 <TextBox Margin="5,0,0,0"

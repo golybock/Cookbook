@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Cookbook.Api.Client;
 using Cookbook.Command;
 using Cookbook.Models.Domain.Recipe;
 using Cookbook.Pages.Recipe;
@@ -13,6 +15,9 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class RecipesViewModel : ViewModelBase, INavItem
 {
+    private readonly ClientApi _clientApi = new ClientApi();
+    private bool _userLogin = false;
+    
     public RecipesViewModel(INavHost host)
     {
         Host = host;
@@ -39,9 +44,37 @@ public class RecipesViewModel : ViewModelBase, INavItem
         Host.NavController.Navigate(new EditRecipePage(Host));
     }
     
+    public bool UserLogin
+    {
+        get => _userLogin ;
+        set
+        {
+            if (value == _userLogin ) return;
+            _userLogin  = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private void OpenRecipe(RecipeDomain recipeDomain)
     {
         Host.NavController.Navigate(new RecipePage(Host, recipeDomain));
+    }
+    
+    private async void LoadAccess()
+    {
+        UserLogin = false;
+
+        try
+        {
+            var client = await _clientApi.GetClientAsync();
+
+            if (client?.Login != null)
+                UserLogin = true;
+        }
+        catch (Exception e)
+        {
+            UserLogin = false;
+        }
     }
     
     private SortType _selectedSortType = UI.Sort.SortTypes.Default;

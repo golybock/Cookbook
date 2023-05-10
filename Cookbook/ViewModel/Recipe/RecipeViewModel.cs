@@ -19,10 +19,14 @@ public class RecipeViewModel : ViewModelBase, INavItem
     private readonly RecipeService _recipeService = new RecipeService();
 
     private bool _canEdit = false;
+    
 
     public INavHost Host { get; set; }
 
     public RecipeDomain Recipe { get; set; } = new RecipeDomain();
+
+
+
 
     public RecipeViewModel(INavHost host)
     {
