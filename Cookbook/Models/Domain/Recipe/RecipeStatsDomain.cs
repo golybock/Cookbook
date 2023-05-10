@@ -20,7 +20,11 @@ public class RecipeStatsDomain
     public DateTime CookingTime { get; set; }
 
     [JsonIgnore] 
-    public int CookingTimeMinutes => CookingTime.Minute;
+    public int CookingTimeMinutes
+    {
+        get => CookingTime.Minute;
+        set => CookingTime = new DateTime(0, 0, 0, 0, value, 0);
+    }
 
     public RecipeStatsDomain() { }
 
