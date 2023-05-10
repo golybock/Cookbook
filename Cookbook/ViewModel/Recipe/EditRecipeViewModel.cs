@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Cookbook.Api.Recipe;
 using Cookbook.Command;
@@ -6,11 +7,13 @@ using Cookbook.Models.Blank.Recipe;
 using Cookbook.Models.Blank.Recipe.Category;
 using Cookbook.Models.Blank.Recipe.Ingredient;
 using Cookbook.Models.Domain.Recipe;
+using Cookbook.Models.Domain.Recipe.Ingredient;
 using Cookbook.Services;
 using Cookbook.ViewModel.ChooseDialogs;
 using Cookbook.ViewModel.Navigation;
 using Cookbook.Views.ChooseDialogs;
 using ModernWpf.Controls;
+using Xceed.Document.NET;
 
 namespace Cookbook.ViewModel.Recipe;
 
@@ -160,12 +163,17 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
         if (res == ContentDialogResult.Primary)
         {
-            var ingredient = Ingredients
+            var ingredients = new List<RecipeIngredientDomain>(Ingredients);
+            
+            var ingredient = ingredients
                 .FirstOrDefault(c => c.IngredientId == context.RecipeIngredientDomain.IngredientId);
 
             if (ingredient != null)
+            {
                 ingredient.Count += context.RecipeIngredientDomain.Count;
-
+                Ingredients = new(ingredients);
+            }
+            
             else
                 Ingredients.Add(context.RecipeIngredientDomain);
         }
