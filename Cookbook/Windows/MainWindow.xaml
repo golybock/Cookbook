@@ -7,7 +7,6 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:Cookbook"
         xmlns:views="clr-namespace:Cookbook.Views"
-        xmlns:navigation="clr-namespace:Cookbook.Views.Navigation"
         mc:Ignorable="d"
         Title="Книга рецептов"
         Icon="../../Resources/AppIcon/book.png"
@@ -15,8 +14,6 @@
         MinWidth="800">
     
     <Grid>
-        
-        <navigation:NavigationView />
         
     </Grid>
     

@@ -1,14 +1,22 @@
-﻿using System.Windows.Controls;
-using Cookbook.ViewModel.Auth;
-using Cookbook.ViewModel.Navigation;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Cookbook.Pages.Auth;
 
 public partial class LoginPage : Page
 {
-    public LoginPage(INavHost host)
+    public LoginPage()
     {
         InitializeComponent();
-        DataContext = new LoginViewModel(host);
+    }
+
+    private void LoginButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
     }
 }

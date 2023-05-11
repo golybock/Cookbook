@@ -5,10 +5,55 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Auth"
       xmlns:auth="clr-namespace:Cookbook.Views.Auth"
+      xmlns:ui="clr-namespace:Cookbook.UI"
+      xmlns:controls="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d"
       Title="Авторизация"
       Tag="Login">
     <Grid>
-        <auth:LoginView x:Name="LoginView"/>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+        
+            <ui:ContentCard>
+        
+                <controls:SimpleStackPanel Orientation="Vertical"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Spacing="12">
+            
+                    <TextBox 
+                        Width="200"
+                        Text="{Binding Login}"
+                        controls:ControlHelper.Header="Логин"
+                        controls:ControlHelper.PlaceholderText="Логин"/>
+            
+                    <PasswordBox
+                        Width="200"
+                        controls:ControlHelper.Header="Пароль"
+                        controls:ControlHelper.PlaceholderText="Пароль"/>
+            
+                    <TextBlock 
+                        Width="200"
+                        TextWrapping="Wrap"
+                        Foreground="Red"
+                        Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"/>
+            
+                    <Button Name="LoginButton"
+                            Width="200"
+                            Margin="5"
+                            Content="Войти"
+                            Click="LoginButton_OnClick"/>
+            
+                    <Button Name="CancelButton" 
+                            Width="200"
+                            Margin="5"
+                            Content="Отмена"
+                            Click="CancelButton_OnClick"/>
+                    
+                </controls:SimpleStackPanel>
+        
+            </ui:ContentCard>
+        
+        </StackPanel>
     </Grid>
 </Page>

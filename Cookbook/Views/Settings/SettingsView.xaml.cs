@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Cookbook.ViewModel.Settings;
 
 namespace Cookbook.Views.Settings;
 

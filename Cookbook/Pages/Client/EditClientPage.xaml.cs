@@ -1,14 +1,12 @@
 ﻿using System.Windows.Controls;
-using Cookbook.ViewModel.Client;
-using Cookbook.ViewModel.Navigation;
+
 
 namespace Cookbook.Pages.Client;
 
 public partial class EditClientPage : Page
 {
-    public EditClientPage(INavHost host)
+    public EditClientPage()
     {
         InitializeComponent();
-        DataContext = new EditClientVIewModel(host);
     }
 }
