@@ -13,6 +13,7 @@ public class ChooseIngredientViewModel : ViewModelBase
     public ChooseIngredientViewModel()
     {
         GetIngredients();
+        RecipeIngredientDomain.Count = _count;
     }
 
     private readonly RecipeService _recipeService = new RecipeService();

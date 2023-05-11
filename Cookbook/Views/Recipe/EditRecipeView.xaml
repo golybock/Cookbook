@@ -1,5 +1,4 @@
 ﻿<UserControl x:Class="Cookbook.Views.Recipe.EditRecipeView"
-             Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -225,7 +224,9 @@
                                             FontSize="14"
                                             Background="Transparent"
                                             BorderBrush="Transparent"
-                                            Command="{Binding DataContext.DeleteIngredientCommand, ElementName=this}"
+                                            Command="{Binding DataContext.DeleteIngredientCommand,
+                                             RelativeSource={RelativeSource AncestorLevel=3,
+                                              AncestorType=UserControl}}"
                                             CommandParameter="{Binding}">
 
                                         <Image Margin="1"
@@ -310,7 +311,9 @@
                                             FontSize="14"
                                             Background="Transparent"
                                             BorderBrush="Transparent"
-                                            Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            Command="{Binding DataContext.DeleteCategoryCommand,
+                                             RelativeSource={RelativeSource AncestorLevel=3,
+                                              AncestorType=UserControl}}"
                                             CommandParameter="{Binding}">
 
                                         <Image Margin="1"
@@ -397,7 +400,9 @@
                                             FontSize="14"
                                             Background="Transparent"
                                             BorderBrush="Transparent"
-                                            Command="{Binding DataContext.DeleteStepCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            Command="{Binding DataContext.DeleteStepCommand,
+                                             RelativeSource={RelativeSource AncestorLevel=3,
+                                              AncestorType=UserControl}}"
                                             CommandParameter="{Binding}">
 
                                         <Image Margin="1"
