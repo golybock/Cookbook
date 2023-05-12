@@ -1,0 +1,240 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj": {}
+  },
+  "projects": {
+    "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
+        "projectName": "Models.Blank",
+        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
+        "packagesPath": "/home/wsr/.nuget/packages/",
+        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/wsr/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/home/wsr/Рабочий стол": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj",
+        "projectName": "Models.Builders.BlankBuilder",
+        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj",
+        "packagesPath": "/home/wsr/.nuget/packages/",
+        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/wsr/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/home/wsr/Рабочий стол": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj": {
+                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj"
+              },
+              "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj": {
+                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj"
+              },
+              "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj": {
+                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj",
+        "projectName": "Models.Database",
+        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj",
+        "packagesPath": "/home/wsr/.nuget/packages/",
+        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/wsr/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/home/wsr/Рабочий стол": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj",
+        "projectName": "Models.Domain",
+        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj",
+        "packagesPath": "/home/wsr/.nuget/packages/",
+        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/wsr/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/home/wsr/Рабочий стол": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
