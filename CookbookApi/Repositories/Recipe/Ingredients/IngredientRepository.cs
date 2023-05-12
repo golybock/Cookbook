@@ -1,5 +1,5 @@
 ﻿using CookbookApi.Models.Database.Recipe.Ingredient;
-using CookbookApi.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
+using CookbookApi.Repositories.Interfaces.Recipe.Ingredient;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Recipe.Ingredients;

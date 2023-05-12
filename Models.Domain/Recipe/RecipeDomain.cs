@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Models.Domain.Client;
 using Models.Domain.Recipe.Category;
+using Models.Domain.Recipe.Ingredient;
 using Models.Domain.Recipe.Type;
 
 namespace Models.Domain.Recipe;

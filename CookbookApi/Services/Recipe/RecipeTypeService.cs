@@ -7,11 +7,11 @@ namespace CookbookApi.Services.Recipe;
 
 public class RecipeTypeService : IRecipeTypeService
 {
-    private readonly RecipeTypeRepository _recipeTypeRepository;
+    private readonly TypeRepository _typeRepository;
 
     public RecipeTypeService()
     {
-        _recipeTypeRepository = new RecipeTypeRepository();
+        _typeRepository = new TypeRepository();
     }
 
     // public async Task<RecipeType?> GetRecipeTypeAsync(int id)
@@ -23,7 +23,7 @@ public class RecipeTypeService : IRecipeTypeService
 
     public async Task<List<RecipeTypeDomain>> GetRecipeTypesAsync()
     {
-        var recipeTypes = await _recipeTypeRepository.GetRecipeTypesAsync();
+        var recipeTypes = await _typeRepository.GetRecipeTypesAsync();
 
         var recipeTypesDomain = recipeTypes
             .Select(c => new RecipeTypeDomain(c))

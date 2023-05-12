@@ -1,5 +1,4 @@
 ﻿using CookbookApi.Models.Database.Client;
-using CookbookApi.Repositories.Interfaces.ClientInterfaces;
 using Npgsql;
 
 namespace CookbookApi.Repositories.Client;

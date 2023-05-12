@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8sRVI8WUUCmh16CAFrkyOiL+RaPE8W9jNDCCgOccbuH7yVsXvL8tWhS42fHeXetVOXYTaajSfLPOWTEbAv8DmA==",
+  "dgSpecHash": "qwpQ5nN/KFrNzzLMFBChMJkZUz2FginHCCQWumqeWfB1Wxw5UBau1UH948t3SAv5z2L2oXnq3kFeTsaXnHdY4A==",
   "success": true,
-  "projectFilePath": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj",
+  "projectFilePath": "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -2,18 +2,23 @@
 
 namespace CookbookApi.Repositories;
 
-public class RepositoryBase
+public abstract class RepositoryBase
 {
-    private readonly string _connectionString = "host=127.0.0.1;port=5432;Username=admin;Password=admin;Models.Database=cookbook;";
+    private readonly string _connectionString;
+
+    protected RepositoryBase(IConfiguration configuration)
+    {
+        _connectionString = configuration.GetConnectionString("cookbook_db")!;
+    }
 
     protected NpgsqlConnection GetConnection()
     {
         return new NpgsqlConnection(_connectionString);
     }
 
-    private string GetConnectionString() => _connectionString;
+    private string ConnectionString => _connectionString;
 
-    public async Task<int> DeleteAsync(string table, string where, object value)
+    protected async Task<int> DeleteAsync(string table, string row, object value)
     {
         var connection = GetConnection();
 
@@ -21,7 +26,7 @@ public class RepositoryBase
         {
             connection.Open();
 
-            var query = $"delete from {table} where {where} = $1";
+            var query = $"delete from {table} where {row} = $1";
             await using var cmd = new NpgsqlCommand(query, connection)
             {
                 Parameters =

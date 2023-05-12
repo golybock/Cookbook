@@ -1,6 +1,9 @@
 using Models.Blank.Recipe;
+using Models.Blank.Recipe.Ingredient;
 using Models.Database.Recipe;
+using Models.Database.Recipe.Ingredient;
 using Models.Domain.Recipe;
+using Models.Domain.Recipe.Ingredient;
 
 namespace Models.Builders.DomainBuilder.Domain.Recipe;
 

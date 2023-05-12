@@ -1,4 +1,5 @@
 using Models.Blank.Recipe;
+using Models.Blank.Recipe.Category;
 using Models.Domain.Recipe;
 
 namespace Models.Builders.BlankBuilder.Blank.Recipe;

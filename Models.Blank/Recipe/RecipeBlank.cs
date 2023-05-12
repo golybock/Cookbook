@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Models.Blank.Recipe.Category;
+using Models.Blank.Recipe.Ingredient;
 
 namespace Models.Blank.Recipe;
 
 public class RecipeBlank
 {
+    [StringLength(150)]
     [JsonPropertyName("header")] 
     public string Header { get; set; } = string.Empty;
     

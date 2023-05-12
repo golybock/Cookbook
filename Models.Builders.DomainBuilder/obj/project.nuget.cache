@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "QD1B2uMNAgbmNI0Y0olt+Z1Ep6ccxnrkjhAeSe357dnYxaFIh0pYHq/qaMW2GyVcbs5++oPjTO+rEFDvzH+BjQ==",
+  "dgSpecHash": "T4D+GnnUpEL2ULw0de8wn0sH7U79Wonyf1rOk1o/SB626Yxt6ecIQiS10+eKUaMpwE3j+Aju48Ys2Vu277DZwA==",
   "success": true,
-  "projectFilePath": "/home/wsr/RiderProjects/Cookbook/Models.Builders.DomainBuilder/Models.Builders.DomainBuilder.csproj",
+  "projectFilePath": "C:\\Coding\\C#\\Cookbook\\Models.Builders.DomainBuilder\\Models.Builders.DomainBuilder.csproj",
   "expectedPackageFiles": [
-    "/home/wsr/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
-    "/home/wsr/.nuget/packages/system.text.json/7.0.2/system.text.json.7.0.2.nupkg.sha512"
+    "C:\\Users\\teplo\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512"
   ],
   "logs": []
 }

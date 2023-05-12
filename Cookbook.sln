@@ -20,7 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Builders.BlankBuilde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Builders.DomainBuilder", "Models.Builders.DomainBuilder\Models.Builders.DomainBuilder.csproj", "{3AD09677-F1C9-4768-8601-32A6AF45C82D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseBuilder", "DatabaseBuilder\DatabaseBuilder.csproj", "{8386DF17-984F-481C-ACF1-3A05F5EA1312}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Builders.DatabaseBuilder", "Models.Builders.DatabaseBuilder\Models.Builders.DatabaseBuilder.csproj", "{8386DF17-984F-481C-ACF1-3A05F5EA1312}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UIExtensions", "UIExtensions", "{3CCEFDEF-F051-4244-9526-2C5ABEA1880B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

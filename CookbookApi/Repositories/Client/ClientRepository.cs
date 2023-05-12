@@ -1,4 +1,4 @@
-﻿using CookbookApi.Repositories.Interfaces.ClientInterfaces;
+﻿using CookbookApi.Repositories.Interfaces.Client;
 using Npgsql;
 using ClientModel = CookbookApi.Models.Database.Client.Client;
 

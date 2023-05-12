@@ -20,7 +20,7 @@ public class RecipeService : IRecipeService
     private readonly RecipeStatsRepository _recipeStatsRepository;
     private readonly RecipeIngredientRepository _recipeIngredientRepository;
     private readonly RecipeCategoryRepository _recipeCategoryRepository;
-    private readonly RecipeTypeRepository _recipeTypeRepository;
+    private readonly TypeRepository _typeRepository;
     private readonly ClientFavRepository _clientFavRepository;
     private readonly ClientRepository _clientRepository;
     private readonly CategoryRepository _categoryRepository;
@@ -34,7 +34,7 @@ public class RecipeService : IRecipeService
         _recipeStatsRepository = new RecipeStatsRepository();
         _recipeIngredientRepository = new RecipeIngredientRepository();
         _recipeCategoryRepository = new RecipeCategoryRepository();
-        _recipeTypeRepository = new RecipeTypeRepository();
+        _typeRepository = new TypeRepository();
         _clientFavRepository = new ClientFavRepository();
         _clientRepository = new ClientRepository();
         _categoryRepository = new CategoryRepository();
@@ -247,7 +247,7 @@ public class RecipeService : IRecipeService
         var recipeDomain = new RecipeDomain(recipe);
 
         var recipeStatsTask = _recipeStatsRepository.GetRecipeStatsAsync(recipe.Id);
-        var recipeTypeTask = _recipeTypeRepository.GetRecipeTypeAsync(recipe.TypeId);
+        var recipeTypeTask = _typeRepository.GetRecipeTypeAsync(recipe.TypeId);
         var recipeCategoriesTask = _recipeCategoryRepository.GetRecipeCategoriesAsync(recipe.Id);
         var recipeIngredientsTask = _recipeIngredientRepository.GetRecipeIngredientsAsync(recipe.Id);
         var ownerTask = _clientRepository.GetClientAsync(recipe.ClientId);

@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj": {}
+    "C:\\Coding\\C#\\Cookbook\\Models.Builders.BlankBuilder\\Models.Builders.BlankBuilder.csproj": {}
   },
   "projects": {
-    "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj": {
+    "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj",
         "projectName": "Models.Blank",
-        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
-        "packagesPath": "/home/wsr/.nuget/packages/",
-        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/obj/",
+        "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/wsr/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/home/wsr/Рабочий стол": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,41 +59,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj": {
+    "C:\\Coding\\C#\\Cookbook\\Models.Builders.BlankBuilder\\Models.Builders.BlankBuilder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Models.Builders.BlankBuilder\\Models.Builders.BlankBuilder.csproj",
         "projectName": "Models.Builders.BlankBuilder",
-        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/Models.Builders.BlankBuilder.csproj",
-        "packagesPath": "/home/wsr/.nuget/packages/",
-        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Builders.BlankBuilder/obj/",
+        "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Builders.BlankBuilder\\Models.Builders.BlankBuilder.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\Cookbook\\Models.Builders.BlankBuilder\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/wsr/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/home/wsr/Рабочий стол": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj": {
-                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj"
+              "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj": {
+                "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj"
               },
-              "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj": {
-                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj"
+              "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj": {
+                "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj"
               },
-              "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj": {
-                "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj"
+              "C:\\Coding\\C#\\Cookbook\\Models.Domain\\Models.Domain.csproj": {
+                "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Domain\\Models.Domain.csproj"
               }
             }
           }
@@ -124,27 +122,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj": {
+    "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj",
         "projectName": "Models.Database",
-        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/Models.Database.csproj",
-        "packagesPath": "/home/wsr/.nuget/packages/",
-        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Database/obj/",
+        "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Database\\Models.Database.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\Cookbook\\Models.Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/wsr/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/home/wsr/Рабочий стол": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -178,27 +175,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj": {
+    "C:\\Coding\\C#\\Cookbook\\Models.Domain\\Models.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Models.Domain\\Models.Domain.csproj",
         "projectName": "Models.Domain",
-        "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/Models.Domain.csproj",
-        "packagesPath": "/home/wsr/.nuget/packages/",
-        "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Domain/obj/",
+        "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Domain\\Models.Domain.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\Cookbook\\Models.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/wsr/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/home/wsr/Рабочий стол": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -232,7 +228,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -155,25 +155,24 @@
     ]
   },
   "packageFolders": {
-    "/home/wsr/.nuget/packages/": {}
+    "C:\\Users\\teplo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
+      "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj",
       "projectName": "Models.Blank",
-      "projectPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/Models.Blank.csproj",
-      "packagesPath": "/home/wsr/.nuget/packages/",
-      "outputPath": "/home/wsr/RiderProjects/Cookbook/Models.Blank/obj/",
+      "projectPath": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\Models.Blank.csproj",
+      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+      "outputPath": "C:\\Coding\\C#\\Cookbook\\Models.Blank\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/wsr/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/home/wsr/Рабочий стол": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -213,7 +212,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }
