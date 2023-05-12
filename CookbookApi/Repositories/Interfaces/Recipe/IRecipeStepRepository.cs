@@ -1,16 +1,18 @@
-﻿using CookbookApi.Models.Database.Recipe;
+﻿using RecipeStepDatabase = Models.Database.Recipe.RecipeStep;
 
-namespace CookbookApi.Repositories.Interfaces.RecipeInterfaces;
+namespace CookbookApi.Repositories.Interfaces.Recipe;
 
 public interface IRecipeStepRepository
 {
-    public Task<RecipeStep?> GetRecipeStep(int id);
+    public Task<List<RecipeStepDatabase>?> GetAsync(int recipeId);
     
-    public Task<List<RecipeStep>> GetRecipeSteps(int recipeId);
+    public Task<List<RecipeStepDatabase>?> GetAsync();
 
-    public Task<int> AddRecipeStep(RecipeStep recipeStep);
-
-    public Task<int> DeleteRecipeStep(int id);
+    public Task<int> AddAsync(RecipeStepDatabase recipeStep);
     
-    public Task<int> DeleteRecipeSteps(int recipeId);
+    public Task<int> UpdateAsync(int id, RecipeStepDatabase recipeStep);
+    
+    public Task<int> DeleteAsync(int id);
+    
+    public Task<int> DeleteByRecipeAsync(int recipeId);
 }
