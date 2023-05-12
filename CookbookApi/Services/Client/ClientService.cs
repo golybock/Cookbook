@@ -175,11 +175,11 @@ public class ClientService : IClientService
         return res > 0 ? new OkResult() : new NotFoundResult();
     }
 
-    private async Task<string> SaveImageAsync(IFormFile file)
+    private async Task<string?> SaveImageAsync(IFormFile file)
     {
         string directory = "wwwroot/ClientImages/";
         
-        string path = $"{Guid.NewGuid()}.png";
+        string? path = $"{Guid.NewGuid()}.png";
 
         using StreamWriter sw = new StreamWriter(directory + path);
         

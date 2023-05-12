@@ -12,7 +12,7 @@ public interface IClientRepository
 
     public Task<int> UpdateAsync(int id, ClientDatabase client);
 
-    public Task<int> UpdateImageAsync(int id, string image);
+    public Task<int> UpdateImageAsync(int id, string? image);
     
     public Task<int> UpdatePasswordAsync(int id, string passwordHash);
     

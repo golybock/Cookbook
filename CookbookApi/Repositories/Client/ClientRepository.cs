@@ -1,12 +1,24 @@
 ﻿using CookbookApi.Repositories.Interfaces.Client;
 using Npgsql;
-using ClientModel = CookbookApi.Models.Database.Client.Client;
+using ClientDatabase = Models.Database.Client.Client;
 
 namespace CookbookApi.Repositories.Client;
 
 public class ClientRepository : RepositoryBase, IClientRepository
 {
-    public async Task<ClientModel?> GetClientAsync(int id)
+    private readonly string _id = "id";
+    private readonly string _roleId = "role_id";
+    private readonly string _login = "login";
+    private readonly string _passwordHash = "password_hash";
+    private readonly string _description = "description";
+    private readonly string _name = "name";
+    private readonly string _email = "email";
+    private readonly string _imagePath = "image_path";
+
+    public ClientRepository(IConfiguration configuration)
+        : base(configuration) { }
+    
+    public async Task<ClientDatabase?> GetAsync(int id)
     {
         var con = GetConnection();
 
@@ -25,28 +37,29 @@ public class ClientRepository : RepositoryBase, IClientRepository
 
             while (await reader.ReadAsync())
             {
-                var client = new ClientModel();
-                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                var client = new ClientDatabase();
+                
+                client.Id = reader.GetInt32(reader.GetOrdinal(_id));
 
-                var login = reader.GetValue(reader.GetOrdinal("login"));
+                client.RoleId = reader.GetInt32(reader.GetOrdinal(_roleId));
+                
+                var login = reader.GetValue(reader.GetOrdinal(_login));
                 client.Login = login == DBNull.Value ? null : login.ToString();
 
-                var password = reader.GetValue(reader.GetOrdinal("password"));
-                client.Password = password == DBNull.Value ? null : password.ToString();
+                var password = reader.GetValue(reader.GetOrdinal(_passwordHash));
+                client.PasswordHash = password == DBNull.Value ? null : password.ToString();
 
-                var name = reader.GetValue(reader.GetOrdinal("name"));
+                var name = reader.GetValue(reader.GetOrdinal(_name));
                 client.Name = name == DBNull.Value ? null : name.ToString();
 
-                var description = reader.GetValue(reader.GetOrdinal("description"));
+                var description = reader.GetValue(reader.GetOrdinal(_description));
                 client.Description = description == DBNull.Value ? null : description.ToString();
 
-                var email = reader.GetValue(reader.GetOrdinal("email"));
+                var email = reader.GetValue(reader.GetOrdinal(_email));
                 client.Email = email == DBNull.Value ? null : email.ToString();
 
-                var image = reader.GetValue(reader.GetOrdinal("image_path"));
+                var image = reader.GetValue(reader.GetOrdinal(_imagePath));
                 client.ImagePath = image == DBNull.Value ? null : image.ToString();
-
-                client.Token = reader.GetString(reader.GetOrdinal("token"));
 
                 return client;
             }
@@ -62,8 +75,8 @@ public class ClientRepository : RepositoryBase, IClientRepository
             await con.CloseAsync();
         }
     }
-    
-    public async Task<ClientModel?> GetClientAsync(string token)
+
+    public async Task<ClientDatabase?> GetAsync(string login)
     {
         var con = GetConnection();
 
@@ -71,39 +84,40 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "select * from client where token = $1";
+            var query = "select * from client where login = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = {new NpgsqlParameter {Value = token}}
+                Parameters = {new NpgsqlParameter {Value = login}}
             };
 
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
-                var client = new ClientModel();
-                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                var client = new ClientDatabase();
+                
+                client.Id = reader.GetInt32(reader.GetOrdinal(_id));
 
-                var login = reader.GetValue(reader.GetOrdinal("login"));
-                client.Login = login == DBNull.Value ? null : login.ToString();
+                client.RoleId = reader.GetInt32(reader.GetOrdinal(_roleId));
 
-                var password = reader.GetValue(reader.GetOrdinal("password"));
-                client.Password = password == DBNull.Value ? null : password.ToString();
+                client.Login = login;
 
-                var name = reader.GetValue(reader.GetOrdinal("name"));
+                var password = reader.GetValue(reader.GetOrdinal(_passwordHash));
+                client.PasswordHash = password == DBNull.Value ? null : password.ToString();
+
+                var name = reader.GetValue(reader.GetOrdinal(_name));
                 client.Name = name == DBNull.Value ? null : name.ToString();
 
-                var description = reader.GetValue(reader.GetOrdinal("description"));
+                var description = reader.GetValue(reader.GetOrdinal(_description));
                 client.Description = description == DBNull.Value ? null : description.ToString();
 
-                var email = reader.GetValue(reader.GetOrdinal("email"));
+                var email = reader.GetValue(reader.GetOrdinal(_email));
                 client.Email = email == DBNull.Value ? null : email.ToString();
 
-                var image = reader.GetValue(reader.GetOrdinal("image_path"));
+                var image = reader.GetValue(reader.GetOrdinal(_imagePath));
                 client.ImagePath = image == DBNull.Value ? null : image.ToString();
 
-                client.Token = reader.GetString(reader.GetOrdinal("token"));
 
                 return client;
             }
@@ -120,7 +134,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<int> AddClientAsync(ClientModel client)
+    public async Task<int> AddAsync(ClientDatabase client)
     {
         var con = GetConnection();
 
@@ -128,27 +142,26 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "insert into client(login, password, name, token, email)" +
-                        " values ($1, $2, $3, $4, $5) returning id";
+            var query = "insert into client(login, password_hash, name, description, email, role_id)" +
+                        " values ($1, $2, $3, $4, $5, $6) returning id";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new NpgsqlParameter {Value = client.Login == null ? DBNull.Value : client.Login},
-                    new NpgsqlParameter {Value = client.Password == null ? DBNull.Value : client.Password},
+                    new NpgsqlParameter {Value = client.PasswordHash == null ? DBNull.Value : client.PasswordHash},
                     new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
-                    new NpgsqlParameter {Value = client.Token},
-                    new NpgsqlParameter {Value = client.Email == null ? DBNull.Value : client.Email}
+                    new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description},
+                    new NpgsqlParameter {Value = client.Email == null ? DBNull.Value : client.Email},
+                    new NpgsqlParameter {Value = client.RoleId <= 0 ? 2 : client.RoleId }
                 }
             };
 
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
-            {
-                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-            }
+                client.Id = reader.GetInt32(reader.GetOrdinal(_id));
 
             return client.Id;
         }
@@ -162,7 +175,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<int> UpdateClientAsync(int id, ClientModel client)
+    public async Task<int> UpdateAsync(int id, ClientDatabase client)
     {
         var con = GetConnection();
 
@@ -170,16 +183,20 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "update client set name = $2, description = $3, email = $4 where id = $1";
+            var query = $"update client" +
+                        $" set login = $2, password_hash = $3, name = $4, description = $5, email = $6" +
+                        $" where {_id} = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new NpgsqlParameter {Value = id},
+                    new NpgsqlParameter {Value = client.Login == null ? DBNull.Value : client.Login},
+                    new NpgsqlParameter {Value = client.PasswordHash == null ? DBNull.Value : client.PasswordHash},
                     new NpgsqlParameter {Value = client.Name == null ? DBNull.Value : client.Name},
                     new NpgsqlParameter {Value = client.Description == null ? DBNull.Value : client.Description},
-                    new NpgsqlParameter {Value = client.Email == null ? DBNull.Value : client.Email}
+                    new NpgsqlParameter {Value = client.Email == null ? DBNull.Value : client.Email},
                 }
             };
 
@@ -195,38 +212,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<int> UpdateTokenAsync(int id, string token)
-    {
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "update client set token = $2 where id = $1";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters =
-                {
-                    new NpgsqlParameter {Value = id},
-                    new NpgsqlParameter {Value = token},
-                }
-            };
-
-            return await cmd.ExecuteNonQueryAsync();
-        }
-        catch (Exception e)
-        {
-            return -1;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<int> UpdateImageAsync(int id, string image)
+    public async Task<int> UpdateImageAsync(int id, string? image)
     {
         var con = GetConnection();
 
@@ -241,7 +227,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
                 Parameters =
                 {
                     new NpgsqlParameter {Value = id},
-                    new NpgsqlParameter {Value = image},
+                    new NpgsqlParameter {Value = image == null ? DBNull.Value : image},
                 }
             };
 
@@ -257,7 +243,7 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<int> UpdatePasswordAsync(int id, string password)
+    public async Task<int> UpdatePasswordAsync(int id, string passwordHash)
     {
         var con = GetConnection();
 
@@ -265,14 +251,14 @@ public class ClientRepository : RepositoryBase, IClientRepository
         {
             con.Open();
 
-            var query = "update client set password = $2 where id = $1";
+            var query = "update client set password_hash = $2 where id = $1";
 
             await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new NpgsqlParameter {Value = id},
-                    new NpgsqlParameter {Value = password},
+                    new NpgsqlParameter {Value = passwordHash},
                 }
             };
 
@@ -288,95 +274,9 @@ public class ClientRepository : RepositoryBase, IClientRepository
         }
     }
 
-    public async Task<ClientModel?> GetClientByLoginAsync(string login)
-    {
-        var con = GetConnection();
+    public async Task<int> DeleteAsync(int id) =>
+        await DeleteAsync("client", "id", id);
 
-        try
-        {
-            con.Open();
-
-            var query = "select * from client where login = $1";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters = {new NpgsqlParameter {Value = login == string.Empty ? DBNull.Value : login}}
-            };
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
-            {
-                var client = new ClientModel();
-                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
-
-                client.Login = login;
-
-                var password = reader.GetValue(reader.GetOrdinal("password"));
-                client.Password = password == DBNull.Value ? null : password.ToString();
-
-                var name = reader.GetValue(reader.GetOrdinal("name"));
-                client.Name = name == DBNull.Value ? null : name.ToString();
-
-                var description = reader.GetValue(reader.GetOrdinal("description"));
-                client.Description = description == DBNull.Value ? null : description.ToString();
-
-                var email = reader.GetValue(reader.GetOrdinal("email"));
-                client.Email = email == DBNull.Value ? null : email.ToString();
-
-                client.Token = reader.GetString(reader.GetOrdinal("token"));
-
-                var image = reader.GetValue(reader.GetOrdinal("image_path"));
-                client.ImagePath = image == DBNull.Value ? null : image.ToString();
-
-                return client;
-            }
-
-            return null;
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
-
-    public async Task<int> DeleteClientAsync(int id)
-    {
-        return await DeleteAsync("client", "id", id);
-    }
-
-    public async Task<int> DeleteClientImageAsync(int id)
-    {
-        var con = GetConnection();
-
-        try
-        {
-            con.Open();
-
-            var query = "update client set image_path = $2 where id = $1";
-
-            await using var cmd = new NpgsqlCommand(query, con)
-            {
-                Parameters =
-                {
-                    new NpgsqlParameter {Value = id},
-                    new NpgsqlParameter {Value = DBNull.Value},
-                }
-            };
-
-            return await cmd.ExecuteNonQueryAsync();
-        }
-        catch (Exception e)
-        {
-            return -1;
-        }
-        finally
-        {
-            await con.CloseAsync();
-        }
-    }
+    public Task<int> DeleteClientImageAsync(int id) =>
+        UpdateImageAsync(id, null);
 }

@@ -6,6 +6,8 @@ public abstract class RepositoryBase
 {
     private readonly string _connectionString;
 
+    protected readonly TableNames TableNames = new TableNames();
+
     protected RepositoryBase(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("cookbook_db")!;
