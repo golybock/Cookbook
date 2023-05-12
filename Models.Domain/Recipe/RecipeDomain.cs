@@ -25,6 +25,9 @@ public class RecipeDomain
     [JsonPropertyName("info")]
     public RecipeInfoDomain? Info { get; set; }
     
+    [JsonPropertyName("bju")] 
+    public RecipeBjuDomain? Bju { get; set; }
+    
     [JsonPropertyName("categories")]
     public List<CategoryDomain> Categories { get; set; } = new List<CategoryDomain>();
 
