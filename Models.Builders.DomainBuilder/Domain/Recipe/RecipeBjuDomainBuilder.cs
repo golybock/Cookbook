@@ -8,25 +8,25 @@ public static class RecipeBjuDomainBuilder
 {
     public static RecipeBjuDomain Create(RecipeBjuBlank recipeBjuBlank)
     {
-        var blank = new RecipeBjuDomain();
+        var domain = new RecipeBjuDomain();
 
-        blank.Fats = recipeBjuBlank.Fats;
-        blank.Squirrels = recipeBjuBlank.Squirrels;
-        blank.Carbohydrates = recipeBjuBlank.Carbohydrates;
-        blank.Kilocalories = recipeBjuBlank.Kilocalories;
+        domain.Fats = recipeBjuBlank.Fats;
+        domain.Squirrels = recipeBjuBlank.Squirrels;
+        domain.Carbohydrates = recipeBjuBlank.Carbohydrates;
+        domain.Kilocalories = recipeBjuBlank.Kilocalories;
 
-        return blank;
+        return domain;
     }
     
     public static RecipeBjuDomain Create(RecipeBju recipeBju)
     {
-        var blank = new RecipeBjuDomain();
+        var domain = new RecipeBjuDomain();
         
-        blank.Fats = recipeBju.Fats;
-        blank.Squirrels = recipeBju.Squirrels;
-        blank.Carbohydrates = recipeBju.Carbohydrates;
-        blank.Kilocalories = recipeBju.Kilocalories;
+        domain.Fats = recipeBju.Fats;
+        domain.Squirrels = recipeBju.Squirrels;
+        domain.Carbohydrates = recipeBju.Carbohydrates;
+        domain.Kilocalories = recipeBju.Kilocalories;
         
-        return blank;
+        return domain;
     }
 }

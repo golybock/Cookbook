@@ -8,25 +8,25 @@ public static class RecipeInfoDomainBuilder
 {
     public static RecipeInfoDomain Create(RecipeInfoBlank recipeInfoBlank)
     {
-        var blank = new RecipeInfoDomain();
+        var domain = new RecipeInfoDomain();
 
-        blank.SourceUrl = recipeInfoBlank.SourceUrl;
-        blank.Description = recipeInfoBlank.Description;
-        blank.Portions = recipeInfoBlank.Portions;
-        blank.CookingTime = recipeInfoBlank.CookingTime;
+        domain.SourceUrl = recipeInfoBlank.SourceUrl;
+        domain.Description = recipeInfoBlank.Description;
+        domain.Portions = recipeInfoBlank.Portions;
+        domain.CookingTime = recipeInfoBlank.CookingTime;
 
-        return blank;
+        return domain;
     }
     
     public static RecipeInfoDomain Create(RecipeInfo recipeInfo)
     {
-        var blank = new RecipeInfoDomain();
+        var domain = new RecipeInfoDomain();
 
-        blank.SourceUrl = recipeInfo.SourceUrl;
-        blank.Description = recipeInfo.Description;
-        blank.Portions = recipeInfo.Portions;
-        blank.CookingTime = recipeInfo.CookingTime;
+        domain.SourceUrl = recipeInfo.SourceUrl;
+        domain.Description = recipeInfo.Description;
+        domain.Portions = recipeInfo.Portions;
+        domain.CookingTime = recipeInfo.CookingTime;
         
-        return blank;
+        return domain;
     }
 }

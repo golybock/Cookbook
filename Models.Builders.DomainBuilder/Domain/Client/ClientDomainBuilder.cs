@@ -1,3 +1,4 @@
+
 using Models.Blank.Client;
 using Models.Domain.Client;
 
@@ -7,34 +8,34 @@ public static class ClientDomainBuilder
 {
     public static ClientDomain Create(ClientBlank clientBlank)
     {
-        var blank = new ClientDomain();
+        var domain = new ClientDomain();
         
-        blank.Name = clientBlank.Name;
-        blank.Email = clientBlank.Email;
-        blank.Description = clientBlank.Description;
+        domain.Name = clientBlank.Name;
+        domain.Email = clientBlank.Email;
+        domain.Description = clientBlank.Description;
 
-        return blank;
+        return domain;
     }
 
     public static ClientDomain Create(Database.Client.Client client)
     {
-        var blank = new ClientDomain();
+        var domain = new ClientDomain();
         
-        blank.Name = client.Name;
-        blank.Email = client.Email;
-        blank.Description = client.Description;
+        domain.Name = client.Name;
+        domain.Email = client.Email;
+        domain.Description = client.Description;
 
-        return blank;
+        return domain;
     }
 
     public static ClientDomain Create(string name, string email, string description)
     {
-        var blank = new ClientDomain();
+        var domain = new ClientDomain();
         
-        blank.Name = name;
-        blank.Email = email;
-        blank.Description = description;
+        domain.Name = name;
+        domain.Email = email;
+        domain.Description = description;
 
-        return blank;   
+        return domain;   
     }
 }

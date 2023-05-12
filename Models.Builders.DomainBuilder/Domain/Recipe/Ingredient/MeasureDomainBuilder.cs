@@ -8,30 +8,30 @@ public static class MeasureDomainBuilder
 {
     public static MeasureDomain Create(MeasureBlank measureBlank)
     {
-        var blank = new MeasureDomain();
+        var domain = new MeasureDomain();
 
-        blank.Name = measureBlank.Name;
+        domain.Name = measureBlank.Name;
 
-        return blank;
+        return domain;
     }
     
     public static MeasureDomain Create(Measure measure)
     {
-        var blank = new MeasureDomain();
+        var domain = new MeasureDomain();
 
-        blank.Id = measure.Id;
-        blank.Name = measure.Name;
+        domain.Id = measure.Id;
+        domain.Name = measure.Name;
 
-        return blank;
+        return domain;
     }
     
     public static MeasureDomain Create(int id, string name)
     {
-        var blank = new MeasureDomain();
+        var domain = new MeasureDomain();
 
-        blank.Id = id;
-        blank.Name = name;
+        domain.Id = id;
+        domain.Name = name;
 
-        return blank;
+        return domain;
     }
 }

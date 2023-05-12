@@ -7,30 +7,30 @@ public static class IngredientDomainBuilder
 {
     public static IngredientDomain Create(IngredientBlank ingredientBlank)
     {
-        var blank = new IngredientDomain();
+        var domain = new IngredientDomain();
 
-        blank.Name = ingredientBlank.Name;
+        domain.Name = ingredientBlank.Name;
 
-        return blank;
+        return domain;
     }
     
     public static IngredientDomain Create(Database.Recipe.Ingredient.Ingredient ingredient)
     {
-        var blank = new IngredientDomain();
+        var domain = new IngredientDomain();
 
-        blank.Id = ingredient.Id;
-        blank.Name = ingredient.Name;
+        domain.Id = ingredient.Id;
+        domain.Name = ingredient.Name;
 
-        return blank;
+        return domain;
     }
     
     public static IngredientDomain Create(int id, string name)
     {
-        var blank = new IngredientDomain();
+        var domain = new IngredientDomain();
 
-        blank.Id = id;
-        blank.Name = name;
+        domain.Id = id;
+        domain.Name = name;
 
-        return blank;
+        return domain;
     }
 }

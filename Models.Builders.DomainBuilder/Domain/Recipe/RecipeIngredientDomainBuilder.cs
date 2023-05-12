@@ -8,23 +8,23 @@ public static class RecipeIngredientDomainBuilder
 {
     public static RecipeIngredientDomain Create(RecipeIngredientBlank recipeIngredientBlank)
     {
-        var blank = new RecipeIngredientDomain();
+        var domain = new RecipeIngredientDomain();
 
-        blank.Count = recipeIngredientBlank.Count;
-        blank.IngredientId = recipeIngredientBlank.IngredientId;
-        blank.MeasureId = recipeIngredientBlank.MeasureId;
+        domain.Count = recipeIngredientBlank.Count;
+        domain.IngredientId = recipeIngredientBlank.IngredientId;
+        domain.MeasureId = recipeIngredientBlank.MeasureId;
 
-        return blank;
+        return domain;
     }
     
     public static RecipeIngredientDomain Create(RecipeIngredient recipeIngredient)
     {
-        var blank = new RecipeIngredientDomain();
+        var domain = new RecipeIngredientDomain();
         
-        blank.Count = recipeIngredient.Count;
-        blank.IngredientId = recipeIngredient.IngredientId;
-        blank.MeasureId = recipeIngredient.MeasureId;
+        domain.Count = recipeIngredient.Count;
+        domain.IngredientId = recipeIngredient.IngredientId;
+        domain.MeasureId = recipeIngredient.MeasureId;
         
-        return blank;
+        return domain;
     }
 }

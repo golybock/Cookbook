@@ -8,31 +8,31 @@ public static class RecipeStepDomainBuilder
 {
     public static RecipeStepDomain Create(RecipeStepBlank recipeStepBlank)
     {
-        var blank = new RecipeStepDomain();
+        var domain = new RecipeStepDomain();
 
-        blank.Number = recipeStepBlank.Number;
-        blank.Text = recipeStepBlank.Text;
+        domain.Number = recipeStepBlank.Number;
+        domain.Text = recipeStepBlank.Text;
         
-        return blank;
+        return domain;
     }
     
     public static RecipeStepDomain Create(RecipeStep recipeStep)
     {
-        var blank = new RecipeStepDomain();
+        var domain = new RecipeStepDomain();
         
-        blank.Number = recipeStep.Number;
-        blank.Text = recipeStep.Text;
+        domain.Number = recipeStep.Number;
+        domain.Text = recipeStep.Text;
         
-        return blank;
+        return domain;
     }
     
     public static RecipeStepDomain Create(int number, string text)
     {
-        var blank = new RecipeStepDomain();
+        var domain = new RecipeStepDomain();
 
-        blank.Number = number;
-        blank.Text = text;
+        domain.Number = number;
+        domain.Text = text;
         
-        return blank;
+        return domain;
     }
 }

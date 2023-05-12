@@ -7,30 +7,30 @@ public static class CategoryDomainBuilder
 {
     public static CategoryDomain Create(CategoryBlank categoryBlank)
     {
-        var blank = new CategoryDomain();
+        var domain = new CategoryDomain();
 
-        blank.Name = categoryBlank.Name;
+        domain.Name = categoryBlank.Name;
 
-        return blank;
+        return domain;
     }
     
     public static CategoryDomain Create(Database.Recipe.Category.Category category)
     {
-        var blank = new CategoryDomain();
+        var domain = new CategoryDomain();
 
-        blank.Id = category.Id;
-        blank.Name = category.Name;
+        domain.Id = category.Id;
+        domain.Name = category.Name;
 
-        return blank;
+        return domain;
     }
     
     public static CategoryDomain Create(int id, string name)
     {
-        var blank = new CategoryDomain();
+        var domain = new CategoryDomain();
 
-        blank.Id = id;
-        blank.Name = name;
+        domain.Id = id;
+        domain.Name = name;
 
-        return blank;
+        return domain;
     }
 }

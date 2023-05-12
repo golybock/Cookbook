@@ -7,19 +7,19 @@ public static class RecipeCategoryBlankBuilder
 {
     public static RecipeCategoryBlank Create(RecipeCategory recipeCategory)
     {
-        var blank = new RecipeCategoryBlank();
+        var domain = new RecipeCategoryBlank();
 
-        blank.CategoryId = recipeCategory.CategoryId;
+        domain.CategoryId = recipeCategory.CategoryId;
 
-        return blank;
+        return domain;
     }
     
     public static RecipeCategoryBlank Create(int categoryId)
     {
-        var blank = new RecipeCategoryBlank();
+        var domain = new RecipeCategoryBlank();
 
-        blank.CategoryId = categoryId;
+        domain.CategoryId = categoryId;
         
-        return blank;
+        return domain;
     }
 }
