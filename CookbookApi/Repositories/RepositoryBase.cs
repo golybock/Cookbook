@@ -4,7 +4,7 @@ namespace CookbookApi.Repositories;
 
 public class RepositoryBase
 {
-    private readonly string _connectionString = "host=127.0.0.1;port=5432;Username=admin;Password=admin;DatabaseModels=cookbook;";
+    private readonly string _connectionString = "host=127.0.0.1;port=5432;Username=admin;Password=admin;Models.Database=cookbook;";
 
     protected NpgsqlConnection GetConnection()
     {
