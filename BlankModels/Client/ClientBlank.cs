@@ -4,10 +4,6 @@ namespace BlankModels.Client;
 
 public class ClientBlank
 {
-    [JsonPropertyName("roleId")]
-    public int RoleId { get; set; }
-    [JsonPropertyName("login")]
-    public string Login { get; set; } = string.Empty;
     [JsonPropertyName("description")]
     public string? Description { get; set; }
     [JsonPropertyName("name")]
