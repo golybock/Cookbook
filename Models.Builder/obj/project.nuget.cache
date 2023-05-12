@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "tVRPBtwgpX3gdBpu56gK4NZQeHR2I91MAYLHhMLTUssitP0tQ1Qtalfxv4JIDNwKyXR/+VVfx3ACWWInMJh32w==",
+  "success": true,
+  "projectFilePath": "/home/wsr/RiderProjects/Cookbook/Models.Builder/Models.Builder.csproj",
+  "expectedPackageFiles": [
+    "/home/wsr/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
+    "/home/wsr/.nuget/packages/system.text.json/7.0.2/system.text.json.7.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

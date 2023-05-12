@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BlankModels.Recipe.Ingredient;
+namespace Models.Blank.Recipe.Ingredient;
 
 public class MeasureBlank
 {

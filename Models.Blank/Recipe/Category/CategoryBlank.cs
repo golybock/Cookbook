@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BlankModels.Recipe.Category;
+namespace Models.Blank.Recipe.Category;
 
 public class CategoryBlank
 {

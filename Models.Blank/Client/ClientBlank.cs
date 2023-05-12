@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BlankModels.Client;
+namespace Models.Blank.Client;
 
 public class ClientBlank
 {
