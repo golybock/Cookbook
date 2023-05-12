@@ -10,6 +10,4 @@ public class ClientBlank
     public string Name { get; set; } = string.Empty;
     [JsonPropertyName("email")]
     public string? Email { get; set; }
-    [JsonPropertyName("imagePath")]
-    public string? ImagePath { get; set; }
 }

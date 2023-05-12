@@ -12,7 +12,7 @@ public class RecipeBlankBuilder
         blank.Header = recipeDomain.Header;
 
         if (recipeDomain.Bju != null)
-            blank.Bju = RecipeBjuBuilder.Create(recipeDomain.Bju);
+            blank.Bju = RecipeBjuBlankBuilder.Create(recipeDomain.Bju);
 
         if (recipeDomain.Info != null)
             blank.Info = RecipeInfoBlankBuilder.Create(recipeDomain.Info);

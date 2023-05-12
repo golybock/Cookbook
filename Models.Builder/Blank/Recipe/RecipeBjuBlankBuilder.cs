@@ -4,7 +4,7 @@ using Models.Domain.Recipe;
 
 namespace Models.Builder.Blank.Recipe;
 
-public class RecipeBjuBuilder
+public class RecipeBjuBlankBuilder
 {
     public static RecipeBjuBlank Create(RecipeBjuDomain recipeBjuDomain)
     {
