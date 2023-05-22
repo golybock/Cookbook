@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Pg6ruzwxBsvgxzoj2x9gbaXXDTJZmMdYgO37l3/2Na/l3cAtPRk+Ryqkmh5jsE9JnLM8gYCEypDvmY75UUFIsA==",
+  "dgSpecHash": "GD4jAUkUQW70praLzAJAj19vpTzwgxyBdO6jxvBsN9gKOyY615XlOySMnOCCaC9C/kAmnSRtnQFn3IAtyfLdyQ==",
   "success": true,
-  "projectFilePath": "C:\\Coding\\C#\\Cookbook\\Models.Builders.DatabaseBuilder\\Models.Builders.DatabaseBuilder.csproj",
+  "projectFilePath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models.Builders.DatabaseBuilder\\Models.Builders.DatabaseBuilder.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\teplo\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\teplo\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512"
+    "C:\\Users\\arshi\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\arshi\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512"
   ],
   "logs": []
 }
