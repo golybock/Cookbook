@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using Cookbook.Api.Client;
 using Cookbook.Command;
-using Cookbook.Models.Domain.Recipe;
-using Cookbook.Models.Domain.Recipe.Category;
-using Cookbook.Models.Domain.Recipe.Ingredient;
 using Cookbook.Pages.Recipe;
 using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
@@ -15,18 +9,13 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class RecipeViewModel : ViewModelBase, INavItem
 {
-    private readonly ClientApi _clientApi = new ClientApi();
     private readonly RecipeService _recipeService = new RecipeService();
 
     private bool _canEdit = false;
     
-
     public INavHost Host { get; set; }
-
-    public RecipeDomain Recipe { get; set; } = new RecipeDomain();
-
-
-
+    
+    public Database.Recipe Recipe { get; set; } = new Database.Recipe();
 
     public RecipeViewModel(INavHost host)
     {
@@ -35,7 +24,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
         LoadAccess();
     }
 
-    public RecipeViewModel(INavHost host, RecipeDomain recipe)
+    public RecipeViewModel(INavHost host, Database.Recipe recipe)
     {
         Host = host;
         Recipe = recipe;
@@ -45,13 +34,13 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
 
     public bool RecipeIngredientsVisible =>
-        Recipe.Ingredients.Count > 0;
+        Recipe.RecipeIngredients.Count > 0;
 
     public bool RecipeCategoriesVisible =>
-        Recipe.Categories.Count > 0;
+        Recipe.RecipeCategories.Count > 0;
 
     public bool RecipeStepsVisible =>
-        Recipe.Steps.Count > 0;
+        Recipe.RecipeSteps.Count > 0;
 
     public bool RecipeStepsNotVisible =>
         !RecipeStepsVisible;
@@ -80,8 +69,6 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
         try
         {
-            var client = await _clientApi.GetClientAsync();
-
             if (client?.Login != null)
                 if (client?.Login == Recipe.ClientOwner)
                     CanEdit = true;

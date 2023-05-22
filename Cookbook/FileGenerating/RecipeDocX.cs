@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Cookbook.Models.Domain.Recipe;
+using Cookbook.Database;
 using ModernWpf.Controls;
 using Xceed.Words.NET;
 
@@ -8,7 +8,7 @@ namespace Cookbook.FileGenerating;
 
 public class RecipeDocX
 {
-    public static void Generate(RecipeDomain recipe)
+    public static void Generate(Recipe recipe)
     {
         throw new NotImplementedException();
         // var fileName = recipe.Header + ".docx";

@@ -7,7 +7,10 @@ namespace Cookbook.Settings;
 public class AppSettings
 {
     // values
-    [JsonPropertyName("token")] public string? Token { get; set; } = string.Empty;
+    [JsonPropertyName("login")] public string? Login { get; set; } = string.Empty;
+    
+    [JsonPropertyName("password")] public string? Password { get; set; } = string.Empty;
+    
     [JsonPropertyName("theme")] public Theme Theme { get; set; } = new Theme();
     
     // info
