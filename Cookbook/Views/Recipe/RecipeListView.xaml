@@ -28,7 +28,7 @@
             
             <controls:ItemsRepeater.ItemTemplate>
                 <DataTemplate>
-                    <local:RecipeCard ClickCommand="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>    
+                    <local:RecipeCardView ClickCommand="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>    
                 </DataTemplate>
             </controls:ItemsRepeater.ItemTemplate>
             

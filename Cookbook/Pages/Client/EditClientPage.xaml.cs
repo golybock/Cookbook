@@ -11,4 +11,10 @@ public partial class EditClientPage : Page
         InitializeComponent();
         DataContext = new EditClientVIewModel(host);
     }
+    
+    public EditClientPage(INavHost host, Database.Client client)
+    {
+        InitializeComponent();
+        DataContext = new EditClientVIewModel(host, client);
+    }
 }

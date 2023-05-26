@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Pages.Client;
-using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using ModernWpf.Controls;
 
@@ -10,8 +9,7 @@ namespace Cookbook.ViewModel.Auth;
 
 public class LoginViewModel : ViewModelBase, INavItem
 {
-    private readonly AuthService _authService = new AuthService();
-    
+
     private string _error = string.Empty;
     
     private string _password = String.Empty;
@@ -65,8 +63,7 @@ public class LoginViewModel : ViewModelBase, INavItem
     {
         try
         {
-            await _authService.LoginAsync(Login, Password);
-            
+
             Host.NavController.Navigate(new ClientPage(Host)); ;
         }
         catch (Exception e)

@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using Cookbook.Command;
 using Cookbook.Pages.Client;
-using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using ModernWpf.Controls;
 
@@ -10,8 +9,7 @@ namespace Cookbook.ViewModel.Auth;
 
 public class RegistrationViewModel : ViewModelBase, INavItem
 {
-    private readonly AuthService _authService = new AuthService();
-    
+
     public INavHost Host { get; set; }
     
     public string Login { get; set; }

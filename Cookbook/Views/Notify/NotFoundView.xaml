@@ -6,24 +6,15 @@
              xmlns:local="clr-namespace:Cookbook.Views.Notify"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid>
-    
-        <StackPanel VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-            
-            <Image Source="../../Resources/dore.png" 
-                   Width="250"
-                   Height="350"/>
-            
-            <Label Content="Ничего не найдено(" 
+
+        <TextBlock Text="Ничего не найдено, попробуйте задать другие параметры поиска"
                    VerticalAlignment="Center"
-                   FontSize="30"
-                   Foreground="Red"/>
-            
-        </StackPanel>
-        
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="30" />
+
     </Grid>
-    
+
 </UserControl>

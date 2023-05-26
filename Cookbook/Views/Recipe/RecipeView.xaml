@@ -11,7 +11,12 @@
              d:DesignWidth="800">
 
     <UserControl.Resources>
+        
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        
+        <BitmapImage x:Key="NoImage"
+                     UriSource="../../Resources/Icons/food.png"/>
+        
     </UserControl.Resources>
     
     <Grid>
@@ -42,7 +47,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Image Grid.Column="0"
-                       Source="{Binding Recipe.ImagePath}"
+                       Source="{Binding Recipe.ImagePath, TargetNullValue={StaticResource NoImage}}"
                        Width="250"
                        Height="250"
                        Margin="20" />
@@ -64,10 +69,6 @@
                                    FontWeight="Bold"
                                    TextWrapping="Wrap"
                                    FontSize="28" />
-
-                        <TextBlock Text="{Binding Recipe.RecipeType.Name}"
-                                   FontSize="20"
-                                   TextWrapping="Wrap" />
                         
                         <TextBlock Text="{Binding Recipe.Description}"
                                    TextWrapping="Wrap"

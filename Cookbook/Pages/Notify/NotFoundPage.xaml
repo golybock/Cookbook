@@ -1,0 +1,13 @@
+﻿<Page x:Class="Cookbook.Pages.Notify.NotFoundPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Cookbook.Pages.Notify"
+      xmlns:notify="clr-namespace:Cookbook.Views.Notify"
+      mc:Ignorable="d"
+      Title="Результаты поиска">
+    <Grid>
+        <notify:NotFoundView/>
+    </Grid>
+</Page>

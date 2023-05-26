@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using Cookbook.Models.Domain.Recipe;
 using Cookbook.ViewModel.Navigation;
 using Cookbook.ViewModel.Recipe;
 
@@ -23,7 +22,7 @@ public partial class RecipesPage : Page
     /// </summary>
     /// <param name="host"></param>
     /// <param name="recipeDomains"></param>
-    public RecipesPage(INavHost host, List<RecipeDomain> recipeDomains)
+    public RecipesPage(INavHost host, List<Database.Recipe> recipeDomains)
     {
         InitializeComponent();
         DataContext = new RecipesViewModel(host, recipeDomains);

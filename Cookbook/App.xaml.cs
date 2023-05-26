@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Cookbook.Database;
 using Cookbook.Settings;
 using ModernWpf;
 
@@ -16,8 +17,10 @@ namespace Cookbook
     /// </summary>
     public partial class App : Application
     {
-        public static AppSettings? Settings =>
+        public static AppSettings Settings =>
             SettingsManager.AppSettings;
+
+        public static CookbookDbContext Context = new CookbookDbContext();
         
         private void App_OnStartup(object sender, StartupEventArgs e)
         {

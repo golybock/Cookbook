@@ -9,6 +9,11 @@ public class EditClientVIewModel : ViewModelBase, INavItem
     {
         Host = host;
     }
+    
+    public EditClientVIewModel(INavHost host, Database.Client client)
+    {
+        Host = host;
+    }
 
     public INavHost Host { get; set; }
 

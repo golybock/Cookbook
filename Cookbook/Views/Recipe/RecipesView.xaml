@@ -19,12 +19,12 @@
                 <ui:SplitButton Height="35"
                                 Width="175"
                                 FontSize="14"
-                                Content="{Binding SelectedRecipeType.Name, UpdateSourceTrigger=PropertyChanged}">
+                                Content="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}">
 
                     <ui:SplitButton.Flyout>
                         <ui:Flyout>
-                            <ListView ItemsSource="{Binding RecipeTypes}"
-                                      SelectedItem="{Binding SelectedRecipeType}">
+                            <ListView ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding SelectedCategory}">
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>

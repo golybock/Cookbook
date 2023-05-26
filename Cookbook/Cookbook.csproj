@@ -45,53 +45,28 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Icons\heart_icon.svg" />
-      <None Remove="Resources\Icons\menu_icon.svg" />
-      <None Remove="Resources\Icons\menu_icon.png" />
       <Resource Include="Resources\Icons\menu_icon.png" />
-      <None Remove="Resources\Icons\heart_icon.png" />
       <Resource Include="Resources\Icons\heart_icon.png" />
-      <None Remove="Resources\Icons\person_icon.png" />
       <Resource Include="Resources\Icons\person_icon.png" />
-      <None Remove="Resources\AppIcon\book.ico" />
       <Resource Include="Resources\AppIcon\book.ico" />
-      <None Remove="Resources\AppIcon\book.png" />
       <Resource Include="Resources\AppIcon\book.png">
         <Pack>True</Pack>
-        <PackagePath></PackagePath>
       </Resource>
-      <None Remove="Resources\dore.png" />
       <Resource Include="Resources\dore.png" />
-      <None Remove="Resources\Icons\food.png" />
       <Resource Include="Resources\Icons\food.png" />
-      <None Remove="Resources\Icons\github.png" />
       <Resource Include="Resources\Icons\github.png" />
-      <None Remove="Resources\Icons\info.png" />
       <Resource Include="Resources\Icons\info.png" />
-      <None Remove="Resources\Icons\array_forward.png" />
       <Resource Include="Resources\Icons\array_forward.png" />
-      <None Remove="Resources\Icons\theme.png" />
       <Resource Include="Resources\Icons\theme.png" />
-      <None Remove="Resources\Icons\pdf.png" />
       <Resource Include="Resources\Icons\pdf.png" />
-      <None Remove="Resources\Icons\save.png" />
-      <None Remove="Resources\Icons\add.png" />
       <Resource Include="Resources\Icons\add.png" />
-      <None Remove="Resources\Icons\delete.png" />
       <Resource Include="Resources\Icons\delete.png" />
-      <None Remove="Resources\Icons\download.png" />
       <Resource Include="Resources\Icons\download.png" />
-      <None Remove="Resources\Icons\edit.png" />
       <Resource Include="Resources\Icons\edit.png" />
-      <None Remove="Resources\Icons\share.png" />
       <Resource Include="Resources\Icons\share.png" />
-      <None Remove="Resources\Icons\close.png" />
       <Resource Include="Resources\Icons\close.png" />
-      <None Remove="Resources\Icons\check.png" />
       <Resource Include="Resources\Icons\check.png" />
-      <None Remove="Resources\Icons\image.png" />
       <Resource Include="Resources\Icons\image.png" />
-      <None Remove="Resources\Icons\bookmark.png" />
       <Resource Include="Resources\Icons\bookmark.png" />
     </ItemGroup>
 

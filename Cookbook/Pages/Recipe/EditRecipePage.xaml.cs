@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Cookbook.Models.Domain.Recipe;
 using Cookbook.ViewModel.Navigation;
 using Cookbook.ViewModel.Recipe;
 
@@ -17,7 +16,7 @@ public partial class EditRecipePage : Page
         
         Title = "Создание рецепта";
         
-        DataContext = new EditRecipeViewModel(host);
+        // DataContext = new EditRecipeViewModel(host);
     }
 
     /// <summary>
@@ -31,6 +30,6 @@ public partial class EditRecipePage : Page
         
         Title = "Редактирование рецепта";
         
-        DataContext = new EditRecipeViewModel(host, recipeDomain);
+        DataContext = new EditRecipeViewModel(host, recipe);
     }
 }

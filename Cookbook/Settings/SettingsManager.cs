@@ -16,7 +16,7 @@ public class SettingsManager
     private static string _appSettings =>
         "appsettings.json";
     
-    public static AppSettings? AppSettings =>
+    public static AppSettings AppSettings =>
         ReadAppSettings();
     
     private static bool SettingsExists() =>
@@ -29,17 +29,16 @@ public class SettingsManager
     {
         Theme = Themes.Default,
         Github = "https://github.com/golybock",
-        Version = "1.0",
-        Description = ""
+        Version = "1.0"
     };
     
-    private static AppSettings? ReadAppSettings()
+    private static AppSettings ReadAppSettings()
     {
         using StreamReader sr = new StreamReader(_appSettings);
 
         string json = sr.ReadToEnd();
         
-        return JsonSerializer.Deserialize<AppSettings>(json);
+        return JsonSerializer.Deserialize<AppSettings>(json) ?? DefaultSettings;
     }
     
     private static void WriteAppSettings(AppSettings appSettings)

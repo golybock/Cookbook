@@ -1,49 +1,45 @@
 ﻿using System;
-using System.Diagnostics;
-using Cookbook.Database;
-using ModernWpf.Controls;
-using Xceed.Words.NET;
 
 namespace Cookbook.FileGenerating;
 
 public class RecipeDocX
 {
-    public static void Generate(Recipe recipe)
-    {
-        throw new NotImplementedException();
-        // var fileName = recipe.Header + ".docx";
-        //
-        // var fullPath = $"C://{Environment.UserName}/Documents/" + fileName;
-        //
-        // try
-        // {
-        //     using var doc = DocX.Create(fullPath);
-        //
-        //     // добавляем фото рецепта(если есть)
-        //     try
-        //     {
-        //         var image = doc.AddImage(recipe.ImagePath);
-        //         var pic = image.CreatePicture(300f, 300f);
-        //
-        //         var p = doc.InsertParagraph("");
-        //         p.AppendPicture(pic);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         // ignored
-        //     }
-        //
-        //     doc.InsertParagraph(recipe.ToString()).FontSize(20);
-        //
-        //     doc.Save();
-        //
-        //     ShowDialog(fullPath);
-        // }
-        // catch (Exception e)
-        // {
-        //     ShowErrorDialog("Ошибка генерации файла");
-        // }
-    }
+    // public static void Generate(Recipe recipe)
+    // {
+    //     throw new NotImplementedException();
+    //     // var fileName = recipe.Header + ".docx";
+    //     //
+    //     // var fullPath = $"C://{Environment.UserName}/Documents/" + fileName;
+    //     //
+    //     // try
+    //     // {
+    //     //     using var doc = DocX.Create(fullPath);
+    //     //
+    //     //     // добавляем фото рецепта(если есть)
+    //     //     try
+    //     //     {
+    //     //         var image = doc.AddImage(recipe.ImagePath);
+    //     //         var pic = image.CreatePicture(300f, 300f);
+    //     //
+    //     //         var p = doc.InsertParagraph("");
+    //     //         p.AppendPicture(pic);
+    //     //     }
+    //     //     catch (Exception e)
+    //     //     {
+    //     //         // ignored
+    //     //     }
+    //     //
+    //     //     doc.InsertParagraph(recipe.ToString()).FontSize(20);
+    //     //
+    //     //     doc.Save();
+    //     //
+    //     //     ShowDialog(fullPath);
+    //     // }
+    //     // catch (Exception e)
+    //     // {
+    //     //     ShowErrorDialog("Ошибка генерации файла");
+    //     // }
+    // }
 
     // private static async void ShowErrorDialog(string error)
     // {

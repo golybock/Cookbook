@@ -12,11 +12,15 @@ public class SortTypes
 
     public static SortType CookingTime =>
         new SortType() {Id = 2, Name = "Время приготовления"};
+    
+    public static SortType Views =>
+        new SortType() {Id = 3, Name = "Просмотры"};
 
     public static List<SortType> SortTypesList => new List<SortType>()
     {
         Default,
         Alphabet,
-        CookingTime
+        CookingTime,
+        Views
     };
 }
