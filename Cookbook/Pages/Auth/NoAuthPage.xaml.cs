@@ -6,9 +6,9 @@ namespace Cookbook.Pages.Auth;
 
 public partial class NoAuthPage : Page
 {
-    public NoAuthPage(NavigationViewModel parent)
+    public NoAuthPage(INavHost host)
     {
         InitializeComponent();
-        NoAuthView.DataContext = new NoAuthViewModel(parent);
+        NoAuthView.DataContext = new NoAuthViewModel(host);
     }
 }

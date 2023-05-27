@@ -10,9 +10,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <StackPanel VerticalAlignment="Center"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                Orientation="Vertical">
         
-        <ui1:ContentCard>
+        <ui1:ContentCard Margin="5">
         
             <ui:SimpleStackPanel Orientation="Vertical"
                                  HorizontalAlignment="Center"
@@ -31,11 +32,7 @@
                     ui:ControlHelper.Header="Пароль"
                     ui:ControlHelper.PlaceholderText="Пароль"/>
             
-                <TextBlock 
-                    Width="200"
-                    TextWrapping="Wrap"
-                    Foreground="Red"
-                    Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"/>
+
             
                 <Button Width="200"
                         Margin="5"
@@ -50,6 +47,15 @@
             </ui:SimpleStackPanel>
         
         </ui1:ContentCard>
+        
+        <TextBlock 
+            Width="200"
+            Margin="5"
+            HorizontalAlignment="Center"
+            TextAlignment="Center"
+            TextWrapping="Wrap"
+            Foreground="Red"
+            Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"/>
         
     </StackPanel>
     

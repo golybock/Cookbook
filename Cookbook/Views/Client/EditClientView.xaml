@@ -7,90 +7,127 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:ui1="clr-namespace:Cookbook.UI"
              mc:Ignorable="d"
- d:DesignHeight="450"
+             d:DesignHeight="450"
              d:DesignWidth="600">
-    
-    <ui1:ContentCard MaxHeight="350"
-                     VerticalAlignment="Top">
-            
-        <Grid>
-                
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <ui:PersonPicture Grid.Column="0"
-                              Grid.Row="0"
-                              Width="250"
-                              Height="250"
-                              Margin="20"
-                              ProfilePicture="../../Resources/dore.png"/>
-            
-            <!-- client info panel -->
-            <ui:SimpleStackPanel Grid.Column="1"
-                                 Spacing="12"
-                                 Margin="20"
+
+    <StackPanel VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Orientation="Vertical">
+
+        <ui1:ContentCard MaxHeight="400"
+                         VerticalAlignment="Top">
+
+            <ui:SimpleStackPanel Spacing="12"
+                                 Orientation="Horizontal"
                                  VerticalAlignment="Top"
-                                 HorizontalAlignment="Left">
-                
-                <TextBox Text="{Binding Client.Name, FallbackValue=Dora, TargetNullValue=Dora}"
-                           FontSize="28"
-                           FontWeight="Bold"
-                           TextWrapping="Wrap"/>
-                
-                <TextBox Text="{Binding Client.Description, FallbackValue=Потому что дора дура, TargetNullValue=Потому что дора дура}"
-                         FontSize="20"
-                         MaxHeight="140"
-                         TextWrapping="Wrap"/>
-                
-                <!-- toolbar -->
-                <ui:SimpleStackPanel HorizontalAlignment="Left"
-                                     Orientation="Horizontal"
+                                 HorizontalAlignment="Center">
+
+                <ui:SimpleStackPanel Orientation="Vertical"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
                                      Spacing="12">
-                    
+
+                    <ui:PersonPicture Width="250"
+                                      Height="250"
+                                      Margin="20"
+                                      ProfilePicture="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
+
                     <Button Height="35"
                             FontSize="14"
-                            Command="{Binding SaveCommand}">
-                    
+                            HorizontalAlignment="Center"
+                            Command="{Binding ChooseImageCommand}">
+
                         <StackPanel Orientation="Horizontal">
-                        
+
                             <Image Margin="1"
-                                   Source="../../Resources/Icons/edit.png"/>
-                        
+                                   Source="../../Resources/Icons/image.png" />
+
                             <TextBlock TextAlignment="Center"
                                        Margin="5,0,5,0"
                                        VerticalAlignment="Center"
-                                       Text="Сохранить"/>
-                        
+                                       Text="Загрузить" />
+
                         </StackPanel>
-                    
+
                     </Button>
-                    
-                    <Button Height="35"
-                            FontSize="14"
-                            Command="{Binding CancelCommand}">
-                    
-                        <StackPanel Orientation="Horizontal">
-                        
-                            <Image Margin="1"
-                                   Source="../../Resources/Icons/share.png"/>
-                        
-                            <TextBlock TextAlignment="Center"
-                                       Margin="5,0,5,0"
-                                       VerticalAlignment="Center"
-                                       Text="Отмена"/>
-                        
-                        </StackPanel>
-                    
-                    </Button>
-                    
+
                 </ui:SimpleStackPanel>
-                
+
+                <ui:SimpleStackPanel Orientation="Vertical"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Spacing="12">
+
+
+                    <!-- client info panel -->
+                    <ui:SimpleStackPanel Spacing="12"
+                                         Margin="20"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left">
+
+                        <TextBox Text="{Binding Client.Name}"
+                                 ui:ControlHelper.Header="Имя"
+                                 FontSize="28"
+                                 FontWeight="Bold"
+                                 TextWrapping="Wrap" />
+
+                        <TextBox ui:ControlHelper.Header="Описание"
+                                 Text="{Binding Client.Description}"
+                                 FontSize="20"
+                                 MaxHeight="140"
+                                 TextWrapping="Wrap" />
+
+                        <!-- toolbar -->
+                        <ui:SimpleStackPanel HorizontalAlignment="Left"
+                                             Orientation="Horizontal"
+                                             Spacing="12">
+
+                            <Button Height="35"
+                                    FontSize="14"
+                                    Command="{Binding SaveCommand}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Image Margin="1"
+                                           Source="../../Resources/Icons/save.png" />
+
+                                    <TextBlock TextAlignment="Center"
+                                               Margin="5,0,5,0"
+                                               VerticalAlignment="Center"
+                                               Text="Сохранить" />
+
+                                </StackPanel>
+
+                            </Button>
+
+                            <Button Height="35"
+                                    FontSize="14"
+                                    Command="{Binding CancelCommand}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Image Margin="1"
+                                           Source="../../Resources/Icons/close.png" />
+
+                                    <TextBlock TextAlignment="Center"
+                                               Margin="5,0,5,0"
+                                               VerticalAlignment="Center"
+                                               Text="Отмена" />
+
+                                </StackPanel>
+
+                            </Button>
+
+                        </ui:SimpleStackPanel>
+
+                    </ui:SimpleStackPanel>
+
+                </ui:SimpleStackPanel>
+
             </ui:SimpleStackPanel>
-            
-        </Grid>
-        
-    </ui1:ContentCard>
-    
+
+        </ui1:ContentCard>
+
+    </StackPanel>
+
 </UserControl>

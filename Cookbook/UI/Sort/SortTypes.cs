@@ -20,7 +20,6 @@ public class SortTypes
     {
         Default,
         Alphabet,
-        CookingTime,
         Views
     };
 }

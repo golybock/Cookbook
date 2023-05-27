@@ -1,20 +1,21 @@
 ﻿using Cookbook.Command;
+using Cookbook.Pages.Auth;
 using Cookbook.Pages.Client;
+using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
+using ModernWpf.Controls;
 
 namespace Cookbook.ViewModel.Client;
 
 public class ClientViewModel : ViewModelBase, INavItem
 {
-    public INavHost Host { get; set; }
+    private readonly ClientService _clientService = new ClientService();
+
+    public string? Image => Client.ImagePath;
     
-    private Database.Client _client = new Database.Client() 
-    {
-        ImagePath = "../../Resources/dore.png",
-        Name = "Дора",
-        Description = 
-            @"Закрываю дверь квартиры Отключаю все мобилы Недоступна для дебилов Потому что я влюбилась В тебя-а-а, тупого наглеца             От чего же? От чего же             Всё потому, что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             (Дура, дура, дура)             Я увидела твой взгляд             Заострённый на мне             Ты рукою помахал             Я помахала в ответ             Ты пошёл ко мне навстречу             Это было так глупо             Ведь за спиною моей             Стояла твоя подруга (подруга)             Всё потому, что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Ты позвал меня на встречу (а)             Ты позвал меня на встречу             Я готовилась весь вечер             Выбирала, что надеть мне             Истрепала свои нервы             Пришла, ждала почти два часа             И ты написал: Сорри, я проспал             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура             Потому что Дора — дура             Супердура, Дора — дура"
-    };
+    public INavHost Host { get; set; }
+
+    private Database.Client _client = new Database.Client(); 
     
     public CommandHandler EditCommand =>
         new CommandHandler(Edit);
@@ -24,6 +25,7 @@ public class ClientViewModel : ViewModelBase, INavItem
     
     public ClientViewModel(INavHost host)
     {
+        Client = _clientService.GetCurrent();
         Host = host;
     }
     
@@ -32,9 +34,23 @@ public class ClientViewModel : ViewModelBase, INavItem
         Host.NavController.Navigate(new EditClientPage(Host, Client));
     }
     
-    private void UnLogin()
+    private async void UnLogin()
     {
-        
+        var cancel = new ContentDialog()
+        {
+            Title = "Выход из акаунта",
+            Content = "Вы хотите выйти из акаунта?",
+            CloseButtonText = "Остаться",
+            PrimaryButtonText = "Выйти"
+        };
+
+        var result = await cancel.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            _clientService.UnLogin();
+            Host.NavController.Navigate(new NoAuthPage(Host));    
+        }
     }
     
     public Database.Client Client
@@ -47,6 +63,4 @@ public class ClientViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
-    
 }

@@ -6,12 +6,6 @@ namespace Cookbook.Pages.Client;
 
 public partial class EditClientPage : Page
 {
-    public EditClientPage(INavHost host)
-    {
-        InitializeComponent();
-        DataContext = new EditClientVIewModel(host);
-    }
-    
     public EditClientPage(INavHost host, Database.Client client)
     {
         InitializeComponent();

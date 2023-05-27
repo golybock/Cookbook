@@ -1,6 +1,7 @@
 ﻿using System;
 using Cookbook.Command;
 using Cookbook.Pages.Recipe;
+using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
@@ -9,27 +10,43 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class RecipeViewModel : ViewModelBase, INavItem
 {
+    private RecipeService _recipeService = new RecipeService();
+    
     private bool _canEdit = false;
+    private Database.Recipe? _recipe;
+
+    private int _recipeId = 0;
     
     public INavHost Host { get; set; }
-    
-    public Database.Recipe Recipe { get; set; } = new Database.Recipe();
-    
-    public RecipeViewModel(INavHost host)
+
+    public Database.Recipe? Recipe
     {
-        Host = host;
-    
-        // LoadAccess();
+        get => _recipe;
+        set
+        {
+            if (Equals(value, _recipe)) return;
+            _recipe = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(RecipeIngredientsVisible));
+            OnPropertyChanged(nameof(RecipeCategoriesVisible));
+            OnPropertyChanged(nameof(RecipeStepsVisible));
+        }
     }
-    
-    public RecipeViewModel(INavHost host, Database.Recipe recipe)
+
+    public RecipeViewModel(INavHost host, Database.Recipe? recipe)
     {
         Host = host;
         Recipe = recipe;
     
         LoadAccess();
+        LoadRecipe();
     }
-    
+
+    private async void LoadRecipe()
+    {
+        if (Recipe != null) 
+            Recipe = await _recipeService.Get(Recipe.Id);
+    }
     
     public bool RecipeIngredientsVisible =>
         Recipe.RecipeIngredients.Count > 0;

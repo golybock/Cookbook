@@ -24,7 +24,7 @@ public partial class EditRecipePage : Page
     /// </summary>
     /// <param name="host"></param>
     /// <param name="recipeDomain"></param>
-    public EditRecipePage(INavHost host, Database.Recipe recipe)
+    public EditRecipePage(INavHost host, Database.Recipe? recipe)
     {
         InitializeComponent();
         

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Pages.Client;
+using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using ModernWpf.Controls;
 
@@ -15,6 +16,15 @@ public class LoginViewModel : ViewModelBase, INavItem
     private string _password = String.Empty;
     
     private string _login = string.Empty;
+
+    private ClientService _clientService = new ClientService();
+    
+    public INavHost Host { get; set; }
+    
+    public LoginViewModel(INavHost host)
+    {
+        Host = host;
+    }
 
     public string Login
     {
@@ -48,11 +58,7 @@ public class LoginViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-
-    public INavHost Host { get; set; }
     
-    public LoginViewModel(INavHost host) => Host = host;
-
     public CommandHandler LoginCommand =>
         new CommandHandler(LoginAsync);
 
@@ -63,8 +69,9 @@ public class LoginViewModel : ViewModelBase, INavItem
     {
         try
         {
-
-            Host.NavController.Navigate(new ClientPage(Host)); ;
+            await _clientService.Login(Login, Password);
+            
+            Host.NavController.Navigate(new ClientPage(Host));
         }
         catch (Exception e)
         {

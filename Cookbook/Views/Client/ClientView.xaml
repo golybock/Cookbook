@@ -9,88 +9,88 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="600">
-    
+
     <ui1:ContentCard MaxHeight="350"
                      VerticalAlignment="Top">
-            
+
         <Grid>
-                
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <ui:PersonPicture Grid.Column="0"
                               Grid.Row="0"
                               Width="250"
                               Height="250"
                               Margin="20"
-                              ProfilePicture="{Binding Client.ImagePath}"/>
-            
+                              ProfilePicture="{Binding Image}" />
+
             <!-- client info panel -->
             <ui:SimpleStackPanel Grid.Column="1"
                                  Spacing="12"
                                  Margin="20"
                                  VerticalAlignment="Top"
                                  HorizontalAlignment="Left">
-                
-                <TextBlock Text="{Binding Client.Name, TargetNullValue=Нет имени}"
+
+                <TextBlock Text="{Binding Client.Name}"
                            FontSize="28"
                            FontWeight="Bold"
-                           TextWrapping="Wrap"/>
-                
+                           TextWrapping="Wrap" />
+
                 <TextBlock Text="{Binding Client.Description}"
                            FontSize="20"
                            MaxHeight="140"
-                           TextWrapping="Wrap"/>
-                
+                           TextWrapping="Wrap" />
+
                 <!-- toolbar -->
                 <ui:SimpleStackPanel HorizontalAlignment="Left"
                                      Orientation="Horizontal"
                                      Spacing="12">
-                    
+
                     <Button Height="35"
                             FontSize="14"
                             Command="{Binding EditCommand}">
-                    
+
                         <StackPanel Orientation="Horizontal">
-                        
+
                             <Image Margin="1"
-                                   Source="../../Resources/Icons/edit.png"/>
-                        
+                                   Source="../../Resources/Icons/edit.png" />
+
                             <TextBlock TextAlignment="Center"
                                        Margin="5,0,5,0"
                                        VerticalAlignment="Center"
-                                       Text="Редактировать"/>
-                        
+                                       Text="Редактировать" />
+
                         </StackPanel>
-                    
+
                     </Button>
-                    
+
                     <Button Height="35"
                             FontSize="14"
                             Command="{Binding UnLoginCommand}">
-                    
+
                         <StackPanel Orientation="Horizontal">
-                        
+
                             <Image Margin="1"
-                                   Source="../../Resources/Icons/share.png"/>
-                        
+                                   Source="../../Resources/Icons/share.png" />
+
                             <TextBlock TextAlignment="Center"
                                        Margin="5,0,5,0"
                                        VerticalAlignment="Center"
-                                       Text="Выйти"/>
-                        
+                                       Text="Выйти" />
+
                         </StackPanel>
-                    
+
                     </Button>
-                    
+
                 </ui:SimpleStackPanel>
-                
+
             </ui:SimpleStackPanel>
-            
+
         </Grid>
-        
+
     </ui1:ContentCard>
-    
+
 </UserControl>

@@ -14,9 +14,11 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class RecipesViewModel : ViewModelBase, INavItem
 {
+    public INavHost Host { get; set; }
+    
     private bool _userLogin = false;
 
-    private List<Database.Recipe> firstRecipes;
+    private List<Database.Recipe> firstRecipes = new List<Database.Recipe>();
 
     public List<Category> Categories { get; set; } = new List<Category>();
 
@@ -43,8 +45,6 @@ public class RecipesViewModel : ViewModelBase, INavItem
         Recipes = new ObservableCollection<Database.Recipe>(recipes);
         
         firstRecipes = new List<Database.Recipe>(recipes);
-        
-        OnPropertyChanged("Recipes");
 
         LoadCategories();
     }
@@ -71,7 +71,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
         }
     }
 
-    private void OpenRecipe(Database.Recipe recipeDomain)
+    private void OpenRecipe(Database.Recipe? recipeDomain)
     {
         Host.NavController.Navigate(new RecipePage(Host, recipeDomain));
     }
@@ -118,8 +118,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
             var sorted = Recipes.OrderBy(c => c.Header);
             Recipes = new ObservableCollection<Database.Recipe>(sorted);
         }
-         
-        
+
         if (SelectedSortType.Id == 2)
         {
             var sorted = Recipes.OrderBy(c => c.RecipeStat?.CookingTime);
@@ -155,6 +154,4 @@ public class RecipesViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-
-    public INavHost Host { get; set; }
 }

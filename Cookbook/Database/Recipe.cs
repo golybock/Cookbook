@@ -1,17 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Cookbook.Database;
 
 public partial class Recipe
 {
+    private string? _imagePath;
     public int Id { get; set; }
 
     public int? ClientId { get; set; }
 
     public string Header { get; set; } = null!;
 
-    public string? ImagePath { get; set; }
+    public string? ImagePath
+    {
+        get
+        {
+            if (_imagePath == null)
+                return null;
+
+            return System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + _imagePath;
+        }
+        set => _imagePath = value;
+    }
 
     public string? SourceUrl { get; set; }
 

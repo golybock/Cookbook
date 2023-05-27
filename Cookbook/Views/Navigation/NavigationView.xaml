@@ -23,7 +23,8 @@
             Converter={StaticResource BooleanToVisibilityConverter},
             UpdateSourceTrigger=PropertyChanged}"
             PaneDisplayMode="Top"
-            IsSettingsVisible="True">
+            IsSettingsVisible="True"
+            IsBackEnabled="True">
             
             <b:Interaction.Triggers>
 
@@ -40,6 +41,8 @@
 
                 <ui:AutoSuggestBox Width="200"
                                    Text="{Binding SearchText, Mode=TwoWay}"
+                                   UpdateTextOnSelect="True"
+                                   ItemsSource="{Binding RecipesSuggestions, UpdateSourceTrigger=PropertyChanged}"
                                    PlaceholderText="Введите текст..."
                                    QueryIcon="Find">
 

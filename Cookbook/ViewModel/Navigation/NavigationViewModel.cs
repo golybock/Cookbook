@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Cookbook.Command;
@@ -8,6 +9,7 @@ using Cookbook.Pages.Client;
 using Cookbook.Pages.Notify;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
+using Cookbook.Services;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
@@ -16,9 +18,24 @@ namespace Cookbook.ViewModel.Navigation;
 
 public class NavigationViewModel : ViewModelBase, INavHost
 {
+    private readonly RecipeService _recipeService = new RecipeService();
+
+    public ObservableCollection<string> RecipesSuggestions
+    {
+        get => _recipesSuggestions;
+        set
+        {
+            if (Equals(value, _recipesSuggestions)) return;
+            _recipesSuggestions = value;
+            OnPropertyChanged();
+        }
+    }
+
     private string? _searchText;
 
     private bool _backVisible = false;
+    
+    private ObservableCollection<string> _recipesSuggestions;
 
     public bool BackVisible
     {
@@ -33,7 +50,31 @@ public class NavigationViewModel : ViewModelBase, INavHost
     public NavigationViewModel()
     {
         BackVisible = false;
-        SetRecipes();
+        LoadSuggestions();
+    }
+
+    private async void LoadSuggestions()
+    {
+        var recipes = await _recipeService.Get();
+
+        RecipesSuggestions = new ObservableCollection<string>(recipes
+            .Select(c => c.Header)
+            .Take(5));
+
+        await SetRecipes();
+    }
+
+    private async void LoadSuggestions(string search)
+    {
+        var recipes = await _recipeService.Get();
+
+        var searchList = recipes
+            .Where(c => c.Header.ToLower()
+                .Contains(search.ToLower()))
+            .Select(c => c.Header)
+            .Take(5);
+
+        RecipesSuggestions = new ObservableCollection<string>(searchList);
     }
 
     public string? SearchText
@@ -43,7 +84,6 @@ public class NavigationViewModel : ViewModelBase, INavHost
         {
             if (value == _searchText) return;
             _searchText = value;
-            SetRecipes(_searchText);
             OnPropertyChanged();
         }
     }
@@ -74,10 +114,10 @@ public class NavigationViewModel : ViewModelBase, INavHost
             return;
 
         if (selected?.Tag.ToString() == "Recipes")
-            SetRecipes();
+            await SetRecipes();
 
         if (selected?.Tag.ToString() == "Liked")
-            NavController.Navigate(new RecipesPage(this));
+            await SetLikedRecipes();
 
         if (selected?.Tag.ToString() == "Profile")
             ShowProfile();
@@ -92,34 +132,80 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
             if (login == null || password == null)
             {
-                var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
-
                 NavController.Navigate(new NoAuthPage(this));
                 return;
             }
+            
+            var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
+
+            if (client == null)
+            {
+                NavController.Navigate(new NoAuthPage(this));
+                return;
+            }
+            
+            NavController.Navigate(new ClientPage(this));
         }
         catch (Exception e)
         {
             NavController.Navigate(new ErrorPage());
         }
-
-        NavController.Navigate(new ClientPage(this));
     }
 
-    private async void SetRecipes()
+    private async Task SetRecipes()
     {
         NavController.Navigate(new LoadingPage());
 
         try
         {
             var recipes = await App.Context.Recipes
-                .Include(c => c.RecipeIngredients)
-                .Include(c => c.RecipeSteps)
-                .Include(c => c.RecipeStat)
                 .Include(c => c.RecipeViews)
                 .ToListAsync();
 
-            NavController.Navigate(new RecipesPage(this, recipes));
+            if (recipes.Count == 0)
+                NavController.Navigate(new NotFoundPage());
+            else
+                NavController.Navigate(new RecipesPage(this, recipes));
+        }
+        catch (Exception e)
+        {
+            NavController.Navigate(new ErrorPage());
+        }
+    }
+    
+    private async Task SetLikedRecipes()
+    {
+        NavController.Navigate(new LoadingPage());
+
+        try
+        {
+            var login = App.Settings.Email;
+            var password = App.Settings.Password;
+
+            if (login == null || password == null)
+            {
+                NavController.Navigate(new NoAuthPage(this));
+                return;
+            }
+            
+            var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
+
+            if (client == null)
+            {
+                NavController.Navigate(new NoAuthPage(this));
+                return;
+            }
+
+            var recipes = await App.Context.FavoriteRecipes
+                .Include(c => c.Recipe)
+                .Where(c => c.ClientId == client.Id)
+                .Select(c => c.Recipe)
+                .ToListAsync();
+            
+            if (recipes.Count == 0)
+                NavController.Navigate(new NotFoundPage());
+            else
+                NavController.Navigate(new RecipesPage(this, recipes));
         }
         catch (Exception e)
         {
@@ -127,7 +213,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
         }
     }
 
-    private async void SetRecipes(string? search)
+    private async Task SetRecipes(string? search)
     {
         NavController.Navigate(new LoadingPage());
 
@@ -138,29 +224,21 @@ public class NavigationViewModel : ViewModelBase, INavHost
             if (string.IsNullOrWhiteSpace(search))
             {
                 recipes = await App.Context.Recipes
-                    .Include(c => c.RecipeIngredients)
-                    .Include(c => c.RecipeSteps)
-                    .Include(c => c.RecipeStat)
                     .Include(c => c.RecipeViews)
                     .ToListAsync();
             }
             else
             {
                 recipes = await App.Context.Recipes
-                    .Include(c => c.RecipeIngredients)
-                    .Include(c => c.RecipeSteps)
-                    .Include(c => c.RecipeStat)
                     .Include(c => c.RecipeViews)
-                    .Where(c => c.Description != null && (c.Header.ToLower().Contains(search) ||
-                                                          c.Description.ToLower().Contains(search)))
-                    .ToListAsync();    
+                    .Where(c => c.Header.ToLower().Contains(search.ToLower()))
+                    .ToListAsync();
             }
-            
-            if(recipes.Count == 0)
+
+            if (recipes.Count == 0)
                 NavController.Navigate(new NotFoundPage());
             else
                 NavController.Navigate(new RecipesPage(this, recipes));
-            
         }
         catch (Exception e)
         {
@@ -170,15 +248,18 @@ public class NavigationViewModel : ViewModelBase, INavHost
 
     private async void QuerySubmitted()
     {
-        
+        await SetRecipes(SearchText);
     }
 
     private async void TextChanged()
     {
+        if (SearchText != null)
+            LoadSuggestions(SearchText);
     }
 
     private async void SuggestionChosen()
     {
+        await SetRecipes(SearchText);
     }
 
     public NavController NavController { get; set; } = new NavController();

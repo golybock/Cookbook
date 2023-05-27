@@ -16,7 +16,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private ObservableCollection<RecipeIngredient> _ingredients =
         new ObservableCollection<RecipeIngredient>();
     
-    public Database.Recipe Recipe { get; set; }
+    public Database.Recipe? Recipe { get; set; }
 
     public string? ImageUrl { get; set; }
 
@@ -39,7 +39,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         Recipe = new Database.Recipe();
     }
     
-    public EditRecipeViewModel(INavHost host, Database.Recipe recipeDomain)
+    public EditRecipeViewModel(INavHost host, Database.Recipe? recipeDomain)
     {
         Host = host;
         Recipe = recipeDomain;
