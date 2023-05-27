@@ -156,7 +156,7 @@
                 </StackPanel>
                 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding Recipe.RecipeIngredients, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding RecipeIngredientsVisible, Converter={StaticResource VisibilityConverter}}">
                     
                     <controls:ItemsRepeater.Layout>
@@ -213,14 +213,14 @@
                 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Visibility="{Binding RecipeCategoriesNotVisible, Converter={StaticResource VisibilityConverter}}">
+                            Visibility="{Binding RecipeCategoriesNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                     
                     <TextBlock Text="Нет категорий"/>
                     
                 </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Categories, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding Recipe.RecipeCategories, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding RecipeCategoriesVisible, Converter={StaticResource VisibilityConverter}}">
 
                     <controls:ItemsRepeater.Layout>
@@ -233,7 +233,7 @@
                         <DataTemplate>
                             <ui:ContentCard2>
 
-                                <TextBlock Text="{Binding Name}"
+                                <TextBlock Text="{Binding Category.Name}"
                                            TextWrapping="Wrap"
                                            VerticalAlignment="Center"
                                            TextAlignment="Left"
@@ -264,14 +264,14 @@
 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Visibility="{Binding RecipeStepsNotVisible, Converter={StaticResource VisibilityConverter}}">
+                            Visibility="{Binding RecipeStepsNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                     
                     <TextBlock Text="Нет шагов приготовления"/>
                     
                 </StackPanel>
                 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding Recipe.RecipeSteps, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding RecipeStepsVisible, Converter={StaticResource VisibilityConverter}}">
 
                     <controls:ItemsRepeater.Layout>
@@ -333,32 +333,32 @@
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Килокалорий"
                                     IsEnabled="False"
-                                    Value="{Binding Recipe.Stats.Kilocalories}" />
+                                    Value="{Binding Recipe.RecipeStat.Kilocalories}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Белки"
                                     IsEnabled="False"
-                                    Value="{Binding Recipe.Stats.Squirrels}" />
+                                    Value="{Binding Recipe.RecipeStat.Squirrels}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Жиры"
                                     IsEnabled="False"
-                                    Value="{Binding Recipe.Stats.Fats}" />
+                                    Value="{Binding Recipe.RecipeStat.Fats}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Углеводы"
                                     IsEnabled="False"
-                                    Value="{Binding Recipe.Stats.Carbohydrates}" />
+                                    Value="{Binding Recipe.RecipeStat.Carbohydrates}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Порций"
                                     IsEnabled="False"
-                                    Value="{Binding Recipe.Stats.Portions}" />
+                                    Value="{Binding Recipe.RecipeStat.Portions}" />
 
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Время приготовления"
                          TextWrapping="Wrap"
-                         Text="{Binding Recipe.Stats.CookingTimeMinutes, Mode=OneWay}"
+                         Text="{Binding Recipe.RecipeStat.CookingTimeMinutes, Mode=OneWay}"
                          IsEnabled="False" />
 
                 <TextBox Margin="5,0,0,0"

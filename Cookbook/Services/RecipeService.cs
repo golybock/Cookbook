@@ -11,7 +11,15 @@ public class RecipeService : IRecipeService
 {
     public async Task<Recipe?> Get(int id)
     {
-        var recipe = await App.Context.Recipes.FirstOrDefaultAsync(c => c.Id == id);
+        var recipe = await App.Context.Recipes
+            .Include(c => c.RecipeStat)
+            .Include(c => c.RecipeSteps)
+            .Include(c => c.RecipeViews)
+            .Include(c => c.RecipeCategories)
+            .ThenInclude(c => c.Category)
+            .Include(c => c.RecipeIngredients)
+            .ThenInclude(c => c.Ingredient)
+            .FirstOrDefaultAsync(c => c.Id == id);
 
         if (recipe != null)
         {

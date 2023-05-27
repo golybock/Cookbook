@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Cookbook.Command;
 using Cookbook.Pages.Recipe;
 using Cookbook.Services;
@@ -15,7 +16,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
     private bool _canEdit = false;
     private Database.Recipe? _recipe;
 
-    private int _recipeId = 0;
+    private int _recipeId;
     
     public INavHost Host { get; set; }
 
@@ -33,19 +34,18 @@ public class RecipeViewModel : ViewModelBase, INavItem
         }
     }
 
-    public RecipeViewModel(INavHost host, Database.Recipe? recipe)
+    public RecipeViewModel(INavHost host, Database.Recipe recipe)
     {
         Host = host;
-        Recipe = recipe;
+        _recipeId = recipe.Id;
     
         LoadAccess();
         LoadRecipe();
     }
-
+    
     private async void LoadRecipe()
     {
-        if (Recipe != null) 
-            Recipe = await _recipeService.Get(Recipe.Id);
+        Recipe = await _recipeService.Get(_recipeId);
     }
     
     public bool RecipeIngredientsVisible =>
