@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="clr-namespace:Cookbook.UI"
              xmlns:controls="http://schemas.modernwpf.com/2019"
+             xmlns:easyCharts="clr-namespace:EasyCharts;assembly=Easy4Charts"
+             xmlns:easyCharts1="clr-namespace:Avalonia.easyCharts;assembly=Easy4Charts"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800">
@@ -24,6 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="250" />
             <RowDefinition Height="*" MinHeight="250" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -366,6 +369,20 @@
                          TextWrapping="Wrap"
                          Text="{Binding Recipe.SourceUrl}"
                          IsEnabled="False" />
+
+            </controls:SimpleStackPanel>
+
+        </ui:ContentCard>
+        
+        <!-- stats -->
+        <ui:ContentCard Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="5">
+
+            <controls:SimpleStackPanel Spacing="12"
+                                       Orientation="Vertical">
+                
+                <easyCharts1:GraphProcessing Chart="{Binding}" Margin="10, 10, 10, 10"/>
 
             </controls:SimpleStackPanel>
 

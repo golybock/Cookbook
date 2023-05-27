@@ -43,6 +43,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
         LoadRecipe();
     }
     
+    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 135")]
     private async void LoadRecipe()
     {
         Recipe = await _recipeService.Get(_recipeId);
