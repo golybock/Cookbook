@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Windows.Documents;
 using Cookbook.Command;
 using Cookbook.Pages.Recipe;
 using Cookbook.Services;
@@ -12,12 +15,12 @@ namespace Cookbook.ViewModel.Recipe;
 public class RecipeViewModel : ViewModelBase, INavItem
 {
     private RecipeService _recipeService = new RecipeService();
-    
+
     private bool _canEdit = false;
     private Database.Recipe? _recipe;
 
     private int _recipeId;
-    
+
     public INavHost Host { get; set; }
 
     public Database.Recipe? Recipe
@@ -38,51 +41,56 @@ public class RecipeViewModel : ViewModelBase, INavItem
     {
         Host = host;
         _recipeId = recipe.Id;
-    
+
         LoadAccess();
         LoadRecipe();
     }
-    
+
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 135")]
     private async void LoadRecipe()
     {
         Recipe = await _recipeService.Get(_recipeId);
+
+        var views = Recipe.RecipeViews
+            .OrderBy(c => c.Datetime)
+            .ToList();
+        
     }
-    
+
     public bool RecipeIngredientsVisible =>
         Recipe.RecipeIngredients.Count > 0;
-    
+
     public bool RecipeCategoriesVisible =>
         Recipe.RecipeCategories.Count > 0;
-    
+
     public bool RecipeStepsVisible =>
         Recipe.RecipeSteps.Count > 0;
-    
+
     public bool RecipeStepsNotVisible =>
         !RecipeStepsVisible;
-    
+
     public bool RecipeCategoriesNotVisible =>
         !RecipeCategoriesVisible;
-    
+
     public bool RecipeIngredientsNotVisible =>
         !RecipeIngredientsVisible;
-    
+
     public CommandHandler EditCommand =>
         new CommandHandler(Edit);
-    
+
     public CommandHandler SaveCommand =>
         new CommandHandler(Save);
-    
+
     public CommandHandler DeleteCommand =>
         new CommandHandler(Delete);
-    
+
     public CommandHandler LikeCommand =>
         new CommandHandler(Like);
-    
+
     private async void LoadAccess()
     {
         CanEdit = false;
-    
+
         try
         {
             // if (client?.Login != null)
@@ -94,7 +102,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
             CanEdit = false;
         }
     }
-    
+
     public bool CanEdit
     {
         get => _canEdit;
@@ -105,7 +113,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
+
     private async void Delete()
     {
         try
@@ -124,9 +132,9 @@ public class RecipeViewModel : ViewModelBase, INavItem
                 Content = "Рецепт успешно удален!",
                 CloseButtonText = "Закрыть"
             };
-    
+
             await notify.ShowAsync();
-    
+
             Host.NavController.GoBack();
         }
         catch (Exception e)
@@ -137,7 +145,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
                 Content = "Возникла ошибка при удалении",
                 CloseButtonText = "Закрыть"
             };
-    
+
             await notify.ShowAsync();
         }
     }
