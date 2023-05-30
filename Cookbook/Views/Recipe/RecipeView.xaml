@@ -359,7 +359,7 @@
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Время приготовления"
                          TextWrapping="Wrap"
-                         Text="{Binding Recipe.RecipeStat.CookingTimeMinutes, Mode=OneWay}"
+                         Text="{Binding Recipe.RecipeStat.CookingTime, Mode=OneWay}"
                          IsEnabled="False" />
 
                 <TextBox Margin="5,0,0,0"

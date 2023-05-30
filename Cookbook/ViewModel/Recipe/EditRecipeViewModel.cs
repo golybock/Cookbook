@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database;
 using Cookbook.Pages.Notify;
@@ -274,6 +275,8 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             await App.Context.RecipeStats.AddAsync(Recipe.RecipeStat);
 
         await App.Context.SaveChangesAsync();
+        
+        MessageBox.Show("created");
     }
 
     private async Task Update()
@@ -314,6 +317,8 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         App.Context.RecipeStats.Update(Recipe.RecipeStat);
         
         await App.Context.SaveChangesAsync();
+
+        MessageBox.Show("Обновлено");
     }
 
     private async void AddIngredient()

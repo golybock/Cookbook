@@ -6,13 +6,14 @@ namespace Cookbook.Database;
 
 public partial class Recipe
 {
-    private string? _imagePath;
     public int Id { get; set; }
 
     public int? ClientId { get; set; }
 
     public string Header { get; set; } = null!;
 
+    private string? _imagePath;
+    
     public string? ImagePath
     {
         get
@@ -37,11 +38,11 @@ public partial class Recipe
 
     public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
-    public virtual RecipeStat? RecipeStat { get; set; } = new RecipeStat();
+    public virtual RecipeStat? RecipeStat { get; set; }
 
     public virtual ICollection<RecipeStep> RecipeSteps { get; set; } = new List<RecipeStep>();
 
     public virtual ICollection<RecipeView> RecipeViews { get; set; } = new List<RecipeView>();
-
+    
     public int Views => RecipeViews.Count;
 }

@@ -58,13 +58,13 @@ public class RecipeViewModel : ViewModelBase, INavItem
     }
 
     public bool RecipeIngredientsVisible =>
-        Recipe.RecipeIngredients.Count > 0;
+        Recipe is {RecipeIngredients.Count: > 0};
 
     public bool RecipeCategoriesVisible =>
-        Recipe.RecipeCategories.Count > 0;
+        Recipe is {RecipeCategories.Count: > 0};
 
     public bool RecipeStepsVisible =>
-        Recipe.RecipeSteps.Count > 0;
+        Recipe is {RecipeSteps.Count: > 0};
 
     public bool RecipeStepsNotVisible =>
         !RecipeStepsVisible;

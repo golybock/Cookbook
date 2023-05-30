@@ -456,7 +456,8 @@
                         Margin="5">
 
             <controls:SimpleStackPanel Spacing="12"
-                                       Orientation="Vertical">
+                                       Orientation="Vertical"
+                                       DataContext="{Binding Recipe}">
 
                 <TextBlock Text="Информация"
                            FontSize="20"
@@ -466,36 +467,36 @@
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Килокалорий"
-                                    Value="{Binding Recipe.RecipeStat.Kilocalories}" />
+                                    Value="{Binding RecipeStat.Kilocalories, Mode=TwoWay}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Белки"
                                     Minimum="0"
-                                    Value="{Binding Recipe.RecipeStat.Squirrels}" />
+                                    Value="{Binding RecipeStat.Squirrels, Mode=TwoWay}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Жиры"
-                                    Value="{Binding Recipe.RecipeStat.Fats}" />
+                                    Value="{Binding RecipeStat.Fats, Mode=TwoWay}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Углеводы"
-                                    Value="{Binding Recipe.RecipeStat.Carbohydrates}" />
+                                    Value="{Binding RecipeStat.Carbohydrates, Mode=TwoWay}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="1"
                                     Header="Порций"
-                                    Value="{Binding Recipe.RecipeStat.Portions}" />
+                                    Value="{Binding RecipeStat.Portions, Mode=TwoWay}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     controls:ControlHelper.Header="Время приготовления"
-                                    Text="{Binding Recipe.RecipeStat.CookingTimeMinutes}" />
+                                    Value="{Binding RecipeStat.CookingTime, Mode=TwoWay}" />
 
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Источник"
                          TextWrapping="Wrap"
-                         Text="{Binding Recipe.SourceUrl}" />
+                         Text="{Binding SourceUrl}" />
 
             </controls:SimpleStackPanel>
 

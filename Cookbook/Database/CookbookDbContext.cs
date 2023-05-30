@@ -139,7 +139,7 @@ public partial class CookbookDbContext : DbContext
                 .HasMaxLength(200)
                 .HasColumnName("description");
             entity.Property(e => e.Header)
-                .HasMaxLength(500)
+                .HasMaxLength(50)
                 .HasColumnName("header");
             entity.Property(e => e.ImagePath)
                 .HasMaxLength(500)
