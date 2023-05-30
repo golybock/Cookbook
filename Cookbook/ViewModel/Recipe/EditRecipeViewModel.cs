@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Database;
+using Cookbook.Pages.Notify;
 using Cookbook.ViewModel.ChooseDialogs;
 using Cookbook.ViewModel.Navigation;
 using Cookbook.Views.ChooseDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using ModernWpf.Controls;
-using Xceed.Document.NET;
 
 namespace Cookbook.ViewModel.Recipe;
 
@@ -27,9 +28,10 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private string? _imageUrl;
     private ObservableCollection<Category> _recipeCategories;
     private Category _selectedCategory;
-    
-    private string _description;
-    private string _header;
+
+    private string _description = string.Empty;
+    private string _header = string.Empty;
+    private Database.Recipe _recipe = new Database.Recipe();
 
     public string Description
     {
@@ -37,10 +39,10 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         set
         {
             if (value == _description) return;
-            
+
             Recipe.Description = value;
             _description = value;
-            
+
             OnPropertyChanged();
         }
     }
@@ -54,12 +56,21 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
             Recipe.Header = value;
             _header = value;
-            
+
             OnPropertyChanged();
         }
     }
 
-    public Database.Recipe? Recipe { get; set; }
+    public Database.Recipe Recipe
+    {
+        get => _recipe;
+        set
+        {
+            if (Equals(value, _recipe)) return;
+            _recipe = value;
+            OnPropertyChanged();
+        }
+    }
 
     public string? ImageUrl
     {
@@ -133,17 +144,17 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     {
         Host = host;
         Recipe = new Database.Recipe();
-        
+
         LoadCategories();
     }
 
-    public EditRecipeViewModel(INavHost host, Database.Recipe? recipeDomain)
+    public EditRecipeViewModel(INavHost host, Database.Recipe recipe)
     {
         Host = host;
-        Recipe = recipeDomain;
+        Recipe = recipe;
 
-        ImageUrl = recipeDomain.ImagePath;
-        
+        ImageUrl = recipe.ImagePath;
+
         LoadCategories();
     }
 
@@ -202,13 +213,13 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private async void ChooseImage()
     {
         var path = ChooseFile();
-        
-        if(path == null)
+
+        if (path == null)
             return;
 
         ImageUrl = path;
     }
-    
+
     private string? ChooseFile()
     {
         var openFileDialog = new OpenFileDialog
@@ -216,15 +227,93 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             InitialDirectory = "C:\\",
             Filter = "Image files (*.png)|*.png|All files (*.*)|*.*"
         };
-        
+
         if (openFileDialog.ShowDialog() == true)
             return openFileDialog.FileName;
 
         return null;
     }
-    
-    private void Save()
+
+    private async void Save()
     {
+        if (Recipe.Id == 0)
+            await Create();
+        else
+            await Update();
+    }
+
+    private async Task Create()
+    {
+        var user = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == App.Settings.Email);
+
+        if (user == null)
+            Host.NavController.Navigate(new ErrorPage());
+
+        await App.Context.Recipes.AddAsync(Recipe);
+        await App.Context.SaveChangesAsync();
+
+        foreach (var step in Steps)
+            step.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeSteps.AddRangeAsync(Steps);
+        await App.Context.SaveChangesAsync();
+
+        foreach (var category in Categories)
+            category.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeCategories.AddRangeAsync(Categories);
+        await App.Context.SaveChangesAsync();
+
+        foreach (var ingredient in Ingredients)
+            ingredient.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeIngredients.AddRangeAsync(Ingredients);
+        await App.Context.SaveChangesAsync();
+
+        if (Recipe.RecipeStat != null)
+            await App.Context.RecipeStats.AddAsync(Recipe.RecipeStat);
+
+        await App.Context.SaveChangesAsync();
+    }
+
+    private async Task Update()
+    {
+        App.Context.Recipes.Update(Recipe);
+        await App.Context.SaveChangesAsync();
+
+        var steps = App.Context.RecipeSteps.Where(c => c.RecipeId == Recipe.Id).ToList();
+        App.Context.RemoveRange(steps);
+        await App.Context.SaveChangesAsync();
+
+        foreach (var step in Steps)
+            step.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeSteps.AddRangeAsync(Steps);
+        await App.Context.SaveChangesAsync();
+
+        var categories = App.Context.RecipeCategories.Where(c => c.RecipeId == Recipe.Id).ToList();
+        App.Context.RemoveRange(categories);
+        await App.Context.SaveChangesAsync();
+        
+        foreach (var category in Categories)
+            category.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeCategories.AddRangeAsync(Categories);
+        await App.Context.SaveChangesAsync();
+
+        var ingredients = App.Context.RecipeIngredients.Where(c => c.RecipeId == Recipe.Id).ToList();
+        App.Context.RemoveRange(ingredients);
+        await App.Context.SaveChangesAsync();
+        
+        foreach (var ingredient in Ingredients)
+            ingredient.RecipeId = Recipe.Id;
+
+        await App.Context.RecipeIngredients.AddRangeAsync(Ingredients);
+        await App.Context.SaveChangesAsync();
+
+        App.Context.RecipeStats.Update(Recipe.RecipeStat);
+        
+        await App.Context.SaveChangesAsync();
     }
 
     private async void AddIngredient()
@@ -247,7 +336,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             var ingredients = new List<RecipeIngredient>(Ingredients);
 
             var ingredient = ingredients
-                .FirstOrDefault(c => c.IngredientId == context.RecipeIngredient.Ingredient.Id);
+                .FirstOrDefault(c => c.IngredientId == context.RecipeIngredient.Ingredient?.Id);
 
             if (ingredient != null)
             {
@@ -294,7 +383,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private async void AddStep()
     {
         Steps.Add(new RecipeStep());
-        
+
         OnPropertyChanged(nameof(Steps));
     }
 
@@ -308,7 +397,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private void DeleteCategory(RecipeCategory recipeCategory)
     {
         Categories.Remove(recipeCategory);
-        
+
         OnPropertyChanged(nameof(Categories));
     }
 

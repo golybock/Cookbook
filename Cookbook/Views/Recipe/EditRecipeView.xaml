@@ -466,31 +466,31 @@
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Килокалорий"
-                                    Value="{Binding Recipe.Stats.Kilocalories}" />
+                                    Value="{Binding Recipe.RecipeStat.Kilocalories}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Header="Белки"
                                     Minimum="0"
-                                    Value="{Binding Recipe.Stats.Squirrels}" />
+                                    Value="{Binding Recipe.RecipeStat.Squirrels}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Жиры"
-                                    Value="{Binding Recipe.Stats.Fats}" />
+                                    Value="{Binding Recipe.RecipeStat.Fats}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="0"
                                     Header="Углеводы"
-                                    Value="{Binding Recipe.Stats.Carbohydrates}" />
+                                    Value="{Binding Recipe.RecipeStat.Carbohydrates}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     Minimum="1"
                                     Header="Порций"
-                                    Value="{Binding Recipe.Stats.Portions}" />
+                                    Value="{Binding Recipe.RecipeStat.Portions}" />
 
                 <controls:NumberBox Margin="5,0,0,0"
                                     controls:ControlHelper.Header="Время приготовления"
-                                    Text="{Binding Recipe.Stats.CookingTimeMinutes}" />
+                                    Text="{Binding Recipe.RecipeStat.CookingTimeMinutes}" />
 
                 <TextBox Margin="5,0,0,0"
                          controls:ControlHelper.Header="Источник"
