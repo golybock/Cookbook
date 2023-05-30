@@ -10,6 +10,13 @@
              d:DesignHeight="600"
              d:DesignWidth="800">
 
+    <UserControl.Resources>
+
+        <BitmapImage x:Key="NoImage"
+                     UriSource="../../Resources/Icons/food.png" />
+
+    </UserControl.Resources>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -37,11 +44,24 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Image Grid.Column="0"
-                       Source="{Binding ImageUrl}"
-                       Width="250"
-                       Height="250"
-                       Margin="20" />
+                <controls:SimpleStackPanel Orientation="Vertical"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Spacing="12">
+
+                    <Image Source="{Binding ImageUrl, TargetNullValue={StaticResource NoImage}, UpdateSourceTrigger=PropertyChanged}"
+                        Width="250"
+                        Height="250"
+                        Margin="20" />
+
+                    <Button Width="200"
+                            Margin="5"
+                            Content="Выбрать фото"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ChooseImageCommand}" />
+
+                </controls:SimpleStackPanel>
+
 
                 <Grid Grid.Column="1"
                       Margin="20">
@@ -57,11 +77,12 @@
                                                HorizontalAlignment="Left"
                                                Margin="5">
 
-                        <TextBox Text="{Binding Recipe.Header}"
+                        <TextBox Text="{Binding Header, Mode=TwoWay}"
                                  controls:ControlHelper.Header="Заголовок"
                                  FontWeight="Bold"
                                  TextWrapping="Wrap"
                                  BorderBrush="Transparent"
+                                 MaxLength="50"
                                  FontSize="28" />
 
                         <controls:SimpleStackPanel Spacing="5">
@@ -72,12 +93,12 @@
                             <controls:SplitButton Height="35"
                                                   Width="200"
                                                   FontSize="16"
-                                                  Content="{Binding SelectedRecipeTypeDomain.Name, UpdateSourceTrigger=PropertyChanged}">
+                                                  Content="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}">
 
                                 <controls:SplitButton.Flyout>
                                     <controls:Flyout>
-                                        <ListView ItemsSource="{Binding RecipeTypeDomains}"
-                                                  SelectedItem="{Binding SelectedRecipeTypeDomain}">
+                                        <ListView ItemsSource="{Binding RecipeCategories}"
+                                                  SelectedItem="{Binding SelectedCategory}">
 
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
@@ -92,9 +113,10 @@
 
                         </controls:SimpleStackPanel>
 
-                        <TextBox Text="{Binding Recipe.Description}"
+                        <TextBox Text="{Binding Description}"
                                  controls:ControlHelper.Header="Краткое описание"
                                  TextWrapping="Wrap"
+                                 MaxLength="200"
                                  BorderBrush="Transparent"
                                  MaxHeight="140"
                                  FontSize="20" />
@@ -131,20 +153,6 @@
 
                                 <Image Margin="1"
                                        Source="../../Resources/Icons/close.png" />
-
-                            </StackPanel>
-
-                        </Button>
-
-                        <Button Height="35"
-                                FontSize="14"
-                                Command="{Binding ChooseImageButton}"
-                                ToolTip="Выбрать изображение">
-
-                            <StackPanel Orientation="Horizontal">
-
-                                <Image Margin="1"
-                                       Source="../../Resources/Icons/image.png" />
 
                             </StackPanel>
 
@@ -209,7 +217,7 @@
                                                    VerticalAlignment="Center"
                                                    TextAlignment="Left"
                                                    FontSize="16" />
-                                        
+
                                         <TextBlock Text="{Binding Ingredient.Measure.Name}"
                                                    Margin="5,0,5,0"
                                                    TextWrapping="Wrap"
@@ -280,7 +288,7 @@
                            FontWeight="Bold" />
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Categories, UpdateSourceTrigger=PropertyChanged}">
+                                        ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}">
 
                     <controls:ItemsRepeater.Layout>
 
@@ -300,7 +308,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
-                                               Text="{Binding Name}"
+                                               Text="{Binding Category.Name}"
                                                TextWrapping="Wrap"
                                                VerticalAlignment="Center"
                                                TextAlignment="Left"
@@ -369,7 +377,7 @@
                            FontWeight="Bold" />
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.Steps, UpdateSourceTrigger=PropertyChanged}">
+                                        ItemsSource="{Binding Steps, UpdateSourceTrigger=PropertyChanged}">
 
                     <controls:ItemsRepeater.Layout>
 

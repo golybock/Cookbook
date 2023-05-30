@@ -16,7 +16,7 @@ public partial class EditRecipePage : Page
         
         Title = "Создание рецепта";
         
-        // DataContext = new EditRecipeViewModel(host);
+        DataContext = new EditRecipeViewModel(host);
     }
 
     /// <summary>

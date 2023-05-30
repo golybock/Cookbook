@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Cookbook.Views.ChooseDialogs.ChooseCategory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Cookbook.Views.ChooseDialogs"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <ui:SimpleStackPanel Spacing="12"
+                         Margin="20"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center">
+        
+        <ui:SimpleStackPanel Spacing="5">
+
+            <TextBlock Text="Категория"
+                       FontSize="16" />
+
+            <ui:SplitButton Height="35"
+                                  Width="200"
+                                  FontSize="16"
+                                  Content="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}">
+
+                <ui:SplitButton.Flyout>
+                
+                    <ui:Flyout>
+                    
+                        <ListView ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding SelectedCategory}">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                        </ListView>
+                    
+                    </ui:Flyout>
+                
+                </ui:SplitButton.Flyout>
+            
+            </ui:SplitButton>
+
+        </ui:SimpleStackPanel>
+        
+    </ui:SimpleStackPanel>
+    
+</UserControl>
