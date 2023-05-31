@@ -3,17 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.ChooseDialogs"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    
+
     <controls:SimpleStackPanel Spacing="12"
                                Margin="20"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center">
-        
+
         <controls:SimpleStackPanel Spacing="5">
 
             <TextBlock Text="Ингредиент"
@@ -25,9 +24,9 @@
                                   Content="{Binding SelectedIngredient.Name, UpdateSourceTrigger=PropertyChanged}">
 
                 <controls:SplitButton.Flyout>
-                
+
                     <controls:Flyout>
-                    
+
                         <ListView ItemsSource="{Binding Ingredients}"
                                   SelectedItem="{Binding SelectedIngredient}">
 
@@ -38,30 +37,30 @@
                             </ListView.ItemTemplate>
 
                         </ListView>
-                    
+
                     </controls:Flyout>
-                
+
                 </controls:SplitButton.Flyout>
-            
+
             </controls:SplitButton>
 
         </controls:SimpleStackPanel>
-        
+
         <controls:SimpleStackPanel Orientation="Horizontal">
-            
+
             <controls:NumberBox Value="{Binding Count}"
                                 Width="160"
                                 FontSize="16"
                                 Minimum="1"
                                 Maximum="100000"
-                                Header="Кол-во"/>
-        
+                                Header="Кол-во" />
+
             <TextBlock Text="{Binding SelectedIngredient.Measure.Name}"
                        Width="35"
-                       Margin="5"/>
-            
+                       Margin="5" />
+
         </controls:SimpleStackPanel>
-        
+
     </controls:SimpleStackPanel>
-    
+
 </UserControl>

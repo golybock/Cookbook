@@ -13,8 +13,8 @@ public class ClientService : IClientService
 {
     public static bool IsAuth()
     {
-        string? email = App.Settings.Email;
-        
+        var email = App.Settings.Email;
+
         var client = App.Context.Clients.FirstOrDefault(c => c.Email == email);
 
         return client != null;
@@ -22,8 +22,8 @@ public class ClientService : IClientService
 
     public Client? GetCurrent()
     {
-        string? email = App.Settings.Email;
-        
+        var email = App.Settings.Email;
+
         return App.Context.Clients.FirstOrDefault(c => c.Email == email);
     }
 
@@ -33,10 +33,10 @@ public class ClientService : IClientService
 
         if (client == null)
             throw new Exception("Пользователь не найден");
-        
+
         if (client.Password != password)
             throw new Exception("Неверный пароль");
-        
+
         var settings = App.Settings;
         settings.Email = login;
         settings.Password = password;
@@ -47,9 +47,7 @@ public class ClientService : IClientService
 
     public async Task<Client> Update(Client client, string? image)
     {
-        var cl = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == client.Email);
-        
-        if(image != null)
+        if (image != null)
             client.ImagePath = await CopyImageToBin(image);
 
         App.Context.Clients.Update(client);
@@ -67,16 +65,16 @@ public class ClientService : IClientService
 
         if (!ValidateEmail(client.Email))
             throw new Exception("Неверный формат почты");
-        
+
         if (!ValidatePassword(client.Password))
             throw new Exception("Неверный формат пароля");
 
-        if(image != null)
+        if (image != null)
             client.ImagePath = await CopyImageToBin(image);
 
         await App.Context.Clients.AddAsync(client);
         await App.Context.SaveChangesAsync();
-        
+
         var settings = App.Settings;
         settings.Email = client.Email;
         settings.Password = client.Password;
@@ -92,29 +90,33 @@ public class ClientService : IClientService
         settings.Password = null;
         SettingsManager.SaveSettings(settings);
     }
-    
+
     #region validation
 
     private async Task<string> CopyImageToBin(string image)
     {
-        string path = Guid.NewGuid() + ".png";
-        
+        var path = Guid.NewGuid() + ".png";
+
         File.Copy(image, path);
 
         return path;
     }
-    
+
     // validate password 
-    private bool ValidatePassword(string password) =>
-        password.Any(char.IsLetter) &&
-        password.Any(char.IsDigit) &&
-        password.Any(char.IsUpper) &&
-        password.Any(char.IsLower) &&
-        password.Length >= 8;
+    private bool ValidatePassword(string password)
+    {
+        return password.Any(char.IsLetter) &&
+               password.Any(char.IsDigit) &&
+               password.Any(char.IsUpper) &&
+               password.Any(char.IsLower) &&
+               password.Length >= 8;
+    }
 
     // validate email
-    private bool ValidateEmail(string email) =>
-        new EmailAddressAttribute().IsValid(email);
+    private bool ValidateEmail(string email)
+    {
+        return new EmailAddressAttribute().IsValid(email);
+    }
 
     #endregion
 }

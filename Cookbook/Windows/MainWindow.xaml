@@ -8,7 +8,7 @@
         Title="Книга рецептов"
         MinHeight="500"
         MinWidth="800">
-    
+
     <navigation:NavigationView />
-    
+
 </Window>

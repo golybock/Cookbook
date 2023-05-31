@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Auth"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:ui1="clr-namespace:Cookbook.UI"
              mc:Ignorable="d"
@@ -14,7 +13,7 @@
                 Orientation="Vertical">
 
         <ui1:ContentCard>
-            
+
             <ui:SimpleStackPanel Spacing="12"
                                  Orientation="Horizontal"
                                  VerticalAlignment="Top"
@@ -24,18 +23,18 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
                                      Spacing="12">
-                    
+
                     <ui:PersonPicture Width="200"
                                       Height="200"
                                       Margin="5"
                                       ProfilePicture="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
-                    
+
                     <Button Width="200"
                             Margin="5"
                             Content="Выбрать фото"
                             HorizontalAlignment="Center"
                             Command="{Binding ChooseImageCommand}" />
-                    
+
                 </ui:SimpleStackPanel>
 
                 <ui:SimpleStackPanel Orientation="Vertical"
@@ -69,11 +68,11 @@
                             Command="{Binding CancelCommand}" />
 
                 </ui:SimpleStackPanel>
-                
+
             </ui:SimpleStackPanel>
-            
+
         </ui1:ContentCard>
-        
+
         <TextBlock Width="200"
                    MaxHeight="60"
                    Text="{Binding Error, UpdateSourceTrigger=PropertyChanged}"

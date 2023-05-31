@@ -20,12 +20,12 @@ public partial class RecipeCardView
 
     public ICommand ClickCommand
     {
-        get => (ICommand)GetValue(ClickCommandProperty);
+        get => (ICommand) GetValue(ClickCommandProperty);
         set => SetValue(ClickCommandProperty, value);
     }
 
     private void RecipeCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        ClickCommand.Execute(this.DataContext);
+        ClickCommand.Execute(DataContext);
     }
 }

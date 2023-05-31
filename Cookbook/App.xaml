@@ -4,20 +4,20 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              StartupUri="Windows/MainWindow.xaml"
              Startup="App_OnStartup">
-    
+
     <Application.Resources>
-        
+
         <ResourceDictionary>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources />
                 <ui:XamlControlsResources />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!-- Other app resources here -->
-            
+
         </ResourceDictionary>
-        
+
     </Application.Resources>
-    
+
 </Application>

@@ -11,19 +11,19 @@ public static class RecipeDocX
     public static void Generate(Recipe recipe)
     {
         var fileName = recipe.Header + ".docx";
-        
+
         var fullPath = $"C://Users/{Environment.UserName}/Documents/" + fileName;
-        
+
         try
         {
             using var doc = DocX.Create(fullPath);
-        
+
             // добавляем фото рецепта(если есть)
             try
             {
                 var image = doc.AddImage(recipe.ImagePath);
                 var pic = image.CreatePicture(300f, 300f);
-        
+
                 var p = doc.InsertParagraph("");
                 p.AppendPicture(pic);
             }
@@ -31,11 +31,11 @@ public static class RecipeDocX
             {
                 // ignored
             }
-        
+
             doc.InsertParagraph(recipe.ToString()).FontSize(20);
-        
+
             doc.Save();
-        
+
             ShowDialog(fullPath);
         }
         catch
@@ -52,10 +52,10 @@ public static class RecipeDocX
             Content = error,
             CloseButtonText = "Закрыть"
         };
-    
+
         await addDialog.ShowAsync();
     }
-    
+
     private static async void ShowDialog(string path)
     {
         var acceptDialog = new ContentDialog
@@ -66,13 +66,13 @@ public static class RecipeDocX
             PrimaryButtonText = "Открыть",
             DefaultButton = ContentDialogButton.Primary
         };
-    
+
         var result = await acceptDialog.ShowAsync();
-    
+
         if (result == ContentDialogResult.Primary)
             ShowFileInExplorer(path);
     }
-    
+
     private static void ShowFileInExplorer(string path)
     {
         Process.Start(new ProcessStartInfo

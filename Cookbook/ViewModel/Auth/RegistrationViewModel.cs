@@ -11,7 +11,7 @@ namespace Cookbook.ViewModel.Auth;
 
 public class RegistrationViewModel : ViewModelBase, INavItem
 {
-    private readonly ClientService _clientService = new ClientService();
+    private readonly ClientService _clientService = new();
     public INavHost Host { get; set; }
 
     public string Password { get; set; } = string.Empty;
@@ -50,23 +50,20 @@ public class RegistrationViewModel : ViewModelBase, INavItem
         }
     }
 
-    public CommandHandler RegistrationCommand =>
-        new CommandHandler(Registration);
+    public CommandHandler RegistrationCommand => new(Registration);
 
-    public CommandHandler ChooseImageCommand =>
-        new CommandHandler(ChooseImage);
-    
-    public CommandHandler CancelCommand =>
-        new CommandHandler(CancelAsync);
-    
+    public CommandHandler ChooseImageCommand => new(ChooseImage);
+
+    public CommandHandler CancelCommand => new(CancelAsync);
+
     private async void Registration()
     {
         try
         {
             var client = new Database.Client() {Name = Name, Email = Email, Password = Password};
-            
+
             await _clientService.Registration(client, Image);
-            
+
             Host.NavController.Navigate(new ClientPage(Host));
         }
         catch (Exception e)
@@ -78,13 +75,13 @@ public class RegistrationViewModel : ViewModelBase, INavItem
     private async void ChooseImage()
     {
         var path = ChooseFile();
-        
-        if(path == null)
+
+        if (path == null)
             return;
 
         Image = path;
     }
-    
+
     private string? ChooseFile()
     {
         var openFileDialog = new OpenFileDialog
@@ -92,7 +89,7 @@ public class RegistrationViewModel : ViewModelBase, INavItem
             InitialDirectory = "C:\\",
             Filter = "Image files (*.png)|*.png|All files (*.*)|*.*"
         };
-        
+
         if (openFileDialog.ShowDialog() == true)
             return openFileDialog.FileName;
 

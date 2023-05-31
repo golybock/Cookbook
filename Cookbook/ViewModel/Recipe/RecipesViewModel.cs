@@ -19,7 +19,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
         Host = host;
         Host.NavController.Clear();
     }
-    
+
     public RecipesViewModel(INavHost host, List<Database.Recipe> recipes)
     {
         Host = host;
@@ -30,15 +30,15 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
         LoadCategories();
     }
-    
+
     #region private members
 
-    private readonly List<Database.Recipe> _firstRecipes = new List<Database.Recipe>();
+    private readonly List<Database.Recipe> _firstRecipes = new();
 
     private SortType _selectedSortType = UI.Sort.SortTypes.Default;
-    
-    private Category _selectedCategory = new Category();
-    
+
+    private Category _selectedCategory = new();
+
     #endregion
 
     #region public members
@@ -46,12 +46,12 @@ public class RecipesViewModel : ViewModelBase, INavItem
     public INavHost Host { get; set; }
 
     #endregion
-    
+
     #region public bind members
 
-    public ObservableCollection<Database.Recipe> Recipes { get; set; } = new ObservableCollection<Database.Recipe>();
-    
-    public List<Category> Categories { get; set; } = new List<Category>();
+    public ObservableCollection<Database.Recipe> Recipes { get; set; } = new();
+
+    public List<Category> Categories { get; set; } = new();
 
     public List<SortType> SortTypes =>
         UI.Sort.SortTypes.SortTypesList;
@@ -69,7 +69,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
+
     public Category SelectedCategory
     {
         get => _selectedCategory;
@@ -83,18 +83,16 @@ public class RecipesViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
+
     public bool IsAuth => ClientService.IsAuth();
-    
+
     #endregion
 
     #region command handlers
 
-    public CommandHandler<Database.Recipe> CardClickCommand =>
-        new CommandHandler<Database.Recipe>(OpenRecipe);
+    public CommandHandler<Database.Recipe> CardClickCommand => new(OpenRecipe);
 
-    public CommandHandler AddCommand =>
-        new CommandHandler(CreateRecipe);
+    public CommandHandler AddCommand => new(CreateRecipe);
 
     #endregion
 
@@ -107,7 +105,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
         else
             Host.NavController.Navigate(new NoAuthPage(Host));
     }
-    
+
     private void OpenRecipe(Database.Recipe? recipeDomain)
     {
         Host.NavController.Navigate(new RecipePage(Host, recipeDomain));
@@ -133,12 +131,12 @@ public class RecipesViewModel : ViewModelBase, INavItem
     private void SortRecipes()
     {
         var sortingStart = new List<Database.Recipe>(_firstRecipes);
-        
+
         // sort
         if (SelectedCategory.Id == -1)
         {
             var sorted = OrderByRecipes(sortingStart);
-            
+
             Recipes = new ObservableCollection<Database.Recipe>(sorted);
         }
         // order by category (and sort)
@@ -152,31 +150,27 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
             Recipes = new ObservableCollection<Database.Recipe>(sorted);
         }
+
+        OnPropertyChanged(nameof(Recipes));
     }
 
     private List<Database.Recipe> OrderByRecipes(List<Database.Recipe> recipes)
     {
         if (SelectedSortType.Id == 1)
-        {
             return recipes
                 .OrderBy(c => c.Header)
                 .ToList();
-        }
 
         if (SelectedSortType.Id == 2)
-        {
             return recipes
                 .OrderBy(c => c.RecipeStat.CookingTime)
                 .ToList();
-        }
 
         if (SelectedSortType.Id == 3)
-        {
             return recipes
                 .OrderBy(c => c.Views)
                 .Reverse()
                 .ToList();
-        }
 
         return recipes;
     }

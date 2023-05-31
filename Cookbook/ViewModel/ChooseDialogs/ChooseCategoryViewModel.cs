@@ -12,7 +12,7 @@ public class ChooseCategoryViewModel : ViewModelBase
         GetIngredients();
     }
 
-    private Category _selectedCategory = new Category();
+    private Category _selectedCategory = new();
 
     public Category SelectedCategory
     {
@@ -25,16 +25,15 @@ public class ChooseCategoryViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    public ObservableCollection<Category> Categories { get; set; } =
-        new ObservableCollection<Category>();
-    
+
+    public ObservableCollection<Category> Categories { get; set; } = new();
+
     public async void GetIngredients()
     {
         var categories = await App.Context.Categories.ToListAsync();
-        
-        Categories = new(categories);
-    
+
+        Categories = new ObservableCollection<Category>(categories);
+
         SelectedCategory = Categories.LastOrDefault()!;
     }
 }

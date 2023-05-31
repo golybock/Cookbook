@@ -21,14 +21,14 @@ public class RecipeViewModel : ViewModelBase, INavItem
     {
         Host = host;
         _recipe = recipe;
-        
+
         LoadRecipe();
     }
 
     # region services
 
-    private readonly RecipeService _recipeService = new RecipeService();
-    private readonly ClientService _clientService = new ClientService();
+    private readonly RecipeService _recipeService = new();
+    private readonly ClientService _clientService = new();
 
     #endregion
 
@@ -37,8 +37,8 @@ public class RecipeViewModel : ViewModelBase, INavItem
     private bool _canEdit;
     private Database.Recipe _recipe;
 
-    private SeriesCollection _series = new SeriesCollection();
-    private AxesCollection _axis = new AxesCollection();
+    private SeriesCollection _series = new();
+    private AxesCollection _axis = new();
 
     #endregion
 
@@ -84,7 +84,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
+
     public bool CanEdit
     {
         get => _canEdit;
@@ -110,7 +110,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
         LoadViews();
     }
-    
+
     private void LoadViews()
     {
         var viewGroups = Recipe
@@ -118,10 +118,10 @@ public class RecipeViewModel : ViewModelBase, INavItem
             .GroupBy(c => new {c.Datetime.Day, c.Datetime.Month})
             .ToList();
 
-        ChartValues<int> views = new ChartValues<int>();
+        var views = new ChartValues<int>();
 
-        AxesCollection axisList = new AxesCollection();
-        List<string> labels = new List<string>();
+        var axisList = new AxesCollection();
+        List<string> labels = new();
 
         foreach (var view in viewGroups)
         {
@@ -131,15 +131,15 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
         axisList.Add(new Axis() {Labels = labels});
         Axis = axisList;
-        
+
         Series = new SeriesCollection()
         {
             new LineSeries()
             {
                 Values = views,
                 Title = "Просмотров: ",
-                Stroke = new SolidColorBrush(Colors.SlateBlue),
-            },
+                Stroke = new SolidColorBrush(Colors.SlateBlue)
+            }
         };
     }
 
@@ -147,10 +147,12 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
     #region private functions
 
-    private string GetMontName(int month) => 
-        new DateTime(2000, month, 1)
+    private string GetMontName(int month)
+    {
+        return new DateTime(2000, month, 1)
             .ToString("MMM", CultureInfo.CreateSpecificCulture("ru"));
-    
+    }
+
     private async void Like()
     {
         var id = _clientService.GetCurrent()?.Id;
@@ -187,14 +189,16 @@ public class RecipeViewModel : ViewModelBase, INavItem
         }
     }
 
-    private void Edit() =>
+    private void Edit()
+    {
         Host.NavController.Navigate(new EditRecipePage(Host, Recipe));
+    }
 
     private void Save()
     {
         RecipeDocX.Generate(Recipe);
     }
-    
+
     private async void Delete()
     {
         try
@@ -224,7 +228,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
             await notify.ShowAsync();
         }
     }
-    
+
     #endregion
 
     #region bind render values
@@ -245,23 +249,19 @@ public class RecipeViewModel : ViewModelBase, INavItem
         !RecipeCategoriesVisible;
 
     public bool RecipeIngredientsNotVisible =>
-        !RecipeIngredientsVisible;  
+        !RecipeIngredientsVisible;
 
     #endregion
 
     #region commands
 
-    public CommandHandler EditCommand =>
-        new CommandHandler(Edit);
+    public CommandHandler EditCommand => new(Edit);
 
-    public CommandHandler SaveCommand =>
-        new CommandHandler(Save);
+    public CommandHandler SaveCommand => new(Save);
 
-    public CommandHandler DeleteCommand =>
-        new CommandHandler(Delete);
+    public CommandHandler DeleteCommand => new(Delete);
 
-    public CommandHandler LikeCommand =>
-        new CommandHandler(Like);
-    
+    public CommandHandler LikeCommand => new(Like);
+
     #endregion
 }

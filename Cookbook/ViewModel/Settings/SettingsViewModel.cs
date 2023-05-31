@@ -31,16 +31,15 @@ public class SettingsViewModel : ViewModelBase
 
             if (SelectedTheme != null)
             {
-                if(SelectedTheme.Name == UI.Theme.Themes.NightTheme.Name)
+                if (SelectedTheme.Name == UI.Theme.Themes.NightTheme.Name)
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
-            
-                if(SelectedTheme.Name == UI.Theme.Themes.DayTheme.Name)
+
+                if (SelectedTheme.Name == UI.Theme.Themes.DayTheme.Name)
                     ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
 
                 // default
                 if (SelectedTheme.Name == UI.Theme.Themes.Default.Name)
                     ThemeManager.Current.ApplicationTheme = null;
-                
             }
 
             // save settings
@@ -49,12 +48,10 @@ public class SettingsViewModel : ViewModelBase
                 AppSettings.Theme = value;
                 SettingsManager.SaveSettings(AppSettings);
             }
-            
         }
     }
 
-    public CommandHandler OpenGitHubCommand =>
-        new CommandHandler(OpenGitHub);
+    public CommandHandler OpenGitHubCommand => new(OpenGitHub);
 
     private void OpenGitHub()
     {

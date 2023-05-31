@@ -395,9 +395,9 @@
                                 AxisX="{Binding Axis, UpdateSourceTrigger=PropertyChanged}">
 
                 <wpf:CartesianChart.AxisY>
-                    <wpf:Axis MinValue="0"/>
+                    <wpf:Axis MinValue="0" />
                 </wpf:CartesianChart.AxisY>
-                
+
             </wpf:CartesianChart>
 
         </ui:ContentCard>

@@ -29,7 +29,7 @@ public class CommandHandler : ICommand
     {
         _action();
     }
-    
+
     public void Execute()
     {
         _action();

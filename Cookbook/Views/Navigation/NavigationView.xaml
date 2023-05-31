@@ -24,7 +24,7 @@
             PaneDisplayMode="Top"
             IsSettingsVisible="True"
             IsBackEnabled="True">
-            
+
             <b:Interaction.Triggers>
 
                 <b:EventTrigger EventName="ItemInvoked">

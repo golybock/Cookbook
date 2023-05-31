@@ -16,7 +16,7 @@ public partial class RecipesPage : Page
         InitializeComponent();
         DataContext = new RecipesViewModel(host);
     }
-    
+
     /// <summary>
     /// Show given recipes (find and loading on the navigationView)
     /// </summary>

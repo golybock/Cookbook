@@ -19,7 +19,7 @@ namespace Cookbook.ViewModel.Navigation;
 
 public class NavigationViewModel : ViewModelBase, INavHost
 {
-    private readonly RecipeService _recipeService = new RecipeService();
+    private readonly RecipeService _recipeService = new();
 
     public ObservableCollection<string> RecipesSuggestions
     {
@@ -35,7 +35,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
     private string? _searchText;
 
     private bool _backVisible = false;
-    
+
     private ObservableCollection<string> _recipesSuggestions;
 
     public bool BackVisible
@@ -136,7 +136,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
                 NavController.Navigate(new NoAuthPage(this));
                 return;
             }
-            
+
             var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
 
             if (client == null)
@@ -144,7 +144,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
                 NavController.Navigate(new NoAuthPage(this));
                 return;
             }
-            
+
             NavController.Navigate(new ClientPage(this));
         }
         catch (Exception e)
@@ -170,28 +170,21 @@ public class NavigationViewModel : ViewModelBase, INavHost
             else
                 NavController.Navigate(new RecipesPage(this, recipes));
         }
-        catch (Exception e)
+        catch
         {
             NavController.Navigate(new ErrorPage());
         }
     }
-    
+
     private async Task SetLikedRecipes()
     {
         NavController.Navigate(new LoadingPage());
 
         try
         {
-            var login = App.Settings.Email;
-            var password = App.Settings.Password;
+            var email = App.Settings.Email;
 
-            if (login == null || password == null)
-            {
-                NavController.Navigate(new NoAuthPage(this));
-                return;
-            }
-            
-            var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
+            var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == email);
 
             if (client == null)
             {
@@ -204,13 +197,13 @@ public class NavigationViewModel : ViewModelBase, INavHost
                 .Where(c => c.ClientId == client.Id)
                 .Select(c => c.Recipe)
                 .ToListAsync();
-            
+
             if (recipes.Count == 0)
                 NavController.Navigate(new NotFoundPage());
             else
                 NavController.Navigate(new RecipesPage(this, recipes));
         }
-        catch (Exception e)
+        catch
         {
             NavController.Navigate(new ErrorPage());
         }
@@ -225,25 +218,21 @@ public class NavigationViewModel : ViewModelBase, INavHost
             List<Database.Recipe> recipes;
 
             if (string.IsNullOrWhiteSpace(search))
-            {
                 recipes = await App.Context.Recipes
                     .Include(c => c.RecipeViews)
                     .ToListAsync();
-            }
             else
-            {
                 recipes = await App.Context.Recipes
                     .Include(c => c.RecipeViews)
                     .Where(c => c.Header.ToLower().Contains(search.ToLower()))
                     .ToListAsync();
-            }
 
             if (recipes.Count == 0)
                 NavController.Navigate(new NotFoundPage());
             else
                 NavController.Navigate(new RecipesPage(this, recipes));
         }
-        catch (Exception e)
+        catch
         {
             NavController.Navigate(new ErrorPage());
         }
@@ -254,7 +243,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
         await SetRecipes(SearchText);
     }
 
-    private async void TextChanged()
+    private void TextChanged()
     {
         if (SearchText != null)
             LoadSuggestions(SearchText);
@@ -265,5 +254,5 @@ public class NavigationViewModel : ViewModelBase, INavHost
         await SetRecipes(SearchText);
     }
 
-    public NavController NavController { get; set; } = new NavController();
+    public NavController NavController { get; set; } = new();
 }

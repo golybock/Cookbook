@@ -18,17 +18,17 @@ public partial class ContentCard2 : UserControl
             typeof(FrameworkElement),
             typeof(ContentCard),
             new UIPropertyMetadata(null));
-    
+
     public new FrameworkElement Content2
     {
-        get => (FrameworkElement)GetValue(Content2Property);
+        get => (FrameworkElement) GetValue(Content2Property);
         set
         {
             SetValue(Content2Property, value);
             ContentControl.Content = value;
         }
     }
-    
+
     private void ContentControl_OnLoaded(object sender, RoutedEventArgs e)
     {
         ContentControl.Content = Content2;

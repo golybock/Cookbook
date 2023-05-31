@@ -23,7 +23,7 @@ public partial class RecipeStat
 
     public override string ToString()
     {
-        string res = "";
+        var res = "";
 
         res += $"Жиры: {Fats}\n";
         res += $"Белки: {Squirrels}\n";
@@ -31,7 +31,7 @@ public partial class RecipeStat
         res += $"Ккал: {Kilocalories}\n";
         res += $"Порций: {Portions}\n";
         res += $"Время приготовления: {CookingTime} минут\n";
-        
+
         return res;
     }
 }

@@ -14,16 +14,12 @@ public partial class Recipe
     public string Header { get; set; } = null!;
 
     private string? _imagePath;
-    
+
     public string? ImagePath
     {
-        get
-        {
-            if (_imagePath == null)
-                return null;
-
-            return System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + _imagePath;
-        }
+        get => _imagePath != null
+            ? System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + _imagePath
+            : null;
         set => _imagePath = value;
     }
 
@@ -39,17 +35,17 @@ public partial class Recipe
 
     public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
-    public virtual RecipeStat RecipeStat { get; set; } = new RecipeStat();
+    public virtual RecipeStat RecipeStat { get; set; } = new();
 
     public virtual ICollection<RecipeStep> RecipeSteps { get; set; } = new List<RecipeStep>();
 
     public virtual ICollection<RecipeView> RecipeViews { get; set; } = new List<RecipeView>();
-    
+
     public int Views => RecipeViews.Count;
 
     public override string ToString()
     {
-        string res = "";
+        var res = "";
 
         res += $"{Header}\n";
 
@@ -58,16 +54,16 @@ public partial class Recipe
 
         res += $"\nШаги приготовления:\n";
         res += string.Join("\n", RecipeSteps.Select(c => c.Text));
-        
+
         res += $"\nИнгредиенты:\n";
         res += string.Join("\n", RecipeIngredients.Select(c => c.Ingredient?.ToString()));
-        
+
         res += $"\nКатегории:\n";
         res += string.Join("\n", RecipeCategories.Select(c => c.Category?.Name));
 
         res += "\nИнформация\n";
         res += $"{RecipeStat}\n";
-        
+
         return res;
     }
 }

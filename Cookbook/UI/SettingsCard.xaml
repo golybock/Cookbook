@@ -3,110 +3,106 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.UI"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              Height="50"
              MinWidth="300"
              d:DesignHeight="50"
              d:DesignWidth="300"
              Loaded="SettingsCard_OnLoaded">
-    
+
     <UserControl.Resources>
-        
+
         <Style TargetType="Border">
-            
+
             <Style.Triggers>
-                
+
                 <DataTrigger Binding="{Binding ElementName=ContentGrid, Path=IsMouseOver}"
                              Value="True">
-                    
+
                     <Setter Property="Background">
-                
+
                         <Setter.Value>
                             <SolidColorBrush Color="{ui:ThemeResource SystemChromeHighColor}" />
                         </Setter.Value>
-                
+
                     </Setter>
-                    
+
                 </DataTrigger>
-                
+
             </Style.Triggers>
-            
+
             <Setter Property="Background">
-                
+
                 <Setter.Value>
                     <SolidColorBrush Color="{ui:ThemeResource SystemChromeMediumColor}" />
                 </Setter.Value>
-                
+
             </Setter>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Padding" Value="12"/>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="12" />
         </Style>
-        
+
     </UserControl.Resources>
-    
+
     <Grid x:Name="ContentGrid">
-        
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="50*" />
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        
+
         <Border x:Name="BackgroundBorder"
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Grid.Column="0"
-                Grid.ColumnSpan="3">
-            
-        </Border>
-        
+                Grid.ColumnSpan="3" />
+
         <Image x:Name="Icon"
                Grid.Row="0"
                Grid.RowSpan="2"
                Grid.Column="0"
                Margin="10"
-               Loaded="Icon_OnLoaded"/>
-        
+               Loaded="Icon_OnLoaded" />
+
         <TextBlock x:Name="HeaderTextBlock"
                    Grid.Row="0"
                    Grid.Column="1"
                    VerticalAlignment="Bottom"
                    FontWeight="Bold"
                    Loaded="HeaderTextBlock_OnLoaded"
-                   FontSize="16"/>
-        
+                   FontSize="16" />
+
         <TextBlock x:Name="DescriptionTextBlock"
                    Grid.Row="1"
                    Grid.Column="1"
                    VerticalAlignment="Top"
                    FontSize="12"
-                   Loaded="DescriptionTextBlock_OnLoaded"/>
-        
+                   Loaded="DescriptionTextBlock_OnLoaded" />
+
         <Image x:Name="ArrayForward"
                Grid.Row="0"
                Grid.RowSpan="2"
                Grid.Column="2"
                Margin="15"
                Source="../../Resources/Icons/array_forward.png"
-               Loaded="ArrayForward_OnLoaded"/>
-        
+               Loaded="ArrayForward_OnLoaded" />
+
         <ContentControl x:Name="ContentControl"
                         Grid.Row="0"
                         Margin="10"
                         Grid.RowSpan="2"
                         Grid.Column="2"
-                        Loaded="ContentControl_OnLoaded"/>
-        
+                        Loaded="ContentControl_OnLoaded" />
+
     </Grid>
-    
+
 </UserControl>

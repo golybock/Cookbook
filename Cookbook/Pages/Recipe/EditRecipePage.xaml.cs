@@ -13,9 +13,9 @@ public partial class EditRecipePage : Page
     public EditRecipePage(INavHost host)
     {
         InitializeComponent();
-        
+
         Title = "Создание рецепта";
-        
+
         DataContext = new EditRecipeViewModel(host);
     }
 
@@ -27,9 +27,9 @@ public partial class EditRecipePage : Page
     public EditRecipePage(INavHost host, Database.Recipe? recipe)
     {
         InitializeComponent();
-        
+
         Title = "Редактирование рецепта";
-        
+
         DataContext = new EditRecipeViewModel(host, recipe);
     }
 }

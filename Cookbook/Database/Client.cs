@@ -17,10 +17,12 @@ public partial class Client
     public string? Email { get; set; }
 
     private string? _imagePath { get; set; }
-    
+
     public string? ImagePath
     {
-        get => System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + _imagePath;
+        get => _imagePath != null
+            ? System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + _imagePath
+            : null;
         set => _imagePath = value;
     }
 

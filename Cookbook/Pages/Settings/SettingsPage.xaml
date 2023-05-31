@@ -3,15 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Cookbook.Pages.Settings"
       xmlns:settings="clr-namespace:Cookbook.Views.Settings"
       mc:Ignorable="d"
       Title="Настройки">
-    
+
     <Grid>
-        
-        <settings:SettingsView x:Name="SettingsView"/>
-        
+
+        <settings:SettingsView x:Name="SettingsView" />
+
     </Grid>
-    
+
 </Page>

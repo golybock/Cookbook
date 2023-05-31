@@ -9,31 +9,29 @@ namespace Cookbook.ViewModel.Client;
 
 public class ClientViewModel : ViewModelBase, INavItem
 {
-    private readonly ClientService _clientService = new ClientService();
+    private readonly ClientService _clientService = new();
 
     public string? Image => Client.ImagePath;
-    
+
     public INavHost Host { get; set; }
 
-    private Database.Client _client = new Database.Client(); 
-    
-    public CommandHandler EditCommand =>
-        new CommandHandler(Edit);
-    
-    public CommandHandler UnLoginCommand =>
-        new CommandHandler(UnLogin);
-    
+    private Database.Client _client = new();
+
+    public CommandHandler EditCommand => new(Edit);
+
+    public CommandHandler UnLoginCommand => new(UnLogin);
+
     public ClientViewModel(INavHost host)
     {
         Client = _clientService.GetCurrent();
         Host = host;
     }
-    
+
     private void Edit()
     {
         Host.NavController.Navigate(new EditClientPage(Host, Client));
     }
-    
+
     private async void UnLogin()
     {
         var cancel = new ContentDialog()
@@ -49,10 +47,10 @@ public class ClientViewModel : ViewModelBase, INavItem
         if (result == ContentDialogResult.Primary)
         {
             _clientService.UnLogin();
-            Host.NavController.Navigate(new NoAuthPage(Host));    
+            Host.NavController.Navigate(new NoAuthPage(Host));
         }
     }
-    
+
     public Database.Client Client
     {
         get => _client;

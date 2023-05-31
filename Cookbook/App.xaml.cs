@@ -10,8 +10,8 @@ public partial class App
     public static AppSettings Settings =>
         SettingsManager.AppSettings;
 
-    public static readonly CookbookDbContext Context = new CookbookDbContext();
-        
+    public static readonly CookbookDbContext Context = new();
+
     private void App_OnStartup(object sender, StartupEventArgs e)
     {
         SettingsManager.CreateAppSettingsIfNotExists();
@@ -22,15 +22,14 @@ public partial class App
     {
         var selectedTheme = Settings.Theme;
 
-        if(selectedTheme.Name == UI.Theme.Themes.NightTheme.Name)
+        if (selectedTheme.Name == UI.Theme.Themes.NightTheme.Name)
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
-            
-        if(selectedTheme.Name == UI.Theme.Themes.DayTheme.Name)
+
+        if (selectedTheme.Name == UI.Theme.Themes.DayTheme.Name)
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
 
         // default
         if (selectedTheme.Name == UI.Theme.Themes.Default.Name)
             ThemeManager.Current.ApplicationTheme = null;
-            
     }
 }

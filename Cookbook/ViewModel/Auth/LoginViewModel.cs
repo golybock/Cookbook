@@ -10,17 +10,16 @@ namespace Cookbook.ViewModel.Auth;
 
 public class LoginViewModel : ViewModelBase, INavItem
 {
-
     private string _error = string.Empty;
-    
-    private string _password = String.Empty;
-    
+
+    private string _password = string.Empty;
+
     private string _login = string.Empty;
 
-    private ClientService _clientService = new ClientService();
-    
+    private ClientService _clientService = new();
+
     public INavHost Host { get; set; }
-    
+
     public LoginViewModel(INavHost host)
     {
         Host = host;
@@ -58,19 +57,17 @@ public class LoginViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-    
-    public CommandHandler LoginCommand =>
-        new CommandHandler(LoginAsync);
 
-    public CommandHandler CancelCommand =>
-        new CommandHandler(CanselAsync);
+    public CommandHandler LoginCommand => new(LoginAsync);
+
+    public CommandHandler CancelCommand => new(CanselAsync);
 
     private async void LoginAsync()
     {
         try
         {
             await _clientService.Login(Login, Password);
-            
+
             Host.NavController.Navigate(new ClientPage(Host));
         }
         catch (Exception e)
@@ -78,7 +75,7 @@ public class LoginViewModel : ViewModelBase, INavItem
             Error = e.Message;
         }
     }
-    
+
     private async void CanselAsync()
     {
         var cancel = new ContentDialog()

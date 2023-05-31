@@ -15,35 +15,39 @@ public class SettingsManager
 
     private static string _appSettings =>
         "appsettings.json";
-    
+
     public static AppSettings AppSettings =>
         ReadAppSettings();
-    
-    private static bool SettingsExists() =>
-        File.Exists(_appSettings);
-    
-    public static void SaveSettings(AppSettings appSettings) =>
-        WriteAppSettings(appSettings);
 
-    private static AppSettings DefaultSettings => new AppSettings()
+    private static bool SettingsExists()
+    {
+        return File.Exists(_appSettings);
+    }
+
+    public static void SaveSettings(AppSettings appSettings)
+    {
+        WriteAppSettings(appSettings);
+    }
+
+    private static AppSettings DefaultSettings => new()
     {
         Theme = Themes.Default,
         Github = "https://github.com/golybock",
         Version = "1.0"
     };
-    
+
     private static AppSettings ReadAppSettings()
     {
-        using StreamReader sr = new StreamReader(_appSettings);
+        using var sr = new StreamReader(_appSettings);
 
-        string json = sr.ReadToEnd();
-        
+        var json = sr.ReadToEnd();
+
         return JsonSerializer.Deserialize<AppSettings>(json) ?? DefaultSettings;
     }
-    
+
     private static void WriteAppSettings(AppSettings appSettings)
     {
-        using StreamWriter sw = new StreamWriter(_appSettings);
+        using var sw = new StreamWriter(_appSettings);
 
         var options = new JsonSerializerOptions
         {
@@ -55,11 +59,11 @@ public class SettingsManager
             WriteIndented = true
         };
 
-        string json = JsonSerializer.Serialize(appSettings, options);
+        var json = JsonSerializer.Serialize(appSettings, options);
 
         sw.WriteAsync(json);
     }
-    
+
     public static void CreateAppSettingsIfNotExists()
     {
         if (!SettingsExists())

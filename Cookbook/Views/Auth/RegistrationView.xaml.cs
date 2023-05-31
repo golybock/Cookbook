@@ -12,6 +12,6 @@ public partial class RegistrationView : UserControl
 
     private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
     {
-        ((dynamic)DataContext).Password = ((PasswordBox)sender).Password;
+        ((dynamic) DataContext).Password = ((PasswordBox) sender).Password;
     }
 }

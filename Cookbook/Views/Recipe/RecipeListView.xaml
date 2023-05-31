@@ -13,7 +13,8 @@
 
     <Grid>
 
-        <controls:ItemsRepeater ItemsSource="{Binding DataContext.Recipes,
+        <controls:ItemsRepeater
+            ItemsSource="{Binding DataContext.Recipes,
                                 UpdateSourceTrigger=PropertyChanged,
                                 ElementName=this}">
 
@@ -31,8 +32,9 @@
 
             <controls:ItemsRepeater.ItemTemplate>
                 <DataTemplate DataType="{x:Type recipe:RecipesViewModel}">
-                    
-                    <local:RecipeCardView ClickCommand="{Binding DataContext.CardClickCommand,
+
+                    <local:RecipeCardView
+                        ClickCommand="{Binding DataContext.CardClickCommand,
                                           RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
                 </DataTemplate>

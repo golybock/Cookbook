@@ -47,7 +47,7 @@ public partial class SettingsCard : UserControl
             nameof(ImageSource),
             typeof(ImageSource),
             typeof(SettingsCard));
-    
+
     public static readonly DependencyProperty ArrayForwardVisibilityProperty =
         DependencyProperty.Register(
             nameof(ArrayForwardVisibility),
@@ -56,23 +56,23 @@ public partial class SettingsCard : UserControl
 
     public ICommand? ClickCommand
     {
-        get => (ICommand)GetValue(ClickCommandProperty);
+        get => (ICommand) GetValue(ClickCommandProperty);
         set => SetValue(ClickCommandProperty, value);
     }
-    
+
     public new FrameworkElement Content
     {
-        get => (FrameworkElement)GetValue(ContentProperty);
+        get => (FrameworkElement) GetValue(ContentProperty);
         set
         {
             SetValue(ContentProperty, value);
             ContentControl.Content = value;
         }
     }
-    
+
     public string Header
     {
-        get => (string)GetValue(HeaderProperty);
+        get => (string) GetValue(HeaderProperty);
         set
         {
             SetValue(HeaderProperty, value);
@@ -82,7 +82,7 @@ public partial class SettingsCard : UserControl
 
     public string Description
     {
-        get => (string)GetValue(DescriptionProperty);
+        get => (string) GetValue(DescriptionProperty);
         set
         {
             SetValue(HeaderProperty, value);
@@ -92,7 +92,7 @@ public partial class SettingsCard : UserControl
 
     public ImageSource ImageSource
     {
-        get => (ImageSource)GetValue(ImageSourceProperty);
+        get => (ImageSource) GetValue(ImageSourceProperty);
         set
         {
             SetValue(ImageSourceProperty, value);
@@ -102,7 +102,7 @@ public partial class SettingsCard : UserControl
 
     public Visibility ArrayForwardVisibility
     {
-        get => (Visibility)GetValue(ArrayForwardVisibilityProperty);
+        get => (Visibility) GetValue(ArrayForwardVisibilityProperty);
         set
         {
             SetValue(ArrayForwardVisibilityProperty, value);
@@ -111,8 +111,10 @@ public partial class SettingsCard : UserControl
         }
     }
 
-    private Visibility InvertVisibility(Visibility visibility) =>
-        visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+    private Visibility InvertVisibility(Visibility visibility)
+    {
+        return visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+    }
 
     private void HeaderTextBlock_OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -141,9 +143,9 @@ public partial class SettingsCard : UserControl
 
     private void SettingsCard_OnLoaded(object sender, RoutedEventArgs e)
     {
-        this.MouseDown += delegate(object o, MouseButtonEventArgs args)
+        MouseDown += delegate(object o, MouseButtonEventArgs args)
         {
-            if (ClickCommand != null) 
+            if (ClickCommand != null)
                 ClickCommand.Execute(null);
         };
     }

@@ -18,7 +18,7 @@ public class NavController : ViewModelBase
 
     private int _currentPageIndex = 0;
 
-    private List<Page> Items { get; set; } = new List<Page>();
+    private List<Page> Items { get; set; } = new();
 
     public Page? CurrentPage
     {
@@ -39,15 +39,20 @@ public class NavController : ViewModelBase
                 Items.Add(value);
 
             _currentPageIndex = Items.Count - 1;
-            
+
             OnPropertyChanged();
         }
     }
 
-    public void Navigate(Page page) => CurrentPage = page;
+    public void Navigate(Page page)
+    {
+        CurrentPage = page;
+    }
 
-    public void GoBack() =>
+    public void GoBack()
+    {
         CurrentPage = _currentPageIndex > 1 ? Items.ElementAt(_currentPageIndex - 1) : null;
+    }
 
     public void GoNext()
     {

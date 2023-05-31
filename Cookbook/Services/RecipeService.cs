@@ -63,7 +63,7 @@ public class RecipeService : IRecipeService
 
     private string CopyImageToBin(string image)
     {
-        string path = Guid.NewGuid() + ".png";
+        var path = Guid.NewGuid() + ".png";
 
         File.Copy(image, path);
 

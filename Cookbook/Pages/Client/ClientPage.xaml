@@ -3,16 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Cookbook.Pages.Client"
       xmlns:client="clr-namespace:Cookbook.Views.Client"
       mc:Ignorable="d"
       Title="Профиль"
       Tag="Profile">
-    
+
     <Grid>
-        
-        <client:ClientView x:Name="ClientView"/>
-        
+
+        <client:ClientView x:Name="ClientView" />
+
     </Grid>
-    
+
 </Page>
