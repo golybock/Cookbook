@@ -16,4 +16,9 @@ public partial class RecipeIngredient
     public virtual Ingredient? Ingredient { get; set; }
 
     public virtual Recipe? Recipe { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Ingredient?.Name} {Count} {Ingredient?.Measure?.Name}";
+    }
 }

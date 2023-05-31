@@ -380,7 +380,9 @@
                         Margin="5"
                         MinHeight="500">
 
-            <wpf:CartesianChart Series="{Binding Series, UpdateSourceTrigger=PropertyChanged}" AxisX="{Binding Axis, UpdateSourceTrigger=PropertyChanged}">
+            <wpf:CartesianChart 
+                                Series="{Binding Series, UpdateSourceTrigger=PropertyChanged}"
+                                AxisX="{Binding Axis, UpdateSourceTrigger=PropertyChanged}">
                 
             </wpf:CartesianChart>
 

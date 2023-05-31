@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Cookbook.Database;
@@ -45,4 +46,28 @@ public partial class Recipe
     public virtual ICollection<RecipeView> RecipeViews { get; set; } = new List<RecipeView>();
     
     public int Views => RecipeViews.Count;
+
+    public override string ToString()
+    {
+        string res = "";
+
+        res += $"{Header}\n";
+
+        res += $"\nОписание:\n";
+        res += $"{Description}\n";
+
+        res += $"\nШаги приготовления:\n";
+        res += string.Join("\n", RecipeSteps.Select(c => c.Text));
+        
+        res += $"\nИнгредиенты:\n";
+        res += string.Join("\n", RecipeIngredients.Select(c => c.Ingredient?.ToString()));
+        
+        res += $"\nКатегории:\n";
+        res += string.Join("\n", RecipeCategories.Select(c => c.Category?.Name));
+
+        res += "\nИнформация\n";
+        res += $"{RecipeStat}\n";
+        
+        return res;
+    }
 }

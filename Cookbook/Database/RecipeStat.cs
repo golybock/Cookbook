@@ -20,4 +20,18 @@ public partial class RecipeStat
     public int CookingTime { get; set; }
 
     public virtual Recipe IdNavigation { get; set; } = null!;
+
+    public override string ToString()
+    {
+        string res = "";
+
+        res += $"Жиры: {Fats}\n";
+        res += $"Белки: {Squirrels}\n";
+        res += $"Углеводы: {Carbohydrates}\n";
+        res += $"Ккал: {Kilocalories}\n";
+        res += $"Порций: {Portions}\n";
+        res += $"Время приготовления: {CookingTime} минут\n";
+        
+        return res;
+    }
 }

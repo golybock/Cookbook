@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Cookbook.Command;
 using Cookbook.Database;
+using Cookbook.FileGenerating;
 using Cookbook.Pages.Recipe;
 using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
@@ -60,7 +61,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
         Recipe = await _recipeService.Get(_recipeId);
 
         CanEdit = Recipe.ClientId == _clientService.GetCurrent()?.Id;
-        
+
         LoadViews();
     }
 
@@ -86,9 +87,15 @@ public class RecipeViewModel : ViewModelBase, INavItem
         }
     }
 
+    private string GetMontName(int month)
+    {
+        return new DateTime(2010, month, 1)
+            .ToString("MMM", CultureInfo.CreateSpecificCulture("ru"));
+    }
+
     private void LoadViews()
     {
-        var viewGroups = Recipe.RecipeViews.GroupBy(c => c.Datetime.Day).ToList();
+        var viewGroups = Recipe?.RecipeViews.GroupBy(c => new {c.Datetime.Day, c.Datetime.Month}).ToList();
 
         ChartValues<int> views = new ChartValues<int>();
 
@@ -98,11 +105,11 @@ public class RecipeViewModel : ViewModelBase, INavItem
         foreach (var view in viewGroups)
         {
             views.Add(view.Count());
-            labels.Add(view.Key.ToString());
+            labels.Add(view.Key.Day + " " + GetMontName(view.Key.Month));
         }
 
-        axisList.Add(new Axis(){ Labels = labels});
-        
+        axisList.Add(new Axis() {Labels = labels});
+
         Series = new SeriesCollection()
         {
             new LineSeries()
@@ -114,7 +121,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
         };
 
         Axis = axisList;
-        
+
         OnPropertyChanged("Series");
     }
 
@@ -183,6 +190,16 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
             if (recipe != null)
             {
+                recipe.RecipeCategories.Clear();
+                recipe.RecipeStat = null;
+                recipe.RecipeIngredients.Clear();
+                recipe.RecipeSteps.Clear();
+                recipe.RecipeViews.Clear();
+                recipe.FavoriteRecipes.Clear();
+
+                App.Context.Recipes.Update(recipe);
+                await App.Context.SaveChangesAsync();
+
                 App.Context.Recipes.Remove(recipe);
                 await App.Context.SaveChangesAsync();
             }
@@ -215,14 +232,44 @@ public class RecipeViewModel : ViewModelBase, INavItem
     {
         var id = _clientService.GetCurrent()?.Id;
 
-        await App.Context.FavoriteRecipes.AddAsync(new FavoriteRecipe() {ClientId = id, RecipeId = _recipeId});
+        var fav = App.Context.FavoriteRecipes.FirstOrDefault(c => c.ClientId == id && c.RecipeId == Recipe.Id);
+
+        if (fav == null)
+        {
+            await App.Context.FavoriteRecipes.AddAsync(new FavoriteRecipe() {ClientId = id, RecipeId = Recipe.Id});
+            await App.Context.SaveChangesAsync();
+            
+            var notify = new ContentDialog()
+            {
+                Title = "Сохранено",
+                Content = "Рецепт добавлен в избранное",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+        }
+        else
+        {
+            App.Context.FavoriteRecipes.Remove(fav);
+            await App.Context.SaveChangesAsync();
+            
+            var notify = new ContentDialog()
+            {
+                Title = "Сохранено",
+                Content = "Рецепт удален из избранного",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+        }
     }
 
     private void Edit() =>
         Host.NavController.Navigate(new EditRecipePage(Host, Recipe));
 
-    private async void Save()
+    private void Save()
     {
-
+        if (Recipe != null)
+            RecipeDocX.Generate(Recipe);
     }
 }

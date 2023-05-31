@@ -37,6 +37,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
     public RecipesViewModel(INavHost host)
     {
         Host = host;
+        Host.NavController.Clear();
     }
 
     public RecipesViewModel(INavHost host, List<Database.Recipe> recipes)
