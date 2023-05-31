@@ -6,19 +6,20 @@
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="clr-namespace:Cookbook.UI"
              xmlns:controls="http://schemas.modernwpf.com/2019"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800">
 
     <UserControl.Resources>
-        
-        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
-        
+
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+
         <BitmapImage x:Key="NoImage"
-                     UriSource="../../Resources/Icons/food.png"/>
-        
+                     UriSource="../../Resources/Icons/food.png" />
+
     </UserControl.Resources>
-    
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*" MaxWidth="300" />
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="70*" />
         </Grid.ColumnDefinitions>
 
         <!-- header and toolbar -->
@@ -39,14 +40,14 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="5">
-            
+
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Image Grid.Column="0"
                        Source="{Binding Recipe.ImagePath, TargetNullValue={StaticResource NoImage}}"
                        Width="250"
@@ -57,27 +58,27 @@
                       Margin="20">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80*"/>
-                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="20*" />
                     </Grid.RowDefinitions>
-                    
+
                     <controls:SimpleStackPanel Grid.Row="0"
                                                Spacing="12"
                                                VerticalAlignment="Top"
                                                HorizontalAlignment="Left">
-                        
+
                         <TextBlock Text="{Binding Recipe.Header}"
                                    FontWeight="Bold"
                                    TextWrapping="Wrap"
                                    FontSize="28" />
-                        
+
                         <TextBlock Text="{Binding Recipe.Description}"
                                    TextWrapping="Wrap"
                                    MaxHeight="140"
-                                   FontSize="20"/>
-                        
+                                   FontSize="20" />
+
                     </controls:SimpleStackPanel>
-                    
+
                     <!-- toolbar -->
                     <controls:SimpleStackPanel Grid.Row="1"
                                                HorizontalAlignment="Left"
@@ -88,7 +89,7 @@
                                 FontSize="14"
                                 Command="{Binding EditCommand}"
                                 ToolTip="Редактировать"
-                                Visibility="{Binding CanEdit, Converter={StaticResource VisibilityConverter}}">
+                                Visibility="{Binding CanEdit, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
 
                             <Image Margin="1"
                                    Source="../../Resources/Icons/edit.png" />
@@ -151,15 +152,15 @@
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Visibility="{Binding RecipeIngredientsNotVisible, Converter={StaticResource VisibilityConverter}}">
-                    
-                    <TextBlock Text="Нет игредиентов"/>
-                    
+
+                    <TextBlock Text="Нет игредиентов" />
+
                 </StackPanel>
-                
+
                 <controls:ItemsRepeater Margin="5"
                                         ItemsSource="{Binding Recipe.RecipeIngredients, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding RecipeIngredientsVisible, Converter={StaticResource VisibilityConverter}}">
-                    
+
                     <controls:ItemsRepeater.Layout>
 
                         <controls:StackLayout Spacing="5" />
@@ -211,13 +212,13 @@
                            FontSize="20"
                            Margin="5,0,0,0"
                            FontWeight="Bold" />
-                
+
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Visibility="{Binding RecipeCategoriesNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
-                    
-                    <TextBlock Text="Нет категорий"/>
-                    
+
+                    <TextBlock Text="Нет категорий" />
+
                 </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
@@ -266,11 +267,11 @@
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Visibility="{Binding RecipeStepsNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
-                    
-                    <TextBlock Text="Нет шагов приготовления"/>
-                    
+
+                    <TextBlock Text="Нет шагов приготовления" />
+
                 </StackPanel>
-                
+
                 <controls:ItemsRepeater Margin="5"
                                         ItemsSource="{Binding Recipe.RecipeSteps, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding RecipeStepsVisible, Converter={StaticResource VisibilityConverter}}">
@@ -371,12 +372,18 @@
             </controls:SimpleStackPanel>
 
         </ui:ContentCard>
-        
+
         <!-- stats -->
-        <ui:ContentCard Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="5">
-            
+        <ui:ContentCard Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="5"
+                        MinHeight="500">
+
+            <wpf:CartesianChart Series="{Binding Series, UpdateSourceTrigger=PropertyChanged}" AxisX="{Binding Axis, UpdateSourceTrigger=PropertyChanged}">
+                
+            </wpf:CartesianChart>
+
         </ui:ContentCard>
 
     </Grid>

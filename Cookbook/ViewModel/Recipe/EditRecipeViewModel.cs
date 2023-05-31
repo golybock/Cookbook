@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database;
-using Cookbook.Pages.Auth;
-using Cookbook.Pages.Notify;
 using Cookbook.Services;
 using Cookbook.ViewModel.ChooseDialogs;
 using Cookbook.ViewModel.Navigation;
@@ -20,6 +18,7 @@ namespace Cookbook.ViewModel.Recipe;
 public class EditRecipeViewModel : ViewModelBase, INavItem
 {
     private readonly RecipeService _recipeService = new RecipeService();
+    private readonly ClientService _clientService = new ClientService();
     
     private ObservableCollection<RecipeIngredient> _ingredients =
         new ObservableCollection<RecipeIngredient>();
@@ -34,11 +33,11 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private ObservableCollection<Category> _recipeCategories;
     private Category _selectedCategory;
 
-    private string _description = string.Empty;
+    private string? _description = string.Empty;
     private string _header = string.Empty;
     private Database.Recipe _recipe = new Database.Recipe();
 
-    public string Description
+    public string? Description
     {
         get => _description;
         set
@@ -157,6 +156,13 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     {
         Host = host;
         Recipe = recipe;
+        
+        Header = recipe.Header;
+        Description = recipe.Description;
+        
+        Categories = new ObservableCollection<RecipeCategory>(recipe.RecipeCategories);
+        Steps = new ObservableCollection<RecipeStep>(recipe.RecipeSteps);
+        Ingredients = new ObservableCollection<RecipeIngredient>(recipe.RecipeIngredients);
 
         ImageUrl = recipe.ImagePath;
 
@@ -249,14 +255,24 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
     private async Task Create()
     {
-        int res = await _recipeService.Create(Recipe, Ingredients.ToList(), Steps.ToList(), Categories, ImageUrl);
+        Recipe.RecipeCategories = Categories.ToList();
+        Recipe.RecipeIngredients = Ingredients.ToList();
+        Recipe.RecipeSteps = Steps.ToList();
+        Recipe.ClientId = _clientService.GetCurrent()?.Id;
+        
+        int res = await _recipeService.Create(Recipe, ImageUrl);
         
         MessageBox.Show("created");
     }
 
     private async Task Update()
     {
-        int res = await _recipeService.Update(Recipe, Ingredients.ToList(),  Categories, Steps.ToList(), ImageUrl);
+        Recipe.RecipeCategories = Categories.ToList();
+        Recipe.RecipeIngredients = Ingredients.ToList();
+        Recipe.RecipeSteps = Steps.ToList();
+        Recipe.ClientId = _clientService.GetCurrent()?.Id;
+        
+        int res = await _recipeService.Update(Recipe,  ImageUrl);
         
         MessageBox.Show("Обновлено");
     }

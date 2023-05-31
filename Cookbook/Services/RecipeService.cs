@@ -36,7 +36,7 @@ public class RecipeService : IRecipeService
         return await App.Context.Recipes.ToListAsync();
     }
 
-    public async Task<int> Create(Recipe recipe, IEnumerable<RecipeIngredient> recipeIngredients, IEnumerable<RecipeStep> steps, IEnumerable<RecipeCategory> categories, string? image)
+    public async Task<int> Create(Recipe recipe, string? image)
     {
         if(image != null)
             recipe.ImagePath = await CopyImageToBin(image);
@@ -44,29 +44,29 @@ public class RecipeService : IRecipeService
         await App.Context.Recipes.AddAsync(recipe);
         await App.Context.SaveChangesAsync();
 
-        foreach (var recipeIngredient in recipeIngredients)
-        {
-            await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
-            await App.Context.SaveChangesAsync();
-        }
+        // foreach (var recipeIngredient in recipeIngredients)
+        // {
+        //     await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
+        //     await App.Context.SaveChangesAsync();
+        // }
         
-        foreach (var recipeIngredient in recipeIngredients)
-        {
-            await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
-            await App.Context.SaveChangesAsync();
-        }
+        // foreach (var recipeIngredient in recipeIngredients)
+        // {
+        //     await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
+        //     await App.Context.SaveChangesAsync();
+        // }
 
-        foreach (var step in steps)
-        {
-            step.RecipeId = recipe.Id;
-            await App.Context.RecipeSteps.AddAsync(step);
-            await App.Context.SaveChangesAsync();
-        }
+        // foreach (var step in steps)
+        // {
+        //     step.RecipeId = recipe.Id;
+        //     await App.Context.RecipeSteps.AddAsync(step);
+        //     await App.Context.SaveChangesAsync();
+        // }
 
         return recipe.Id;
     }
 
-    public async Task<int> Update(Recipe recipe, IEnumerable<RecipeIngredient> recipeIngredients, IEnumerable<RecipeCategory> categories, IEnumerable<RecipeStep> steps, string? image)
+    public async Task<int> Update(Recipe recipe, string? image)
     {
         if (image == null)
             recipe.ImagePath = null;
@@ -80,34 +80,34 @@ public class RecipeService : IRecipeService
         App.Context.Recipes.Update(recipe);
         await App.Context.SaveChangesAsync();
 
-        var oldRecipeIngredients =
-            await App.Context.RecipeIngredients
-                .Where(c => c.RecipeId == recipe.Id)
-                .ToListAsync();
-        
-        App.Context.RecipeIngredients.RemoveRange(oldRecipeIngredients);
-        await App.Context.SaveChangesAsync();
-
-        foreach (var recipeIngredient in recipeIngredients)
-        {
-            await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
-            await App.Context.SaveChangesAsync();
-        }
-
-        var oldRecipeSteps =
-            await App.Context.RecipeSteps
-                .Where(c => c.RecipeId == recipe.Id)
-                .ToListAsync();
-        
-        App.Context.RecipeSteps.RemoveRange(oldRecipeSteps);
-        await App.Context.SaveChangesAsync();
-        
-        foreach (var step in steps)
-        {
-            step.RecipeId = recipe.Id;
-            await App.Context.RecipeSteps.AddAsync(step);
-            await App.Context.SaveChangesAsync();
-        }
+        // var oldRecipeIngredients =
+        //     await App.Context.RecipeIngredients
+        //         .Where(c => c.RecipeId == recipe.Id)
+        //         .ToListAsync();
+        //
+        // App.Context.RecipeIngredients.RemoveRange(oldRecipeIngredients);
+        // await App.Context.SaveChangesAsync();
+        //
+        // foreach (var recipeIngredient in recipeIngredients)
+        // {
+        //     await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
+        //     await App.Context.SaveChangesAsync();
+        // }
+        //
+        // var oldRecipeSteps =
+        //     await App.Context.RecipeSteps
+        //         .Where(c => c.RecipeId == recipe.Id)
+        //         .ToListAsync();
+        //
+        // App.Context.RecipeSteps.RemoveRange(oldRecipeSteps);
+        // await App.Context.SaveChangesAsync();
+        //
+        // foreach (var step in steps)
+        // {
+        //     step.RecipeId = recipe.Id;
+        //     await App.Context.RecipeSteps.AddAsync(step);
+        //     await App.Context.SaveChangesAsync();
+        // }
 
         return recipe.Id;
     }
