@@ -47,12 +47,20 @@
 
         </controls:SimpleStackPanel>
         
-        <controls:NumberBox Value="{Binding Count}"
-                            Width="200"
-                            FontSize="16"
-                            Minimum="1"
-                            Maximum="100000"
-                            Header="Кол-во"/>
+        <controls:SimpleStackPanel Orientation="Horizontal">
+            
+            <controls:NumberBox Value="{Binding Count}"
+                                Width="160"
+                                FontSize="16"
+                                Minimum="1"
+                                Maximum="100000"
+                                Header="Кол-во"/>
+        
+            <TextBlock Text="{Binding SelectedIngredient.Measure.Name}"
+                       Width="35"
+                       Margin="5"/>
+            
+        </controls:SimpleStackPanel>
         
     </controls:SimpleStackPanel>
     

@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="clr-namespace:Cookbook.UI"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:database="clr-namespace:Cookbook.Database"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800">
@@ -140,8 +140,7 @@
                         Grid.Column="0"
                         Margin="5">
 
-            <controls:SimpleStackPanel Grid.Column="0"
-                                       Orientation="Vertical"
+            <controls:SimpleStackPanel Orientation="Vertical"
                                        Spacing="12">
 
                 <TextBlock Text="Ингредиенты"
@@ -151,15 +150,20 @@
 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Visibility="{Binding RecipeIngredientsNotVisible, Converter={StaticResource VisibilityConverter}}">
+                            Visibility="{Binding RecipeIngredientsNotVisible,
+                            Converter={StaticResource VisibilityConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
 
                     <TextBlock Text="Нет игредиентов" />
 
                 </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.RecipeIngredients, UpdateSourceTrigger=PropertyChanged}"
-                                        Visibility="{Binding RecipeIngredientsVisible, Converter={StaticResource VisibilityConverter}}">
+                                        ItemsSource="{Binding Recipe.RecipeIngredients,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeIngredientsVisible,
+                                        Converter={StaticResource VisibilityConverter},
+                                        UpdateSourceTrigger=PropertyChanged}">
 
                     <controls:ItemsRepeater.Layout>
 
@@ -168,7 +172,7 @@
                     </controls:ItemsRepeater.Layout>
 
                     <controls:ItemsRepeater.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="{x:Type database:RecipeIngredient}">
                             <ui:ContentCard2>
 
                                 <WrapPanel Orientation="Horizontal">
@@ -204,8 +208,7 @@
                         Grid.Column="1"
                         Margin="5">
 
-            <controls:SimpleStackPanel Grid.Column="0"
-                                       Orientation="Vertical"
+            <controls:SimpleStackPanel Orientation="Vertical"
                                        Spacing="12">
 
                 <TextBlock Text="Категории"
@@ -215,15 +218,20 @@
 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Visibility="{Binding RecipeCategoriesNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                            Visibility="{Binding RecipeCategoriesNotVisible,
+                            Converter={StaticResource VisibilityConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
 
                     <TextBlock Text="Нет категорий" />
 
                 </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.RecipeCategories, UpdateSourceTrigger=PropertyChanged}"
-                                        Visibility="{Binding RecipeCategoriesVisible, Converter={StaticResource VisibilityConverter}}">
+                                        ItemsSource="{Binding Recipe.RecipeCategories,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeCategoriesVisible,
+                                        Converter={StaticResource VisibilityConverter},
+                                        UpdateSourceTrigger=PropertyChanged}">
 
                     <controls:ItemsRepeater.Layout>
 
@@ -232,7 +240,7 @@
                     </controls:ItemsRepeater.Layout>
 
                     <controls:ItemsRepeater.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="{x:Type database:RecipeCategory}">
                             <ui:ContentCard2>
 
                                 <TextBlock Text="{Binding Category.Name}"
@@ -256,8 +264,7 @@
                         Grid.RowSpan="2"
                         Grid.Column="1"
                         Margin="5">
-            <controls:SimpleStackPanel Grid.Column="0"
-                                       Orientation="Vertical"
+            <controls:SimpleStackPanel Orientation="Vertical"
                                        Spacing="12">
 
                 <TextBlock Text="Шаги приготовления"
@@ -266,15 +273,20 @@
 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Visibility="{Binding RecipeStepsNotVisible, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                            Visibility="{Binding RecipeStepsNotVisible,
+                            Converter={StaticResource VisibilityConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
 
                     <TextBlock Text="Нет шагов приготовления" />
 
                 </StackPanel>
 
                 <controls:ItemsRepeater Margin="5"
-                                        ItemsSource="{Binding Recipe.RecipeSteps, UpdateSourceTrigger=PropertyChanged}"
-                                        Visibility="{Binding RecipeStepsVisible, Converter={StaticResource VisibilityConverter}}">
+                                        ItemsSource="{Binding Recipe.RecipeSteps,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding RecipeStepsVisible,
+                                        Converter={StaticResource VisibilityConverter},
+                                        UpdateSourceTrigger=PropertyChanged}">
 
                     <controls:ItemsRepeater.Layout>
 
@@ -283,7 +295,7 @@
                     </controls:ItemsRepeater.Layout>
 
                     <controls:ItemsRepeater.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="{x:Type database:RecipeStep}">
                             <ui:ContentCard2>
 
                                 <Grid>
@@ -324,8 +336,7 @@
                         Grid.Column="0"
                         Margin="5">
 
-            <controls:SimpleStackPanel Grid.Column="1"
-                                       Spacing="12"
+            <controls:SimpleStackPanel Spacing="12"
                                        Orientation="Vertical">
 
                 <TextBlock Text="Информация"
@@ -373,16 +384,19 @@
 
         </ui:ContentCard>
 
-        <!-- stats -->
+        <!-- views -->
         <ui:ContentCard Grid.Row="4"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="5"
-                        MinHeight="500">
+                        MinHeight="400">
 
-            <wpf:CartesianChart 
-                                Series="{Binding Series, UpdateSourceTrigger=PropertyChanged}"
+            <wpf:CartesianChart Series="{Binding Series, UpdateSourceTrigger=PropertyChanged}"
                                 AxisX="{Binding Axis, UpdateSourceTrigger=PropertyChanged}">
+
+                <wpf:CartesianChart.AxisY>
+                    <wpf:Axis MinValue="0"/>
+                </wpf:CartesianChart.AxisY>
                 
             </wpf:CartesianChart>
 

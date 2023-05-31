@@ -13,9 +13,9 @@ public partial class RecipeIngredient
 
     public decimal? Count { get; set; }
 
-    public virtual Ingredient? Ingredient { get; set; }
+    public virtual Ingredient Ingredient { get; set; } = null!;
 
-    public virtual Recipe? Recipe { get; set; }
+    public virtual Recipe Recipe { get; set; } = null!;
 
     public override string ToString()
     {

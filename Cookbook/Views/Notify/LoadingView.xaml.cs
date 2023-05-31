@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
+﻿namespace Cookbook.Views.Notify;
 
-namespace Cookbook.Views.Notify;
-
-public partial class LoadingView : UserControl
+public partial class LoadingView
 {
     public LoadingView()
     {

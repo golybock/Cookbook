@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows;
 using Cookbook.Database;
 using ModernWpf.Controls;
 using Xceed.Words.NET;
 
 namespace Cookbook.FileGenerating;
 
-public class RecipeDocX
+public static class RecipeDocX
 {
     public static void Generate(Recipe recipe)
     {
@@ -28,7 +27,7 @@ public class RecipeDocX
                 var p = doc.InsertParagraph("");
                 p.AppendPicture(pic);
             }
-            catch (Exception e)
+            catch
             {
                 // ignored
             }
@@ -39,7 +38,7 @@ public class RecipeDocX
         
             ShowDialog(fullPath);
         }
-        catch (Exception e)
+        catch
         {
             ShowErrorDialog("Ошибка генерации файла");
         }
@@ -56,7 +55,6 @@ public class RecipeDocX
     
         await addDialog.ShowAsync();
     }
-    
     
     private static async void ShowDialog(string path)
     {

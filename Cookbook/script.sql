@@ -1,18 +1,18 @@
-﻿create table if not exists category
+﻿create table category
 (
     id   serial
         primary key,
     name varchar(150)
 );
 
-create table if not exists measure
+create table measure
 (
     id   serial
         primary key,
     name varchar(150)
 );
 
-create table if not exists ingredient
+create table ingredient
 (
     id         serial
         primary key,
@@ -21,33 +21,30 @@ create table if not exists ingredient
     name       varchar(150)
 );
 
-create table if not exists client
+create table client
 (
     id          serial
         primary key,
-    login       varchar(150),
     password    varchar(150),
-    token       varchar(500),
     description varchar(5000),
     name        varchar(500),
     email       varchar(500),
     image_path  varchar(500)
 );
 
-create table if not exists recipe
+create table recipe
 (
     id          serial
         primary key,
     client_id   integer
         references client,
-    header      varchar(500) not null,
-    code        varchar(500),
+    header      varchar(50) not null,
     image_path  varchar(500),
     source_url  varchar(500),
     description varchar(200)
 );
 
-create table if not exists recipe_stats
+create table recipe_stats
 (
     id            integer not null
         primary key
@@ -57,10 +54,10 @@ create table if not exists recipe_stats
     carbohydrates numeric,
     kilocalories  numeric,
     portions      integer default 1,
-    cooking_time  timestamp with time zone
+    cooking_time  integer
 );
 
-create table if not exists recipe_ingredients
+create table recipe_ingredients
 (
     id            serial
         primary key,
@@ -71,7 +68,7 @@ create table if not exists recipe_ingredients
     count         numeric
 );
 
-create table if not exists favorite_recipes
+create table favorite_recipes
 (
     id        serial
         primary key,
@@ -81,7 +78,7 @@ create table if not exists favorite_recipes
         references client
 );
 
-create table if not exists recipe_categories
+create table recipe_categories
 (
     id          serial
         primary key,
@@ -91,7 +88,7 @@ create table if not exists recipe_categories
         references category
 );
 
-create table if not exists recipe_step
+create table recipe_step
 (
     id        serial
         primary key,
@@ -100,7 +97,7 @@ create table if not exists recipe_step
     text      text    not null
 );
 
-create table if not exists recipe_views
+create table recipe_views
 (
     id        serial
         primary key,

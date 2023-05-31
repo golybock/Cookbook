@@ -2,7 +2,7 @@
 
 namespace Cookbook.Views.Recipe;
 
-public partial class RecipesView : UserControl
+public partial class RecipesView
 {
     public RecipesView()
     {

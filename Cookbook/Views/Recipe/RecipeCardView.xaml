@@ -4,37 +4,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
              d:DesignHeight="350"
              d:DesignWidth="200"
              MouseDown="RecipeCard_OnMouseDown">
-    
+
     <UserControl.Resources>
-        
+
+        <!-- fallback value -->
         <BitmapImage x:Key="NoImage"
-                     UriSource="../../Resources/Icons/food.png"/>
-        
+                     UriSource="../../Resources/Icons/food.png" />
+
+        <!-- animation -->
         <Style TargetType="Border">
-            
+
             <Style.Triggers>
-                
+
                 <DataTrigger Binding="{Binding ElementName=this, Path=IsMouseOver}"
                              Value="True">
-                    
+
                     <Setter Property="Background">
-                
+
                         <Setter.Value>
                             <SolidColorBrush Color="{ui:ThemeResource SystemChromeMediumColor}" />
                         </Setter.Value>
-                
+
                     </Setter>
-                    
+
                 </DataTrigger>
-                
+
                 <Trigger Property="IsMouseOver" Value="True">
                     <Trigger.EnterActions>
                         <BeginStoryboard>
@@ -43,7 +42,7 @@
                                                     Duration="0:0:0.1"
                                                     FillBehavior="HoldEnd"
                                                     From="0, 5, 0, 0"
-                                                    To="0, 0, 0, 5"/>
+                                                    To="0, 0, 0, 5" />
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.EnterActions>
@@ -54,32 +53,32 @@
                                                     Duration="0:0:0.1"
                                                     FillBehavior="HoldEnd"
                                                     From="0, 0, 0, 5"
-                                                    To="0, 5, 0, 0"/>
+                                                    To="0, 5, 0, 0" />
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.ExitActions>
                 </Trigger>
-                
+
             </Style.Triggers>
-            
+
             <Setter Property="Background">
-                
+
                 <Setter.Value>
                     <SolidColorBrush Color="{ui:ThemeResource SystemChromeMediumLowColor}" />
                 </Setter.Value>
-                
+
             </Setter>
-            <Setter Property="Margin" Value="0,5,0,0"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="12" />
         </Style>
-        
+
     </UserControl.Resources>
-    
+
     <Border>
-        
+
         <Grid>
 
             <Grid.RowDefinitions>
@@ -94,12 +93,15 @@
                                  Spacing="12"
                                  Margin="15,0,15,0">
 
-                <TextBlock Text="{Binding Header, FallbackValue=Заголовок}"
+                <TextBlock Text="{Binding Header,
+                           FallbackValue=Заголовок}"
                            FontSize="22"
                            FontWeight="Bold" />
 
-                <TextBlock Text="{Binding Views, StringFormat=Просмотров: {0}, FallbackValue=Просмотры}"
-                           FontSize="16" />
+                <TextBlock FontSize="16"
+                           Text="{Binding Views,
+                           StringFormat=Просмотров: {0},
+                           TargetNullValue=0}" />
 
             </ui:SimpleStackPanel>
 

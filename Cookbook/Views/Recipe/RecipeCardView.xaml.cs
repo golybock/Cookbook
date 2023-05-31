@@ -1,11 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cookbook.UI;
 
 namespace Cookbook.Views.Recipe;
 
-public partial class RecipeCardView : UserControl
+public partial class RecipeCardView
 {
     public RecipeCardView()
     {
@@ -27,6 +26,6 @@ public partial class RecipeCardView : UserControl
 
     private void RecipeCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        ClickCommand?.Execute(this.DataContext);
+        ClickCommand.Execute(this.DataContext);
     }
 }

@@ -272,7 +272,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         Recipe.RecipeSteps = Steps.ToList();
         Recipe.ClientId = _clientService.GetCurrent()?.Id;
         
-        int res = await _recipeService.Update(Recipe,  ImageUrl);
+        await _recipeService.Update(Recipe, ImageUrl);
         
         MessageBox.Show("Обновлено");
     }

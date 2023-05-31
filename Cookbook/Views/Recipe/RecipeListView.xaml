@@ -6,34 +6,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:controls="http://schemas.modernwpf.com/2019"
+             xmlns:recipe="clr-namespace:Cookbook.ViewModel.Recipe"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    
+
     <Grid>
-    
-        <controls:ItemsRepeater ItemsSource="{Binding DataContext.Recipes, UpdateSourceTrigger=PropertyChanged, ElementName=this}">
-            
+
+        <controls:ItemsRepeater ItemsSource="{Binding DataContext.Recipes,
+                                UpdateSourceTrigger=PropertyChanged,
+                                ElementName=this}">
+
 
             <controls:ItemsRepeater.Layout>
-                
+
                 <controls:UniformGridLayout MinItemWidth="200"
                                             ItemsStretch="Fill"
                                             MinItemHeight="350"
                                             MinColumnSpacing="12"
                                             MinRowSpacing="12"
-                                            ItemsJustification="Start"/>
-                
+                                            ItemsJustification="Start" />
+
             </controls:ItemsRepeater.Layout>
-            
+
             <controls:ItemsRepeater.ItemTemplate>
-                <DataTemplate>
-                    <local:RecipeCardView ClickCommand="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>    
+                <DataTemplate DataType="{x:Type recipe:RecipesViewModel}">
+                    
+                    <local:RecipeCardView ClickCommand="{Binding DataContext.CardClickCommand,
+                                          RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
                 </DataTemplate>
             </controls:ItemsRepeater.ItemTemplate>
-            
+
         </controls:ItemsRepeater>
-        
+
     </Grid>
-    
+
 </UserControl>

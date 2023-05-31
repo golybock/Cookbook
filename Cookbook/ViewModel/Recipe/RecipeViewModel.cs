@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
@@ -12,26 +11,44 @@ using Cookbook.Services;
 using Cookbook.ViewModel.Navigation;
 using LiveCharts;
 using LiveCharts.Wpf;
-using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
 namespace Cookbook.ViewModel.Recipe;
 
 public class RecipeViewModel : ViewModelBase, INavItem
 {
-    private RecipeService _recipeService = new RecipeService();
-    private ClientService _clientService = new ClientService();
+    public RecipeViewModel(INavHost host, Database.Recipe recipe)
+    {
+        Host = host;
+        _recipe = recipe;
+        
+        LoadRecipe();
+    }
 
-    private bool _canEdit = false;
-    private Database.Recipe? _recipe;
+    # region services
 
-    private int _recipeId;
+    private readonly RecipeService _recipeService = new RecipeService();
+    private readonly ClientService _clientService = new ClientService();
+
+    #endregion
+
+    #region private members
+
+    private bool _canEdit;
+    private Database.Recipe _recipe;
+
     private SeriesCollection _series = new SeriesCollection();
     private AxesCollection _axis = new AxesCollection();
 
+    #endregion
+
+    #region public members
+
     public INavHost Host { get; set; }
 
-    public Database.Recipe? Recipe
+    #region bind models
+
+    public Database.Recipe Recipe
     {
         get => _recipe;
         set
@@ -39,30 +56,11 @@ public class RecipeViewModel : ViewModelBase, INavItem
             if (Equals(value, _recipe)) return;
             _recipe = value;
             OnPropertyChanged();
+
             OnPropertyChanged(nameof(RecipeIngredientsVisible));
             OnPropertyChanged(nameof(RecipeCategoriesVisible));
             OnPropertyChanged(nameof(RecipeStepsVisible));
         }
-    }
-
-    public RecipeViewModel(INavHost host, Database.Recipe recipe)
-    {
-        Host = host;
-        _recipeId = recipe.Id;
-
-        LoadAccess();
-        LoadRecipe();
-    }
-
-    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 135")]
-    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 342")]
-    private async void LoadRecipe()
-    {
-        Recipe = await _recipeService.Get(_recipeId);
-
-        CanEdit = Recipe.ClientId == _clientService.GetCurrent()?.Id;
-
-        LoadViews();
     }
 
     public SeriesCollection Series
@@ -86,16 +84,39 @@ public class RecipeViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-
-    private string GetMontName(int month)
+    
+    public bool CanEdit
     {
-        return new DateTime(2010, month, 1)
-            .ToString("MMM", CultureInfo.CreateSpecificCulture("ru"));
+        get => _canEdit;
+        set
+        {
+            if (value == _canEdit) return;
+            _canEdit = value;
+            OnPropertyChanged();
+        }
     }
 
+    #endregion
+
+    #endregion
+
+    #region get and render data
+
+    private async void LoadRecipe()
+    {
+        Recipe = (await _recipeService.Get(Recipe.Id))!;
+
+        CanEdit = Recipe.ClientId == _clientService.GetCurrent()?.Id;
+
+        LoadViews();
+    }
+    
     private void LoadViews()
     {
-        var viewGroups = Recipe?.RecipeViews.GroupBy(c => new {c.Datetime.Day, c.Datetime.Month}).ToList();
+        var viewGroups = Recipe
+            .RecipeViews
+            .GroupBy(c => new {c.Datetime.Day, c.Datetime.Month})
+            .ToList();
 
         ChartValues<int> views = new ChartValues<int>();
 
@@ -109,7 +130,8 @@ public class RecipeViewModel : ViewModelBase, INavItem
         }
 
         axisList.Add(new Axis() {Labels = labels});
-
+        Axis = axisList;
+        
         Series = new SeriesCollection()
         {
             new LineSeries()
@@ -119,11 +141,93 @@ public class RecipeViewModel : ViewModelBase, INavItem
                 Stroke = new SolidColorBrush(Colors.SlateBlue),
             },
         };
-
-        Axis = axisList;
-
-        OnPropertyChanged("Series");
     }
+
+    #endregion
+
+    #region private functions
+
+    private string GetMontName(int month) => 
+        new DateTime(2000, month, 1)
+            .ToString("MMM", CultureInfo.CreateSpecificCulture("ru"));
+    
+    private async void Like()
+    {
+        var id = _clientService.GetCurrent()?.Id;
+
+        var fav = App.Context.FavoriteRecipes.FirstOrDefault(c => c.ClientId == id && c.RecipeId == Recipe.Id);
+
+        if (fav == null)
+        {
+            await App.Context.FavoriteRecipes.AddAsync(new FavoriteRecipe() {ClientId = id, RecipeId = Recipe.Id});
+            await App.Context.SaveChangesAsync();
+
+            var notify = new ContentDialog()
+            {
+                Title = "Сохранено",
+                Content = "Рецепт добавлен в избранное",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+        }
+        else
+        {
+            App.Context.FavoriteRecipes.Remove(fav);
+            await App.Context.SaveChangesAsync();
+
+            var notify = new ContentDialog()
+            {
+                Title = "Сохранено",
+                Content = "Рецепт удален из избранного",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+        }
+    }
+
+    private void Edit() =>
+        Host.NavController.Navigate(new EditRecipePage(Host, Recipe));
+
+    private void Save()
+    {
+        RecipeDocX.Generate(Recipe);
+    }
+    
+    private async void Delete()
+    {
+        try
+        {
+            await _recipeService.Delete(Recipe);
+
+            var notify = new ContentDialog()
+            {
+                Title = "Удалено",
+                Content = "Рецепт успешно удален!",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+
+            Host.NavController.GoBack();
+        }
+        catch
+        {
+            var notify = new ContentDialog()
+            {
+                Title = "Ошибка",
+                Content = "Возникла ошибка при удалении",
+                CloseButtonText = "Закрыть"
+            };
+
+            await notify.ShowAsync();
+        }
+    }
+    
+    #endregion
+
+    #region bind render values
 
     public bool RecipeIngredientsVisible =>
         Recipe is {RecipeIngredients.Count: > 0};
@@ -141,7 +245,11 @@ public class RecipeViewModel : ViewModelBase, INavItem
         !RecipeCategoriesVisible;
 
     public bool RecipeIngredientsNotVisible =>
-        !RecipeIngredientsVisible;
+        !RecipeIngredientsVisible;  
+
+    #endregion
+
+    #region commands
 
     public CommandHandler EditCommand =>
         new CommandHandler(Edit);
@@ -154,122 +262,6 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
     public CommandHandler LikeCommand =>
         new CommandHandler(Like);
-
-    private async void LoadAccess()
-    {
-        CanEdit = false;
-
-        try
-        {
-            // if (client?.Login != null)
-            //     if (client?.Login == Recipe.ClientOwner)
-            //         CanEdit = true;
-        }
-        catch (Exception e)
-        {
-            CanEdit = false;
-        }
-    }
-
-    public bool CanEdit
-    {
-        get => _canEdit;
-        set
-        {
-            if (value == _canEdit) return;
-            _canEdit = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private async void Delete()
-    {
-        try
-        {
-            var recipe = await App.Context.Recipes.FirstOrDefaultAsync(c => c.Id == Recipe.Id);
-
-            if (recipe != null)
-            {
-                recipe.RecipeCategories.Clear();
-                recipe.RecipeStat = null;
-                recipe.RecipeIngredients.Clear();
-                recipe.RecipeSteps.Clear();
-                recipe.RecipeViews.Clear();
-                recipe.FavoriteRecipes.Clear();
-
-                App.Context.Recipes.Update(recipe);
-                await App.Context.SaveChangesAsync();
-
-                App.Context.Recipes.Remove(recipe);
-                await App.Context.SaveChangesAsync();
-            }
-
-            var notify = new ContentDialog()
-            {
-                Title = "Удалено",
-                Content = "Рецепт успешно удален!",
-                CloseButtonText = "Закрыть"
-            };
-
-            await notify.ShowAsync();
-
-            Host.NavController.GoBack();
-        }
-        catch (Exception e)
-        {
-            var notify = new ContentDialog()
-            {
-                Title = "Ошибка",
-                Content = "Возникла ошибка при удалении",
-                CloseButtonText = "Закрыть"
-            };
-
-            await notify.ShowAsync();
-        }
-    }
-
-    private async void Like()
-    {
-        var id = _clientService.GetCurrent()?.Id;
-
-        var fav = App.Context.FavoriteRecipes.FirstOrDefault(c => c.ClientId == id && c.RecipeId == Recipe.Id);
-
-        if (fav == null)
-        {
-            await App.Context.FavoriteRecipes.AddAsync(new FavoriteRecipe() {ClientId = id, RecipeId = Recipe.Id});
-            await App.Context.SaveChangesAsync();
-            
-            var notify = new ContentDialog()
-            {
-                Title = "Сохранено",
-                Content = "Рецепт добавлен в избранное",
-                CloseButtonText = "Закрыть"
-            };
-
-            await notify.ShowAsync();
-        }
-        else
-        {
-            App.Context.FavoriteRecipes.Remove(fav);
-            await App.Context.SaveChangesAsync();
-            
-            var notify = new ContentDialog()
-            {
-                Title = "Сохранено",
-                Content = "Рецепт удален из избранного",
-                CloseButtonText = "Закрыть"
-            };
-
-            await notify.ShowAsync();
-        }
-    }
-
-    private void Edit() =>
-        Host.NavController.Navigate(new EditRecipePage(Host, Recipe));
-
-    private void Save()
-    {
-        if (Recipe != null)
-            RecipeDocX.Generate(Recipe);
-    }
+    
+    #endregion
 }

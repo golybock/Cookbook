@@ -85,34 +85,6 @@
                                  MaxLength="50"
                                  FontSize="28" />
 
-                        <!-- <controls:SimpleStackPanel Spacing="5"> -->
-                        <!-- -->
-                        <!--     <TextBlock Text="Основная категория" -->
-                        <!--                FontSize="20" /> -->
-                        <!-- -->
-                        <!--     <controls:SplitButton Height="35" -->
-                        <!--                           Width="200" -->
-                        <!--                           FontSize="16" -->
-                        <!--                           Content="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}"> -->
-                        <!-- -->
-                        <!--         <controls:SplitButton.Flyout> -->
-                        <!--             <controls:Flyout> -->
-                        <!--                 <ListView ItemsSource="{Binding RecipeCategories}" -->
-                        <!--                           SelectedItem="{Binding SelectedCategory}"> -->
-                        <!-- -->
-                        <!--                     <ListView.ItemTemplate> -->
-                        <!--                         <DataTemplate> -->
-                        <!--                             <TextBlock Text="{Binding Name}" /> -->
-                        <!--                         </DataTemplate> -->
-                        <!--                     </ListView.ItemTemplate> -->
-                        <!-- -->
-                        <!--                 </ListView> -->
-                        <!--             </controls:Flyout> -->
-                        <!--         </controls:SplitButton.Flyout> -->
-                        <!--     </controls:SplitButton> -->
-                        <!-- -->
-                        <!-- </controls:SimpleStackPanel> -->
-
                         <TextBox Text="{Binding Description}"
                                  controls:ControlHelper.Header="Краткое описание"
                                  TextWrapping="Wrap"

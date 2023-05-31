@@ -12,7 +12,7 @@ public interface IRecipeService
 
     public Task<int> Create(Recipe recipe, string? image);
 
-    public Task<int> Update(Recipe recipe, string? image);
+    public Task Update(Recipe recipe, string? image);
 
-    public Task<int> Delete(Recipe recipe);
+    public Task Delete(Recipe recipe);
 }

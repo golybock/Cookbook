@@ -1,10 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Cookbook.ViewModel.Recipe;
+﻿namespace Cookbook.Views.Recipe;
 
-namespace Cookbook.Views.Recipe;
-
-public partial class RecipeListView : UserControl
+public partial class RecipeListView
 {
     public RecipeListView()
     {
