@@ -11,9 +11,18 @@ namespace Cookbook.Services;
 
 public class ClientService : IClientService
 {
-    public Client GetCurrent()
+    public static bool IsAuth()
     {
-        string email = App.Settings.Email;
+        string? email = App.Settings.Email;
+        
+        var client = App.Context.Clients.FirstOrDefault(c => c.Email == email);
+
+        return client != null;
+    }
+
+    public Client? GetCurrent()
+    {
+        string? email = App.Settings.Email;
         
         return App.Context.Clients.FirstOrDefault(c => c.Email == email);
     }

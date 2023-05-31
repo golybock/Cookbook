@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database;
+using Cookbook.Pages.Auth;
 using Cookbook.Pages.Notify;
+using Cookbook.Services;
 using Cookbook.ViewModel.ChooseDialogs;
 using Cookbook.ViewModel.Navigation;
 using Cookbook.Views.ChooseDialogs;
@@ -17,6 +19,8 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class EditRecipeViewModel : ViewModelBase, INavItem
 {
+    private readonly RecipeService _recipeService = new RecipeService();
+    
     private ObservableCollection<RecipeIngredient> _ingredients =
         new ObservableCollection<RecipeIngredient>();
 
@@ -245,79 +249,15 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
     private async Task Create()
     {
-        var user = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == App.Settings.Email);
-
-        if (user == null)
-            Host.NavController.Navigate(new ErrorPage());
-
-        await App.Context.Recipes.AddAsync(Recipe);
-        await App.Context.SaveChangesAsync();
-
-        foreach (var step in Steps)
-            step.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeSteps.AddRangeAsync(Steps);
-        await App.Context.SaveChangesAsync();
-
-        foreach (var category in Categories)
-            category.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeCategories.AddRangeAsync(Categories);
-        await App.Context.SaveChangesAsync();
-
-        foreach (var ingredient in Ingredients)
-            ingredient.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeIngredients.AddRangeAsync(Ingredients);
-        await App.Context.SaveChangesAsync();
-
-        if (Recipe.RecipeStat != null)
-            await App.Context.RecipeStats.AddAsync(Recipe.RecipeStat);
-
-        await App.Context.SaveChangesAsync();
+        int res = await _recipeService.Create(Recipe, Ingredients.ToList(), Steps.ToList(), Categories, ImageUrl);
         
         MessageBox.Show("created");
     }
 
     private async Task Update()
     {
-        App.Context.Recipes.Update(Recipe);
-        await App.Context.SaveChangesAsync();
-
-        var steps = App.Context.RecipeSteps.Where(c => c.RecipeId == Recipe.Id).ToList();
-        App.Context.RemoveRange(steps);
-        await App.Context.SaveChangesAsync();
-
-        foreach (var step in Steps)
-            step.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeSteps.AddRangeAsync(Steps);
-        await App.Context.SaveChangesAsync();
-
-        var categories = App.Context.RecipeCategories.Where(c => c.RecipeId == Recipe.Id).ToList();
-        App.Context.RemoveRange(categories);
-        await App.Context.SaveChangesAsync();
+        int res = await _recipeService.Update(Recipe, Ingredients.ToList(),  Categories, Steps.ToList(), ImageUrl);
         
-        foreach (var category in Categories)
-            category.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeCategories.AddRangeAsync(Categories);
-        await App.Context.SaveChangesAsync();
-
-        var ingredients = App.Context.RecipeIngredients.Where(c => c.RecipeId == Recipe.Id).ToList();
-        App.Context.RemoveRange(ingredients);
-        await App.Context.SaveChangesAsync();
-        
-        foreach (var ingredient in Ingredients)
-            ingredient.RecipeId = Recipe.Id;
-
-        await App.Context.RecipeIngredients.AddRangeAsync(Ingredients);
-        await App.Context.SaveChangesAsync();
-
-        App.Context.RecipeStats.Update(Recipe.RecipeStat);
-        
-        await App.Context.SaveChangesAsync();
-
         MessageBox.Show("Обновлено");
     }
 

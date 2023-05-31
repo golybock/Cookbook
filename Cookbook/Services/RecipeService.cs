@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cookbook.Database;
@@ -35,12 +36,20 @@ public class RecipeService : IRecipeService
         return await App.Context.Recipes.ToListAsync();
     }
 
-    public async Task<int> Create(Recipe recipe, List<RecipeIngredient> recipeIngredients, RecipeStat recipeStat,
-        List<RecipeStep> steps)
+    public async Task<int> Create(Recipe recipe, IEnumerable<RecipeIngredient> recipeIngredients, IEnumerable<RecipeStep> steps, IEnumerable<RecipeCategory> categories, string? image)
     {
+        if(image != null)
+            recipe.ImagePath = await CopyImageToBin(image);
+        
         await App.Context.Recipes.AddAsync(recipe);
         await App.Context.SaveChangesAsync();
 
+        foreach (var recipeIngredient in recipeIngredients)
+        {
+            await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
+            await App.Context.SaveChangesAsync();
+        }
+        
         foreach (var recipeIngredient in recipeIngredients)
         {
             await App.Context.RecipeIngredients.AddAsync(recipeIngredient);
@@ -54,17 +63,20 @@ public class RecipeService : IRecipeService
             await App.Context.SaveChangesAsync();
         }
 
-        recipeStat.Id = recipe.Id;
-
-        await App.Context.RecipeStats.AddAsync(recipeStat);
-        await App.Context.SaveChangesAsync();
-
-        return await App.Context.SaveChangesAsync();
+        return recipe.Id;
     }
 
-    public async Task<int> Update(Recipe recipe, List<RecipeIngredient> recipeIngredients, RecipeStat recipeStat,
-        List<RecipeStep> steps)
+    public async Task<int> Update(Recipe recipe, IEnumerable<RecipeIngredient> recipeIngredients, IEnumerable<RecipeCategory> categories, IEnumerable<RecipeStep> steps, string? image)
     {
+        if (image == null)
+            recipe.ImagePath = null;
+        
+        else if(image != null)
+            recipe.ImagePath = await CopyImageToBin(image);
+        
+        else if(image != recipe.ImagePath)
+            recipe.ImagePath = await CopyImageToBin(image);
+
         App.Context.Recipes.Update(recipe);
         await App.Context.SaveChangesAsync();
 
@@ -97,15 +109,18 @@ public class RecipeService : IRecipeService
             await App.Context.SaveChangesAsync();
         }
 
-        App.Context.RecipeStats.Remove(recipeStat);
-        await App.Context.SaveChangesAsync();
-        
-        await App.Context.RecipeStats.AddAsync(recipeStat);
-        await App.Context.SaveChangesAsync();
-
-        return await App.Context.SaveChangesAsync();
+        return recipe.Id;
     }
 
+    private async Task<string> CopyImageToBin(string image)
+    {
+        string path = Guid.NewGuid() + ".png";
+        
+        File.Copy(image, path);
+
+        return path;
+    }
+    
     public async Task<int> Delete(Recipe recipe)
     {
         App.Context.Recipes.Remove(recipe);

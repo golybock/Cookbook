@@ -28,7 +28,6 @@ public class RegistrationViewModel : ViewModelBase, INavItem
             if (value == _image) return;
             _image = value;
             OnPropertyChanged();
-            OnPropertyChanged();
         }
     }
 

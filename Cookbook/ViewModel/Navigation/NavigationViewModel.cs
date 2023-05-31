@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Cookbook.Command;
@@ -152,6 +153,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
         }
     }
 
+    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 103")]
     private async Task SetRecipes()
     {
         NavController.Navigate(new LoadingPage());
@@ -160,6 +162,7 @@ public class NavigationViewModel : ViewModelBase, INavHost
         {
             var recipes = await App.Context.Recipes
                 .Include(c => c.RecipeViews)
+                .Include(c => c.RecipeCategories)
                 .ToListAsync();
 
             if (recipes.Count == 0)

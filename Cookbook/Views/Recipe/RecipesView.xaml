@@ -70,8 +70,7 @@
                         <TextBlock TextAlignment="Center"
                                    Margin="5,0,5,0"
                                    VerticalAlignment="Center"
-                                   Text="Создать"
-                                   IsEnabled="{Binding UserLogin}"/>
+                                   Text="Создать"/>
                         
                     </StackPanel>
                     

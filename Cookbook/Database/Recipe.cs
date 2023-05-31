@@ -38,7 +38,7 @@ public partial class Recipe
 
     public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
-    public virtual RecipeStat? RecipeStat { get; set; }
+    public virtual RecipeStat RecipeStat { get; set; } = new RecipeStat();
 
     public virtual ICollection<RecipeStep> RecipeSteps { get; set; } = new List<RecipeStep>();
 

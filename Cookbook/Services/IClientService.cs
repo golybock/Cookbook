@@ -11,7 +11,9 @@ namespace Cookbook.Services;
 
 public interface IClientService
 {
-    public Client GetCurrent();
+    public static abstract bool IsAuth();
+    
+    public Client? GetCurrent();
     
     public Task<Client> Login(string login, string password);
     

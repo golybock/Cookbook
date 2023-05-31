@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Cookbook.Command;
 using Cookbook.Database;
+using Cookbook.Pages.Auth;
 using Cookbook.Pages.Recipe;
+using Cookbook.Services;
 using Cookbook.UI.Sort;
 using Cookbook.ViewModel.Navigation;
 using Microsoft.EntityFrameworkCore;
-using Xceed.Document.NET;
 
 namespace Cookbook.ViewModel.Recipe;
 
 public class RecipesViewModel : ViewModelBase, INavItem
 {
     public INavHost Host { get; set; }
-    
-    private bool _userLogin = false;
 
     private List<Database.Recipe> firstRecipes = new List<Database.Recipe>();
 
@@ -29,6 +27,9 @@ public class RecipesViewModel : ViewModelBase, INavItem
         {
             if (Equals(value, _selectedCategory)) return;
             _selectedCategory = value;
+            
+            SortRecipesByCategories();
+            
             OnPropertyChanged();
         }
     }
@@ -43,7 +44,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
         Host = host;
 
         Recipes = new ObservableCollection<Database.Recipe>(recipes);
-        
+
         firstRecipes = new List<Database.Recipe>(recipes);
 
         LoadCategories();
@@ -57,19 +58,13 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
     private void CreateRecipe()
     {
-        Host.NavController.Navigate(new EditRecipePage(Host));
+        if (IsAuth)
+            Host.NavController.Navigate(new EditRecipePage(Host));
+        else
+            Host.NavController.Navigate(new NoAuthPage(Host));
     }
 
-    public bool UserLogin
-    {
-        get => _userLogin;
-        set
-        {
-            if (value == _userLogin) return;
-            _userLogin = value;
-            OnPropertyChanged();
-        }
-    }
+    public bool IsAuth => ClientService.IsAuth();
 
     private void OpenRecipe(Database.Recipe? recipeDomain)
     {
@@ -86,29 +81,10 @@ public class RecipesViewModel : ViewModelBase, INavItem
         SelectedCategory = Categories.LastOrDefault()!;
     }
 
-    private async void LoadAccess()
-    {
-        UserLogin = false;
-
-        try
-        {
-            var login = App.Settings.Email;
-
-            var client = await App.Context.Clients.FirstOrDefaultAsync(c => c.Email == login);
-
-            if (client?.Email != null)
-                UserLogin = true;
-        }
-        catch (Exception e)
-        {
-            UserLogin = false;
-        }
-    }
-
     private SortType _selectedSortType = UI.Sort.SortTypes.Default;
     private Category _selectedCategory = new Category();
 
-    private async void SortRecipes()
+    private void SortRecipes()
     {
         if (SelectedSortType.Id == 0)
             Recipes = new ObservableCollection<Database.Recipe>(firstRecipes);
@@ -124,7 +100,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
             var sorted = Recipes.OrderBy(c => c.RecipeStat?.CookingTime);
             Recipes = new ObservableCollection<Database.Recipe>(sorted);
         }
-        
+
         if (SelectedSortType.Id == 3)
         {
             var sorted = Recipes.OrderBy(c => c.Views)
@@ -132,10 +108,29 @@ public class RecipesViewModel : ViewModelBase, INavItem
                 .ToList();
             Recipes = new ObservableCollection<Database.Recipe>(sorted);
         }
-        
+
         OnPropertyChanged("Recipes");
     }
-    
+
+    private void SortRecipesByCategories()
+    {
+        if (SelectedCategory.Id == -1)
+            Recipes = new ObservableCollection<Database.Recipe>(firstRecipes);
+
+        else
+        {
+            var sorting = new ObservableCollection<Database.Recipe>(firstRecipes);
+            
+            var recipes = sorting.Where(c =>
+                c.RecipeCategories.FirstOrDefault(c => c.CategoryId == SelectedCategory.Id) != null)
+                .ToList();
+
+            Recipes = new ObservableCollection<Database.Recipe>(recipes);
+        }
+
+        OnPropertyChanged("Recipes");
+    }
+
     public ObservableCollection<Database.Recipe> Recipes { get; set; } = new ObservableCollection<Database.Recipe>();
 
     public List<SortType> SortTypes =>
@@ -148,9 +143,9 @@ public class RecipesViewModel : ViewModelBase, INavItem
         {
             if (Equals(value, _selectedSortType)) return;
             _selectedSortType = value;
-            
+
             SortRecipes();
-            
+
             OnPropertyChanged();
         }
     }
