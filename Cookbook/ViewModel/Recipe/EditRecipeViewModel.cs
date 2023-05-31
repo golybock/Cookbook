@@ -17,9 +17,40 @@ namespace Cookbook.ViewModel.Recipe;
 
 public class EditRecipeViewModel : ViewModelBase, INavItem
 {
+    public EditRecipeViewModel(INavHost host)
+    {
+        Host = host;
+        Recipe = new Database.Recipe();
+
+        LoadCategories();
+    }
+
+    public EditRecipeViewModel(INavHost host, Database.Recipe recipe)
+    {
+        Host = host;
+        Recipe = recipe;
+        
+        Header = recipe.Header;
+        Description = recipe.Description;
+        
+        Categories = new ObservableCollection<RecipeCategory>(recipe.RecipeCategories);
+        Steps = new ObservableCollection<RecipeStep>(recipe.RecipeSteps);
+        Ingredients = new ObservableCollection<RecipeIngredient>(recipe.RecipeIngredients);
+
+        ImageUrl = recipe.ImagePath;
+
+        LoadCategories();
+    }
+    
+    #region setrvices
+
     private readonly RecipeService _recipeService = new RecipeService();
     private readonly ClientService _clientService = new ClientService();
-    
+
+    #endregion
+
+    #region private members
+
     private ObservableCollection<RecipeIngredient> _ingredients =
         new ObservableCollection<RecipeIngredient>();
 
@@ -29,66 +60,23 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
     private ObservableCollection<RecipeStep> _steps =
         new ObservableCollection<RecipeStep>();
 
-    private string? _imageUrl;
-    private ObservableCollection<Category> _recipeCategories;
-    private Category _selectedCategory;
-
-    private string? _description = string.Empty;
-    private string _header = string.Empty;
+    private ObservableCollection<Category> _recipeCategories =
+            new ObservableCollection<Category>();
+    
     private Database.Recipe _recipe = new Database.Recipe();
+    
+    private Category _selectedCategory = null!;
+    
+    private string _header = string.Empty;
+    
+    private string? _imageUrl;
+    
+    private string? _description;
 
-    public string? Description
-    {
-        get => _description;
-        set
-        {
-            if (value == _description) return;
+    #endregion
 
-            Recipe.Description = value;
-            _description = value;
-
-            OnPropertyChanged();
-        }
-    }
-
-    public string Header
-    {
-        get => _header;
-        set
-        {
-            if (value == _header) return;
-
-            Recipe.Header = value;
-            _header = value;
-
-            OnPropertyChanged();
-        }
-    }
-
-    public Database.Recipe Recipe
-    {
-        get => _recipe;
-        set
-        {
-            if (Equals(value, _recipe)) return;
-            _recipe = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string? ImageUrl
-    {
-        get => _imageUrl;
-        set
-        {
-            if (value == _imageUrl) return;
-            _imageUrl = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public INavHost Host { get; set; }
-
+    #region bind members
+    
     public ObservableCollection<RecipeIngredient> Ingredients
     {
         get => _ingredients;
@@ -96,17 +84,6 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         {
             if (Equals(value, _ingredients)) return;
             _ingredients = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public Category SelectedCategory
-    {
-        get => _selectedCategory;
-        set
-        {
-            if (Equals(value, _selectedCategory)) return;
-            _selectedCategory = value;
             OnPropertyChanged();
         }
     }
@@ -143,40 +120,77 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             OnPropertyChanged();
         }
     }
-
-    public EditRecipeViewModel(INavHost host)
+    
+    public Category SelectedCategory
     {
-        Host = host;
-        Recipe = new Database.Recipe();
-
-        LoadCategories();
+        get => _selectedCategory;
+        set
+        {
+            if (Equals(value, _selectedCategory)) return;
+            _selectedCategory = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public Database.Recipe Recipe
+    {
+        get => _recipe;
+        set
+        {
+            if (Equals(value, _recipe)) return;
+            _recipe = value;
+            OnPropertyChanged();
+        }
     }
 
-    public EditRecipeViewModel(INavHost host, Database.Recipe recipe)
+    public string? Description
     {
-        Host = host;
-        Recipe = recipe;
-        
-        Header = recipe.Header;
-        Description = recipe.Description;
-        
-        Categories = new ObservableCollection<RecipeCategory>(recipe.RecipeCategories);
-        Steps = new ObservableCollection<RecipeStep>(recipe.RecipeSteps);
-        Ingredients = new ObservableCollection<RecipeIngredient>(recipe.RecipeIngredients);
+        get => _description;
+        set
+        {
+            if (value == _description) return;
 
-        ImageUrl = recipe.ImagePath;
+            Recipe.Description = value;
+            _description = value;
 
-        LoadCategories();
+            OnPropertyChanged();
+        }
     }
 
-    private async void LoadCategories()
+    public string Header
     {
-        var categories = await App.Context.Categories.ToListAsync();
+        get => _header;
+        set
+        {
+            if (value == _header) return;
 
-        RecipeCategories = new ObservableCollection<Category>(categories);
+            Recipe.Header = value;
+            _header = value;
 
-        SelectedCategory = RecipeCategories.FirstOrDefault();
+            OnPropertyChanged();
+        }
     }
+    
+    public string? ImageUrl
+    {
+        get => _imageUrl;
+        set
+        {
+            if (value == _imageUrl) return;
+            _imageUrl = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    #endregion
+
+    #region public members
+
+    public INavHost Host { get; set; }
+
+    #endregion
+
+    #region command handlers
 
     public CommandHandler CancelCommand =>
         new CommandHandler(CancelEdit);
@@ -203,9 +217,22 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         new CommandHandler<RecipeCategory>(DeleteCategory);
 
     public CommandHandler<RecipeIngredient> DeleteIngredientCommand =>
-        new CommandHandler<RecipeIngredient>(DeleteIngredient);
+        new CommandHandler<RecipeIngredient>(DeleteIngredient); 
 
-    private async void CancelEdit()
+    #endregion
+
+    #region private functions(for handlers and etc)
+
+    private async void LoadCategories()
+    {
+        var categories = await App.Context.Categories.ToListAsync();
+
+        RecipeCategories = new ObservableCollection<Category>(categories);
+
+        SelectedCategory = RecipeCategories.FirstOrDefault()!;
+    }
+    
+     private async void CancelEdit()
     {
         var dialog = new ContentDialog()
         {
@@ -221,7 +248,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             Host.NavController.GoBack();
     }
 
-    private async void ChooseImage()
+    private void ChooseImage()
     {
         var path = ChooseFile();
 
@@ -260,9 +287,9 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         Recipe.RecipeSteps = Steps.ToList();
         Recipe.ClientId = _clientService.GetCurrent()?.Id;
         
-        int res = await _recipeService.Create(Recipe, ImageUrl);
+        await _recipeService.Create(Recipe, ImageUrl);
         
-        MessageBox.Show("created");
+        Host.NavController.GoBack();
     }
 
     private async Task Update()
@@ -274,7 +301,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
         
         await _recipeService.Update(Recipe, ImageUrl);
         
-        MessageBox.Show("Обновлено");
+        Host.NavController.GoBack();
     }
 
     private async void AddIngredient()
@@ -297,7 +324,7 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
             var ingredients = new List<RecipeIngredient>(Ingredients);
 
             var ingredient = ingredients
-                .FirstOrDefault(c => c.IngredientId == context.RecipeIngredient.Ingredient?.Id);
+                .FirstOrDefault(c => c.Ingredient.Id == context.RecipeIngredient.Ingredient.Id);
 
             if (ingredient != null)
             {
@@ -329,19 +356,26 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
         if (res == ContentDialogResult.Primary)
         {
-            Categories.Add(
-                new RecipeCategory()
-                {
-                    Category = context.SelectedCategory,
-                    CategoryId = context.SelectedCategory.Id
-                }
-            );
+            var category = Categories.FirstOrDefault(c => c.CategoryId == context.SelectedCategory.Id);
+
+            if (category == null)
+            {
+            
+                Categories.Add(
+                    new RecipeCategory()
+                    {
+                        Category = context.SelectedCategory,
+                        CategoryId = context.SelectedCategory.Id
+                    }
+                );
+                
+            }
         }
 
         OnPropertyChanged(nameof(Categories));
     }
 
-    private async void AddStep()
+    private void AddStep()
     {
         Steps.Add(new RecipeStep());
 
@@ -368,4 +402,6 @@ public class EditRecipeViewModel : ViewModelBase, INavItem
 
         OnPropertyChanged(nameof(Ingredients));
     }
+
+    #endregion
 }
