@@ -44,19 +44,6 @@ create table recipe
     description varchar(200)
 );
 
-create table recipe_stats
-(
-    id            integer not null
-        primary key
-        references recipe,
-    fats          numeric,
-    squirrels     numeric,
-    carbohydrates numeric,
-    kilocalories  numeric,
-    portions      integer default 1,
-    cooking_time  integer
-);
-
 create table recipe_ingredients
 (
     id            serial
@@ -104,5 +91,18 @@ create table recipe_views
     recipe_id integer
         references recipe,
     datetime  timestamp with time zone default now() not null
+);
+
+create table recipe_stats
+(
+    id            integer not null
+        primary key
+        references recipe,
+    fats          numeric,
+    squirrels     numeric,
+    carbohydrates numeric,
+    kilocalories  numeric,
+    portions      integer default 1,
+    cooking_time  integer
 );
 
