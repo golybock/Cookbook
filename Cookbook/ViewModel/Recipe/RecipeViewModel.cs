@@ -216,7 +216,7 @@ public class RecipeViewModel : ViewModelBase, INavItem
 
             Host.NavController.GoBack();
         }
-        catch
+        catch(Exception e)
         {
             var notify = new ContentDialog()
             {

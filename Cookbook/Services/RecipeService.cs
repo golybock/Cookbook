@@ -13,7 +13,7 @@ public class RecipeService : IRecipeService
     public async Task<Recipe?> Get(int id)
     {
         var recipe = await App.Context.Recipes
-            .Include(c => c.RecipeStat)
+            .Include(c => c.RecipeStats)
             .Include(c => c.RecipeSteps)
             .Include(c => c.RecipeViews)
             .Include(c => c.RecipeCategories)
@@ -73,12 +73,15 @@ public class RecipeService : IRecipeService
     public async Task Delete(Recipe recipe)
     {
         recipe.RecipeCategories.Clear();
-        recipe.RecipeStat = null!;
         recipe.RecipeIngredients.Clear();
         recipe.RecipeSteps.Clear();
         recipe.RecipeViews.Clear();
         recipe.FavoriteRecipes.Clear();
 
+        if (recipe.RecipeStats != null) 
+            App.Context.RecipeStats.Remove(recipe.RecipeStats);
+        await App.Context.SaveChangesAsync();
+        
         App.Context.Recipes.Update(recipe);
         await App.Context.SaveChangesAsync();
 

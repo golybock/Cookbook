@@ -163,7 +163,7 @@ public class RecipesViewModel : ViewModelBase, INavItem
 
         if (SelectedSortType.Id == 2)
             return recipes
-                .OrderBy(c => c.RecipeStat.CookingTime)
+                .OrderBy(c => c.RecipeStats.CookingTime)
                 .ToList();
 
         if (SelectedSortType.Id == 3)

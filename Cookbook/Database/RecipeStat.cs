@@ -5,7 +5,7 @@ namespace Cookbook.Database;
 
 public partial class RecipeStat
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     public decimal Fats { get; set; }
 
@@ -19,7 +19,7 @@ public partial class RecipeStat
 
     public int CookingTime { get; set; }
 
-    public virtual Recipe IdNavigation { get; set; } = null!;
+    public virtual Recipe? IdNavigation { get; set; }
 
     public override string ToString()
     {

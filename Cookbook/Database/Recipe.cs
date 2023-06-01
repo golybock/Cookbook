@@ -7,21 +7,13 @@ namespace Cookbook.Database;
 
 public partial class Recipe
 {
+    private string? _imagePath;
+    
     public int Id { get; set; }
 
     public int? ClientId { get; set; }
 
     public string Header { get; set; } = null!;
-
-    private string? _imagePath;
-
-    public string? ImagePath
-    {
-        get => _imagePath != null
-            ? System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + _imagePath
-            : null;
-        set => _imagePath = value;
-    }
 
     public string? SourceUrl { get; set; }
 
@@ -35,11 +27,19 @@ public partial class Recipe
 
     public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
-    public virtual RecipeStat RecipeStat { get; set; } = new();
+    public virtual RecipeStat? RecipeStats { get; set; } = new RecipeStat();
 
     public virtual ICollection<RecipeStep> RecipeSteps { get; set; } = new List<RecipeStep>();
 
     public virtual ICollection<RecipeView> RecipeViews { get; set; } = new List<RecipeView>();
+
+    public string? ImagePath
+    {
+        get => _imagePath != null
+            ? System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + _imagePath
+            : null;
+        set => _imagePath = value;
+    }
 
     public int Views => RecipeViews.Count;
 
@@ -62,7 +62,7 @@ public partial class Recipe
         res += string.Join("\n", RecipeCategories.Select(c => c.Category?.Name));
 
         res += "\nИнформация\n";
-        res += $"{RecipeStat}\n";
+        res += $"{RecipeStats}\n";
 
         return res;
     }

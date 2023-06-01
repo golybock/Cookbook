@@ -210,7 +210,7 @@ public partial class CookbookDbContext : DbContext
                 .HasColumnName("portions");
             entity.Property(e => e.Squirrels).HasColumnName("squirrels");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.RecipeStat)
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.RecipeStats)
                 .HasForeignKey<RecipeStat>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("recipe_stats_id_fkey");
