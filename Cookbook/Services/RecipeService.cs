@@ -78,9 +78,16 @@ public class RecipeService : IRecipeService
         recipe.RecipeViews.Clear();
         recipe.FavoriteRecipes.Clear();
 
-        if (recipe.RecipeStats != null) 
-            App.Context.RecipeStats.Remove(recipe.RecipeStats);
-        await App.Context.SaveChangesAsync();
+        try
+        {
+            if (recipe.RecipeStats != null)
+                App.Context.RecipeStats.Remove(recipe.RecipeStats);
+            await App.Context.SaveChangesAsync();
+        }
+        catch
+        {
+            
+        }
         
         App.Context.Recipes.Update(recipe);
         await App.Context.SaveChangesAsync();
